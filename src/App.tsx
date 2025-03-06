@@ -1,13 +1,10 @@
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+import "@fontsource/roboto/index.css";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Navigation } from "./components/Navigation";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { NotesPage } from "./pages/NotesPage";
 import { TaskPage } from "./pages/TaskPage";
-import { EventPage } from "./pages/EventPage";
+import { NotificationsPage } from "./pages/NotificationsPage";
 import { ArchivePage } from "./pages/ArchivePage";
 import { TrashPage } from "./pages/TrashPage";
 import { SettingsPage } from "./pages/SettingsPage";
@@ -16,13 +13,13 @@ export const App = () => {
   return (
     <Router>
       <Header />
-      <Navigation />
-      <main className="flex h-[calc(100vh-64px)]">
+      <main className="flex flex-1 min-h-0 py-3">
+        <Navigation />
         <Routes>
-          <Route path="/" element={<NotesPage />} />
+          <Route path="/" element={<Navigate to="/notes" replace />} />
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/tasks" element={<TaskPage />} />
-          <Route path="/events" element={<EventPage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/archive" element={<ArchivePage />} />
           <Route path="/trash" element={<TrashPage />} />
           <Route path="/settings" element={<SettingsPage />} />
