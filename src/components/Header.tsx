@@ -41,7 +41,7 @@ export const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+        <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: "inherit" }}>
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
