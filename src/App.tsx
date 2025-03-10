@@ -8,13 +8,16 @@ import { NotificationsPage } from "./pages/NotificationsPage";
 import { ArchivePage } from "./pages/ArchivePage";
 import { TrashPage } from "./pages/TrashPage";
 import { SettingsPage } from "./pages/SettingsPage";
+import { useState } from "react";
 
 export const App = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
   return (
     <Router>
-      <Header />
-      <main className="flex flex-1 min-h-0 py-3">
-        <Navigation />
+      <Header setIsVisible={() => setIsVisible((prev) => !prev)} />
+      <main className="relative flex flex-1 min-h-0 py-3 max-w-7xl w-full mx-auto pt-6">
+        <Navigation isVisible={isVisible} />
         <Routes>
           <Route path="/" element={<Navigate to="/notes" replace />} />
           <Route path="/notes" element={<NotesPage />} />

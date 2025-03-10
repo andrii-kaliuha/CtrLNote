@@ -68,6 +68,7 @@ export const Notes = ({ title, description, color, date }: { title: string; desc
         </IconButton>
         <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose} slotProps={{ paper: { style: { width: "200px" } } }}>
           <MenuItem onClick={handleClose}>Edit</MenuItem>
+          <MenuItem onClick={handleClose}>Pinned</MenuItem>
           <MenuItem onClick={handleClose}>Delete</MenuItem>
           <MenuItem onClick={handleClose}>Archive</MenuItem>
           <MenuItem onClick={handleClose}>Color</MenuItem>

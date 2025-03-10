@@ -37,11 +37,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const Header = () => {
+type HeaderProps = {
+  setIsVisible: () => void;
+};
+
+export const Header: React.FC<HeaderProps> = ({ setIsVisible }) => {
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <IconButton size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: "inherit" }}>
+    <AppBar position="sticky" sx={{ zIndex: 10, top: 0, left: 0, display: "flex", justifyContent: "center", width: "100%" }}>
+      <Toolbar sx={{ width: "100%", maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between" }}>
+        <IconButton onClick={setIsVisible} size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: "inherit" }}>
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
@@ -57,3 +61,32 @@ export const Header = () => {
     </AppBar>
   );
 };
+
+{
+  /* <AppBar
+  position="sticky"
+  sx={{
+    zIndex: 10,
+    top: 0,
+    left: 0,
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+  }}
+>
+  <Toolbar sx={{ width: "100%", maxWidth: "1280px", margin: "0 auto", display: "flex", justifyContent: "space-between" }}>
+    <IconButton onClick={setIsVisible} size="large" edge="start" aria-label="menu" sx={{ mr: 2, color: "inherit" }}>
+      <MenuIcon />
+    </IconButton>
+    <Typography variant="h6" noWrap sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
+      CtrLNote
+    </Typography>
+    <Search>
+      <SearchIconWrapper>
+        <SearchIcon />
+      </SearchIconWrapper>
+      <StyledInputBase placeholder="Search…" inputProps={{ "aria-label": "search" }} />
+    </Search>
+  </Toolbar>
+</AppBar>; */
+}
