@@ -41,7 +41,7 @@ const colors: Record<string, string> = {
   teal: "bg-teal-300",
 };
 
-export const Notes = ({ title, description, color, date }: { title: string; description: string; color: string; date: string }) => {
+export const Notes = ({ title, description, color, date }: { title: string; description: string; color: string; date: any }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
