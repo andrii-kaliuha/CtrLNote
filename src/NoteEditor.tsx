@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useEditor, EditorContent, Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Underline from "@tiptap/extension-underline";
-import { Notes } from "./pages/ArchivePage";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { addNote } from "./store/slices/notesSlice";
 
 import {
   Add,
@@ -106,10 +107,10 @@ const FormattingToolbar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
     ));
 
   return (
-    <div className="bg-white rounded-lg shadow-md max-w-max mx-auto mt-6">
+    <div className="bg-white rounded-lg max-w-max mx-auto flex justify-between">
       <div className="flex items-center p-3">
         {/* Вибір шрифту */}
-        <FormControl size="small" variant="outlined" className="w-48">
+        {/* <FormControl size="small" variant="outlined" className="w-48">
           <InputLabel>Font</InputLabel>
           <Select value={fontFamily} label="Font" onChange={fontChange}>
             {fontFamilies.map((font) => (
@@ -118,10 +119,10 @@ const FormattingToolbar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
               </MenuItem>
             ))}
           </Select>
-        </FormControl>
+        </FormControl> */}
 
         {/* Розмір шрифту */}
-        <div className="flex items-center">
+        {/* <div className="flex items-center">
           <IconButton onClick={() => fontSizeChange(false)} disabled={fontSize <= 8}>
             <Remove />
           </IconButton>
@@ -129,7 +130,7 @@ const FormattingToolbar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
           <IconButton onClick={() => fontSizeChange(true)} disabled={fontSize >= 72}>
             <Add />
           </IconButton>
-        </div>
+        </div> */}
 
         {/* Групи кнопок форматування */}
         <div className="flex items-center">{renderButtons(formatButtons)}</div>
@@ -143,10 +144,9 @@ const FormattingToolbar: React.FC<{ editor: Editor | null }> = ({ editor }) => {
 
 const TextEditor: React.FC<{ editor: Editor | null; onSave: () => void; onClear: () => void }> = ({ editor, onSave, onClear }) => {
   return (
-    <div className="relative mt-6">
-      <EditorContent editor={editor} className="bg-[#faedcd] text-black rounded-lg shadow-md mx-6 mt-2  p-3" />
-
-      <div className="absolute bottom-3 right-12">
+    <div className="relative">
+      <EditorContent editor={editor} className="bg-[#faedcd] rounded-lg" />
+      <div className="absolute bottom-3 right-3">
         <Button variant="text" onClick={onClear}>
           Очистити
         </Button>
@@ -158,21 +158,12 @@ const TextEditor: React.FC<{ editor: Editor | null; onSave: () => void; onClear:
   );
 };
 
-interface Note {
-  id: number;
-  title: string;
-  content: string;
-  date: number;
-  pinned?: string;
-  color: string;
-  archive?: string;
-  trash?: string;
-}
-
 export const NoteEditor: React.FC = () => {
-  const [notes, setNotes] = useState<Note[]>([]);
+  // Використовуємо Redux замість локального стану
+  const dispatch = useAppDispatch();
+
   const editor = useEditor({
-    extensions: [StarterKit.configure({ heading: { levels: [1, 2, 3] } }), Underline],
+    extensions: [StarterKit, Underline],
     content: "Натисніть тут",
     editorProps: { attributes: { class: "focus:outline-none min-h-[300px] w-full p-3 cursor-text" } },
   });
@@ -182,26 +173,16 @@ export const NoteEditor: React.FC = () => {
     const content = editor.getText().trim();
     if (!content) return;
 
-    setNotes((prev) => {
-      return [...prev, { id: Date.now(), color: "red", date: Date.now(), title: `Нотатка ${Date.now()}`, content }];
-    });
+    // Використовуємо Redux action для додавання нотатки
+    dispatch(addNote({ id: Date.now(), date: Date.now(), title: `Нотатка ${Date.now()}`, content }));
 
-    editor.commands.clearContent();
+    // editor.commands.clearContent();
   };
 
-  useEffect(() => {
-    console.log(notes);
-  }, [notes]);
-
   return (
-    <section>
-      <FormattingToolbar editor={editor} />
+    <div className="flex flex-col gap-3">
+      {/* <FormattingToolbar editor={editor} /> */}
       <TextEditor editor={editor} onSave={SaveNote} onClear={() => editor?.commands.clearContent()} />
-      <ul className="columns-1 sm:columns-2 lg:columns-3 xl:columns-4 gap-3 px-3 w-full">
-        {notes.map((note) => (
-          <Notes key={note.id} title={note.title} description={note.content} color={note.color} date={note.date} />
-        ))}
-      </ul>
-    </section>
+    </div>
   );
 };

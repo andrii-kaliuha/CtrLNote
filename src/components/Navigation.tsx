@@ -1,36 +1,70 @@
 import { Link } from "react-router-dom";
-import { List, ListItemButton, ListItemText } from "@mui/material";
+import { List, ListItemButton, ListItemText, ListItemIcon } from "@mui/material";
+import { useState } from "react";
+
+import { Menu, StickyNote2, CheckCircle, Notifications, Archive, Delete, Settings } from "@mui/icons-material";
 
 const navItems = [
-  { title: "Нотатки", path: "/notes" },
-  { title: "Завдання", path: "/tasks" },
-  { title: "Сповіщення", path: "/notifications" },
-  { title: "Архів", path: "/archive" },
-  { title: "Кошик", path: "/trash" },
-  { title: "Налаштування", path: "/settings" },
+  { title: "Нотатки", path: "/notes", icon: <StickyNote2 /> },
+  { title: "Завдання", path: "/tasks", icon: <CheckCircle /> },
+  { title: "Сповіщення", path: "/notifications", icon: <Notifications /> },
+  { title: "Архів", path: "/archive", icon: <Archive /> },
+  { title: "Кошик", path: "/trash", icon: <Delete /> },
+  { title: "Налаштування", path: "/settings", icon: <Settings /> },
 ];
 
-export const Navigation = () => (
-  <nav className="bg-[#faedcd] flex-shrink-0 m-6 ml-6 rounded-xl">
-    <List sx={{ width: 300, p: 0 }}>
-      {navItems.map(({ title, path }, index) => (
+export default navItems;
+
+export const Navigation = () => {
+  const [collapsed, setCollapsed] = useState(false);
+
+  return (
+    <nav className="sticky top-0 left-0 h-screen flex-shrink-0 p-6">
+      <List
+        sx={{
+          width: collapsed ? 64 : 240,
+          p: 0,
+          backgroundColor: "#faedcd",
+          height: "100%",
+          borderRadius: "8px",
+          transition: "width 0.3s ease",
+        }}
+      >
+        {/* Кнопка для зміни стану */}
         <ListItemButton
-          component={Link}
-          to={path}
-          key={title}
+          onClick={() => setCollapsed((prev) => !prev)}
           sx={{
-            height: 48,
-            px: 3,
+            justifyContent: collapsed ? "center" : "flex-start",
             py: 1.5,
-            color: "#1976d2",
-            borderTopRightRadius: index === 0 ? "12px" : 0,
-            borderTopLeftRadius: index === 0 ? "12px" : 0,
-            "&:hover": { backgroundColor: "#0000000a" },
+            height: 48,
+            borderTopRightRadius: "8px",
+            borderTopLeftRadius: "8px",
           }}
         >
-          <ListItemText primary={title} />
+          <ListItemIcon sx={{ minWidth: "auto" }}>
+            <Menu />
+          </ListItemIcon>
+          {!collapsed && <ListItemText primary="Меню" sx={{ ml: 2 }} />}
         </ListItemButton>
-      ))}
-    </List>
-  </nav>
-);
+
+        {navItems.map(({ title, path, icon }) => (
+          <ListItemButton
+            component={Link}
+            to={path}
+            key={title}
+            sx={{
+              py: 1.5,
+              color: "#1976d2",
+              height: 48,
+              "&:hover": { backgroundColor: "#0000000a" },
+              justifyContent: collapsed ? "center" : "flex-start",
+            }}
+          >
+            <ListItemIcon sx={{ minWidth: "auto" }}>{icon}</ListItemIcon>
+            {!collapsed && <ListItemText primary={title} sx={{ ml: 2 }} />}
+          </ListItemButton>
+        ))}
+      </List>
+    </nav>
+  );
+};

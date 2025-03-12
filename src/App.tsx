@@ -11,9 +11,9 @@ import { SettingsPage } from "./pages/SettingsPage";
 export const App = () => {
   return (
     <Router>
-      <div className="relative flex h-screen max-w-[1280px] w-full">
+      <div className="relative flex max-w-[1280px] w-full min-h-screen">
         <Navigation />
-        <main className="flex-1 py-6 pr-6">
+        <main className="flex-1 py-6 pr-6 overflow-y-auto">
           <Routes>
             <Route path="/" element={<Navigate to="/notes" replace />} />
             <Route path="/notes" element={<NotesPage />} />
