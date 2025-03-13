@@ -35,7 +35,7 @@ const EmptyTrash = () => (
 const Trash = () => (
   <ul className="columns-1 sm:columns-2 lg:columns-3 gap-3 w-full">
     {notes.map((note) => (
-      <Note key={note.id} title={note.title} description={note.description} date={note.date} />
+      <Note key={note.id} title={note.title} text={note.text} date={note.date} />
     ))}
   </ul>
 );
