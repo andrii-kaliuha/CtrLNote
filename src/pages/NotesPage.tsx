@@ -1,13 +1,10 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { IconButton, Menu, MenuItem } from "@mui/material";
+import { IconButton, Menu, MenuItem, Modal, Box, TextField } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import {
-  deleteNote,
   pinNote,
-  archiveNote,
-  restoreNote,
   editNote,
   setEditedNoteId,
   setTitle,
@@ -18,46 +15,40 @@ import {
   moveToTrash,
 } from "../store/slices/notesSlice";
 
-type NoteStatus = "active" | "pinned" | "archived" | "deleted";
+type NotesProps = { title: string; notes: NoteProps[] };
+type NoteProps = { id: string; title: string; text: string; date: number; status: string };
+type NoteOperation = { title: string; action: () => void };
+type MenuButtonProps = { title: string; onClick: () => void; action: () => void };
+type NoteEditorProps = { closeModal: () => void };
 
 export const NotesPage = () => {
-  const { notes, pinnedNotes, archivedNotes, deletedNotes } = useSelector((state: RootState) => state.note);
+  const { notes, pinnedNotes } = useSelector((state: RootState) => state.note);
 
   return (
     <section className="flex flex-col w-full">
-      <NoteEditor />
-      <Notes title="Нотатки" notes={notes} status="active" />
-      <Notes title="Закріплені" notes={pinnedNotes} status="pinned" />
-      <Notes title="Архів" notes={archivedNotes} status="archived" />
-      <Notes title="Видалені" notes={deletedNotes} status="deleted" />
+      <Notes title="Закріплені" notes={pinnedNotes} />
+      <Notes title="Нотатки" notes={notes} />
     </section>
   );
 };
 
-type NotesProps = { title: string; notes: NoteProps[]; status: NoteStatus };
-type NoteProps = {
-  id: string;
-  title: string;
-  text: string;
-  date: string | Date;
-};
-
-const Notes: React.FC<NotesProps> = ({ title, notes, status }) => {
+const Notes: React.FC<NotesProps> = ({ title, notes }) => {
   return (
     <>
       <h2 className="p-3">{title}</h2>
       <ul className="columns-1 md:columns-2 lg:columns-3 gap-3 w-full">
         {notes.map((note: NoteProps) => (
-          <Note key={note.id} {...note} status={status} />
+          <Note key={note.id} {...note} />
         ))}
       </ul>
     </>
   );
 };
 
-export const Note: React.FC<NoteProps & { status: NoteStatus }> = ({ id, title, text, date, status }) => {
+export const Note: React.FC<NoteProps> = ({ id, title, text, date, status }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -68,56 +59,33 @@ export const Note: React.FC<NoteProps & { status: NoteStatus }> = ({ id, title, 
     dispatch(setEditedNoteId(id));
   };
 
-  const handlePin = (id: string) => {
-    dispatch(pinNote(id));
+  const handlePin = (id: string) => dispatch(pinNote(id));
+  const handleUnpin = (id: string) => dispatch(unpinNote(id));
+  const handleDelete = (id: string) => dispatch(moveToTrash(id));
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+    handleEdit(id, title, text);
   };
 
-  const handleArchive = (id: string) => {
-    dispatch(archiveNote(id));
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    dispatch(clearNote());
   };
 
-  const handleRestore = (id: string) => {
-    dispatch(restoreNote(id));
-  };
-
-  const handleUnpin = (id: string) => {
-    dispatch(unpinNote(id));
-  };
-
-  const handleUnarchive = (id: string) => {
-    dispatch(restoreNote(id));
-  };
-
-  const handleDelete = (id: string) => {
-    dispatch(moveToTrash(id));
-  };
-
-  const handleFullDelete = (id: string) => {
-    dispatch(deleteNote(id));
-  };
-
-  const noteOperations = {
+  const noteOperations: { [key: string]: NoteOperation[] } = {
     active: [
-      { title: "Редагувати", action: () => handleEdit(id, title, text) },
+      { title: "Редагувати", action: () => handleOpenModal() },
       { title: "Закріпити", action: () => handlePin(id) },
-      { title: "Архівувати", action: () => handleArchive(id) },
       { title: "Видалити", action: () => handleDelete(id) },
     ],
     pinned: [
       { title: "Відкріпити", action: () => handleUnpin(id) },
       { title: "Видалити", action: () => handleDelete(id) },
     ],
-    archived: [
-      { title: "Відновити", action: () => handleUnarchive(id) },
-      { title: "Видалити", action: () => handleDelete(id) },
-    ],
-    deleted: [
-      { title: "Відновити", action: () => handleRestore(id) },
-      { title: "Видалити назавжди", action: () => handleFullDelete(id) },
-    ],
   };
 
-  const menuActions = noteOperations[status];
+  const menuActions = useMemo(() => noteOperations[status], [status, noteOperations]);
 
   return (
     <li className="break-inside-avoid inline-block w-full mb-3 p-3 rounded-lg relative bg-[#faedcd]">
@@ -126,7 +94,7 @@ export const Note: React.FC<NoteProps & { status: NoteStatus }> = ({ id, title, 
       </div>
       <p className="text-sm">{text}</p>
       <div className="flex justify-between items-end">
-        <p className="text-xs text-gray-600">{typeof date === "string" ? date : date.toLocaleDateString()}</p>
+        <p className="text-xs text-gray-600">{typeof date === "number" ? new Date(date).toLocaleDateString() : date}</p>
         <IconButton onClick={handleClick}>
           <MoreVertIcon />
         </IconButton>
@@ -150,11 +118,25 @@ export const Note: React.FC<NoteProps & { status: NoteStatus }> = ({ id, title, 
           ))}
         </Menu>
       </div>
+      <Modal open={isModalOpen} onClose={handleCloseModal}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <NoteEditor closeModal={handleCloseModal} />
+        </Box>
+      </Modal>
     </li>
   );
 };
-
-type MenuButtonProps = { title: string; onClick: () => void; action: () => void };
 
 const MenuButton: React.FC<MenuButtonProps> = ({ title, onClick, action }) => {
   return (
@@ -170,7 +152,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({ title, onClick, action }) => {
   );
 };
 
-export const NoteEditor = () => {
+export const NoteEditor: React.FC<NoteEditorProps> = ({ closeModal }) => {
   const { title, text, editedNoteId, notes, pinnedNotes } = useSelector((state: RootState) => state.note);
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
@@ -183,13 +165,8 @@ export const NoteEditor = () => {
     }
   }, [title, text]);
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setTitle(e.target.value));
-  };
-
-  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    dispatch(setContent(e.target.value));
-  };
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => dispatch(setTitle(e.target.value));
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => dispatch(setContent(e.target.value));
 
   const handleSave = () => {
     if (isEditing && editedNoteId) {
@@ -201,6 +178,7 @@ export const NoteEditor = () => {
             title,
             text,
             date: noteToEdit.date,
+            status: noteToEdit.status,
           })
         );
       }
@@ -208,22 +186,18 @@ export const NoteEditor = () => {
       dispatch(addNote());
     }
     dispatch(clearNote());
+    closeModal();
   };
 
   const handleCancel = () => {
     dispatch(clearNote());
+    closeModal();
   };
 
   return (
-    <div className="p-4 mb-4 bg-[#f8f9fa] rounded-lg">
-      <input type="text" placeholder="Заголовок" value={title} onChange={handleTitleChange} className="w-full p-2 mb-2 border rounded-md" />
-      <textarea
-        placeholder="Текст нотатки"
-        value={text}
-        onChange={handleContentChange}
-        className="w-full p-2 mb-2 border rounded-md"
-        rows={4}
-      />
+    <div>
+      <TextField label="Заголовок" value={title} onChange={handleTitleChange} fullWidth margin="normal" />
+      <TextField label="Текст нотатки" value={text} onChange={handleContentChange} multiline rows={4} fullWidth margin="normal" />
       <div className="flex justify-end">
         <button onClick={handleSave} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
           Зберегти

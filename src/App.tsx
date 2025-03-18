@@ -1,10 +1,10 @@
 import "@fontsource/roboto/index.css";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { MobileNavigation, Navigation } from "./components/Navigation";
+import { SearchPage } from "./pages/SearchPage";
 import { NotesPage } from "./pages/NotesPage";
-import { TaskPage } from "./pages/TaskPage";
-import { NotificationsPage } from "./pages/NotificationsPage";
-// import { TrashPage } from "./pages/TrashPage";
+import { ArchivePage } from "./pages/ArchivePage";
+import { TrashPage } from "./pages/TrashPage";
 import { SettingsPage } from "./pages/SettingsPage";
 
 export const App = () => {
@@ -15,10 +15,10 @@ export const App = () => {
         <main className="flex-1 py-3 px-3 overflow-y-auto">
           <Routes>
             <Route path="/" element={<Navigate to="/notes" replace />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="/notes" element={<NotesPage />} />
-            <Route path="/tasks" element={<TaskPage />} />
-            <Route path="/search" element={<NotificationsPage />} />
-            {/* <Route path="/trash" element={<TrashPage />} /> */}
+            <Route path="/archive" element={<ArchivePage />} />
+            <Route path="/trash" element={<TrashPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>
         </main>
