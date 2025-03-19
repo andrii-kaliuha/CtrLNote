@@ -1,27 +1,21 @@
 import { useState } from "react";
 import { Switch, FormControl, MenuItem, Select, Typography } from "@mui/material";
-import { Accordion, AccordionSummary, AccordionDetails, List, ListItem, ListItemText } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-export const SettingsPage = () => {
-  return (
-    <section className="flex-1">
-      <Settings />
-    </section>
-  );
-};
+export const SettingsPage = () => (
+  <section className="flex-1">
+    <Settings />
+  </section>
+);
 
 const Settings = () => {
   const [dateFormat, setDateFormat] = useState("DD/MM/YYYY");
   const [timeFormat, setTimeFormat] = useState("24_hour");
   const [theme, setTheme] = useState("light");
-  const [appColor, setAppColor] = useState("blue");
   const [language, setLanguage] = useState("ukrainian");
   const [trash, toogleTrash] = useState(true);
-  const [notifications, toogleNotifications] = useState(true);
 
   return (
-    <ul className="flex flex-col gap-3 mx-6">
+    <ul className="flex flex-col gap-3">
       <Setting
         title="Формат дати"
         value={dateFormat}
@@ -51,18 +45,6 @@ const Settings = () => {
         ]}
       />
       <Setting
-        title="Основний колір інтерфейсу"
-        value={appColor}
-        function={setAppColor}
-        options={[
-          { name: "Синій", value: "blue" },
-          { name: "Червоний", value: "red" },
-          { name: "Жовтий", value: "yellow" },
-          { name: "Зелений", value: "green" },
-          { name: "Фіолетовий", value: "purple" },
-        ]}
-      />
-      <Setting
         title="Мова"
         value={language}
         function={setLanguage}
@@ -73,37 +55,19 @@ const Settings = () => {
         ]}
       />
       <li>
-        <ShortcutsList />
-      </li>
-      <li>
         <div className="flex items-center justify-between w-full">
           <p>Увімкнути Кошик</p>
           <Switch checked={trash} onChange={(e) => toogleTrash(e.target.checked)} />
-        </div>
-      </li>
-      <li>
-        <div className="flex items-center justify-between w-full">
-          <p>Увімкнути Сповіщення</p>
-          <Switch checked={notifications} onChange={(e) => toogleNotifications(e.target.checked)} />
         </div>
       </li>
     </ul>
   );
 };
 
-interface Option {
-  value: string;
-  name: string;
-}
+type Option = { value: string; name: string };
+type SettingProps = { title: string; value: string; options: Option[]; function: (value: string) => void };
 
-interface LiProps {
-  title: string;
-  value: string;
-  options: Option[];
-  function: (value: string) => void;
-}
-
-const Setting = ({ title, value, options, function: handleChange }: LiProps) => {
+const Setting = ({ title, value, options, function: handleChange }: SettingProps) => {
   return (
     <li>
       <FormControl sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
@@ -117,38 +81,5 @@ const Setting = ({ title, value, options, function: handleChange }: LiProps) => 
         </Select>
       </FormControl>
     </li>
-  );
-};
-
-const shortcuts = [
-  { label: "Перейти до наступної або попередньої нотатки", keys: "J / K" },
-  { label: "Перемістити нотатку в наступну або попередню позицію", keys: "Shift + J / K" },
-  { label: "Перейти до наступного чи попереднього елемента списку", keys: "P / N" },
-  { label: "Перемістити пункт списку в наступну або попередню позицію", keys: "Shift + P / N" },
-  { label: "Створити нотатку", keys: "C" },
-  { label: "Шукати в нотатках", keys: "/" },
-  { label: "Вибрати всі нотатки", keys: "Ctrl + A" },
-  { label: "Відкрити довідку", keys: "? / Ctrl + /" },
-  { label: "Заархівувати нотатку", keys: "E" },
-  { label: "Перемістити нотатку в кошик", keys: "#" },
-  { label: "Закріпити або відкріпити нотатку", keys: "F" },
-];
-
-const ShortcutsList = () => {
-  return (
-    <Accordion sx={{ boxShadow: "none", padding: 0 }}>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ padding: 0 }}>
-        <Typography>Переглянути комбінації клавіш</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <List>
-          {shortcuts.map((item, index) => (
-            <ListItem key={index}>
-              <ListItemText primary={item.label} secondary={item.keys} />
-            </ListItem>
-          ))}
-        </List>
-      </AccordionDetails>
-    </Accordion>
   );
 };

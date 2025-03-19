@@ -2,15 +2,31 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import notesList from "../../notes.json";
 import { v4 as uuidv4 } from "uuid";
 
-type Note = { id: string; title: string; text: string; date: number; status: string };
-type NotesState = { notes: Note[]; pinnedNotes: Note[]; deletedNotes: Note[]; title: string; text: string; editedNoteId: string | null };
+export type Note = { id: string; title: string; text: string; date: number; status: string; originalStatus?: string };
+type NotesState = {
+  notes: Note[];
+  pinnedNotes: Note[];
+  deletedNotes: Note[];
+  archivedNotes: Note[];
+  title: string;
+  text: string;
+  editedNoteId: string | null;
+};
 
 const initialNotes = notesList.map((note) => ({
   ...note,
   date: new Date(note.date).getTime(),
 }));
 
-const initialState: NotesState = { notes: initialNotes, pinnedNotes: [], deletedNotes: [], title: "", text: "", editedNoteId: null };
+const initialState: NotesState = {
+  notes: initialNotes,
+  pinnedNotes: [],
+  deletedNotes: [],
+  archivedNotes: [],
+  title: "",
+  text: "",
+  editedNoteId: null,
+};
 
 const notesSlice = createSlice({
   name: "note",
@@ -52,18 +68,29 @@ const notesSlice = createSlice({
       state.editedNoteId = null;
     },
     moveToTrash: (state, action: PayloadAction<string>) => {
-      const noteToMove = state.notes.find((note) => note.id === action.payload) || state.pinnedNotes.find((note) => note.id === action.payload);
+      const noteToMove =
+        state.notes.find((note) => note.id === action.payload) ||
+        state.pinnedNotes.find((note) => note.id === action.payload) ||
+        state.archivedNotes.find((note) => note.id === action.payload);
 
       if (noteToMove) {
+        if (noteToMove.status === "active") {
+          noteToMove.originalStatus = "active";
+        } else if (noteToMove.status === "pinned") {
+          noteToMove.originalStatus = "pinned";
+        } else if (noteToMove.status === "archived") {
+          noteToMove.originalStatus = "archived";
+        }
+
         state.deletedNotes.push(noteToMove);
         state.notes = state.notes.filter((note) => note.id !== action.payload);
         state.pinnedNotes = state.pinnedNotes.filter((note) => note.id !== action.payload);
+        state.archivedNotes = state.archivedNotes.filter((note) => note.id !== action.payload);
       }
     },
     deleteNote: (state, action: PayloadAction<string>) => {
-      state.notes = state.notes.filter((note) => note.id !== action.payload);
-      state.pinnedNotes = state.pinnedNotes.filter((note) => note.id !== action.payload);
       state.deletedNotes = state.deletedNotes.filter((note) => note.id !== action.payload);
+      state.archivedNotes = state.archivedNotes.filter((note) => note.id !== action.payload);
     },
     pinNote: (state, action: PayloadAction<string>) => {
       const noteToPin = state.notes.find((note) => note.id === action.payload);
@@ -95,10 +122,62 @@ const notesSlice = createSlice({
     setEditedNoteId: (state, action: PayloadAction<string | null>) => {
       state.editedNoteId = action.payload;
     },
+    restoreNote: (state, action: PayloadAction<string>) => {
+      const noteToRestore = state.deletedNotes.find((note) => note.id === action.payload);
+      if (noteToRestore) {
+        if (noteToRestore.originalStatus === "active") {
+          state.notes.push(noteToRestore);
+        } else if (noteToRestore.originalStatus === "pinned") {
+          state.pinnedNotes.push(noteToRestore);
+        } else if (noteToRestore.originalStatus === "archived") {
+          state.archivedNotes.push(noteToRestore);
+        }
+
+        state.deletedNotes = state.deletedNotes.filter((note) => note.id !== action.payload);
+        noteToRestore.originalStatus = undefined;
+      }
+    },
+    clearTrash: (state) => {
+      state.deletedNotes = [];
+    },
+    archiveNote: (state, action: PayloadAction<string>) => {
+      const noteToArchive =
+        state.notes.find((note) => note.id === action.payload) || state.pinnedNotes.find((note) => note.id === action.payload);
+
+      if (noteToArchive) {
+        noteToArchive.status = "archived";
+        state.archivedNotes.push(noteToArchive);
+        state.notes = state.notes.filter((note) => note.id !== action.payload);
+        state.pinnedNotes = state.pinnedNotes.filter((note) => note.id !== action.payload);
+      }
+    },
+    unarchiveNote: (state, action: PayloadAction<string>) => {
+      const noteToUnarchive = state.archivedNotes.find((note) => note.id === action.payload);
+
+      if (noteToUnarchive) {
+        noteToUnarchive.status = "active";
+        state.notes.push(noteToUnarchive);
+        state.archivedNotes = state.archivedNotes.filter((note) => note.id !== action.payload);
+      }
+    },
   },
 });
 
-export const { addNote, editNote, deleteNote, pinNote, unpinNote, setTitle, moveToTrash, setContent, clearNote, setEditedNoteId } =
-  notesSlice.actions;
+export const {
+  addNote,
+  editNote,
+  deleteNote,
+  pinNote,
+  unpinNote,
+  setTitle,
+  moveToTrash,
+  setContent,
+  clearNote,
+  setEditedNoteId,
+  restoreNote,
+  clearTrash,
+  archiveNote,
+  unarchiveNote,
+} = notesSlice.actions;
 
 export default notesSlice.reducer;

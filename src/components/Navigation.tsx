@@ -16,10 +16,25 @@ export const Navigation = () => {
 
   return (
     <nav className="hidden md:block sticky top-0 left-0 h-screen flex-shrink-0 py-3 pl-3">
-      <List sx={{ p: 0, backgroundColor: "#faedcd", height: "100%", borderRadius: "8px", transition: "width 0.3s ease" }}>
+      <List
+        sx={{
+          width: collapsed ? 64 : 240,
+          p: 0,
+          backgroundColor: "#faedcd",
+          height: "100%",
+          borderRadius: "8px",
+          transition: "width 0.3s ease",
+        }}
+      >
         <ListItemButton
           onClick={() => setCollapsed((prev) => !prev)}
-          sx={{ py: 1.5, height: 48, borderTopRightRadius: "8px", borderTopLeftRadius: "8px" }}
+          sx={{
+            justifyContent: collapsed ? "center" : "flex-start",
+            py: 1.5,
+            height: 48,
+            borderTopRightRadius: "8px",
+            borderTopLeftRadius: "8px",
+          }}
         >
           <ListItemIcon sx={{ minWidth: "auto" }}>
             <Menu />
@@ -32,7 +47,13 @@ export const Navigation = () => {
             component={Link}
             to={path}
             key={title}
-            sx={{ py: 1.5, color: "#1976d2", height: 48, "&:hover": { backgroundColor: "#0000000a" } }}
+            sx={{
+              py: 1.5,
+              color: "#1976d2",
+              height: 48,
+              "&:hover": { backgroundColor: "#0000000a" },
+              justifyContent: collapsed ? "center" : "flex-start",
+            }}
           >
             <ListItemIcon sx={{ minWidth: "auto" }}>{icon}</ListItemIcon>
             {!collapsed && <ListItemText primary={title} sx={{ ml: 2 }} />}

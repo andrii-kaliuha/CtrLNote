@@ -1,25 +1,35 @@
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button } from "@mui/material";
-import { useState } from "react";
+import { Note as NoteType, restoreNote, clearTrash } from "../store/slices/notesSlice";
 import { Note } from "./NotesPage";
-import notes from "../notes.json";
 
 export const TrashPage = () => {
-  const [isEmpty, setIsEmpty] = useState(false);
+  const deletedNotes = useSelector((state: { note: { deletedNotes: NoteType[] } }) => state.note.deletedNotes);
+  const dispatch = useDispatch();
+
+  const handleRestoreAll = () => {
+    deletedNotes.forEach((note) => dispatch(restoreNote(note.id)));
+  };
+
+  const handleDeleteAll = () => {
+    dispatch(clearTrash());
+  };
 
   return (
     <section className="flex flex-col items-center w-full h-full">
-      {isEmpty === false ? (
+      {deletedNotes.length > 0 ? (
         <div className="flex gap-3 self-end p-3">
-          <Button variant="text" color="primary" onClick={() => setIsEmpty(true)}>
-            Відновити
+          <Button variant="text" color="primary" onClick={handleRestoreAll}>
+            Відновити все
           </Button>
-          <Button variant="text" color="primary" onClick={() => setIsEmpty(true)}>
+          <Button variant="text" color="primary" onClick={handleDeleteAll}>
             Видалити все
           </Button>
         </div>
       ) : null}
-      {isEmpty ? <EmptyTrash /> : <Trash />}
+      {deletedNotes.length === 0 ? <EmptyTrash /> : <Trash notes={deletedNotes} />}
     </section>
   );
 };
@@ -32,10 +42,14 @@ const EmptyTrash = () => (
   </div>
 );
 
-const Trash = () => (
+interface TrashProps {
+  notes: NoteType[];
+}
+
+const Trash: React.FC<TrashProps> = ({ notes }) => (
   <ul className="columns-1 sm:columns-2 lg:columns-3 gap-3 w-full">
     {notes.map((note) => (
-      <Note key={note.id} {...note} />
+      <Note key={note.id} {...note} notes={notes} isTrash={true} />
     ))}
   </ul>
 );
