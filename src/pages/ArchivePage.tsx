@@ -6,7 +6,7 @@ import { Note } from "./NotesPage";
 import { RootState } from "../store/store";
 
 export const ArchivePage = () => {
-  const archivedNotes = useSelector((state: RootState) => state.note.archivedNotes);
+  const archivedNotes = useSelector((state: RootState) => state.notes.archivedNotes);
 
   return (
     <section className="flex flex-col items-center w-full h-full">
@@ -30,7 +30,7 @@ interface ArchiveProps {
 
 const Archive: React.FC<ArchiveProps> = ({ archivedNotes }) => {
   return (
-    <ul className="columns-1 sm:columns-2 lg:columns-3 gap-3 px-3 w-full">
+    <ul className="columns-1 sm:columns-2 lg:columns-3 gap-3 w-full">
       {archivedNotes.map((note) => (
         <li key={note.id} className="break-inside-avoid">
           <Note key={note.id} {...note} />

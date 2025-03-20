@@ -4,9 +4,9 @@ import { Menu, StickyNote2Outlined, ArchiveOutlined, Delete, Settings, Search } 
 import { useState } from "react";
 
 const navItems = [
-  { title: "Пошук", path: "/search", icon: <Search /> },
   { title: "Нотатки", path: "/notes", icon: <StickyNote2Outlined /> },
   { title: "Архів", path: "/archive", icon: <ArchiveOutlined /> },
+  { title: "Пошук", path: "/search", icon: <Search /> },
   { title: "Кошик", path: "/trash", icon: <Delete /> },
   { title: "Налаштування", path: "/settings", icon: <Settings /> },
 ];

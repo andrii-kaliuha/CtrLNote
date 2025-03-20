@@ -28,7 +28,7 @@ type MenuButtonProps = { title: string; onClick: () => void; action: () => void 
 type NoteEditorProps = { closeModal: () => void };
 
 export const NotesPage = () => {
-  const { notes, pinnedNotes } = useSelector((state: RootState) => state.note);
+  const { notes, pinnedNotes } = useSelector((state: RootState) => state.notes);
 
   return (
     <section className="flex flex-col w-full">
@@ -38,7 +38,7 @@ export const NotesPage = () => {
   );
 };
 
-const Notes: React.FC<NotesProps> = ({ title, notes }) => {
+export const Notes: React.FC<NotesProps> = ({ title, notes }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
 
@@ -214,7 +214,7 @@ const MenuButton: React.FC<MenuButtonProps> = ({ title, onClick, action }) => {
 };
 
 export const NoteEditor: React.FC<NoteEditorProps> = ({ closeModal }) => {
-  const { title, text, editedNoteId, notes, pinnedNotes } = useSelector((state: RootState) => state.note);
+  const { title, text, editedNoteId, notes, pinnedNotes } = useSelector((state: RootState) => state.notes);
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
 

@@ -11,6 +11,8 @@ type NotesState = {
   title: string;
   text: string;
   editedNoteId: string | null;
+  searchQuery: string;
+  searchHistory: string[];
 };
 
 const initialNotes = notesList.map((note) => ({
@@ -26,6 +28,8 @@ const initialState: NotesState = {
   title: "",
   text: "",
   editedNoteId: null,
+  searchQuery: "",
+  searchHistory: [],
 };
 
 const notesSlice = createSlice({
@@ -160,6 +164,14 @@ const notesSlice = createSlice({
         state.archivedNotes = state.archivedNotes.filter((note) => note.id !== action.payload);
       }
     },
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.searchQuery = action.payload;
+    },
+    addSearchQueryToHistory: (state, action: PayloadAction<string>) => {
+      if (!state.searchHistory.includes(action.payload)) {
+        state.searchHistory.push(action.payload);
+      }
+    },
   },
 });
 
@@ -178,6 +190,8 @@ export const {
   clearTrash,
   archiveNote,
   unarchiveNote,
+  setSearchQuery,
+  addSearchQueryToHistory,
 } = notesSlice.actions;
 
 export default notesSlice.reducer;
