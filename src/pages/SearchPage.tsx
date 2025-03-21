@@ -54,8 +54,8 @@ export const SearchPage = () => {
       <div>
         <h2>Результати пошуку</h2>
         <ul className="columns-1 md:columns-2 lg:columns-3 gap-3 w-full">
-          {filteredNotes.map((note) => (
-            <Note key={note.id} {...note} />
+          {filteredNotes.map((note, index) => (
+            <Note key={note.id} {...note} index={index} notes={filteredNotes} />
           ))}
         </ul>
       </div>

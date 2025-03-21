@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { IconButton, Menu, MenuItem, Modal, Box, TextField } from "@mui/material";
@@ -19,7 +19,11 @@ import {
   archiveNote,
   unarchiveNote,
   Note as NoteType,
+  reorderNotes,
 } from "../store/slices/notesSlice";
+import { Select, FormControl, InputLabel } from "@mui/material";
+import { DndProvider, useDrag, useDrop } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 type NotesProps = { title: string; notes: NoteProps[] };
 type NoteProps = NoteType & { notes?: NoteType[]; isTrash?: boolean };
@@ -28,19 +32,27 @@ type MenuButtonProps = { title: string; onClick: () => void; action: () => void 
 type NoteEditorProps = { closeModal: () => void };
 
 export const NotesPage = () => {
-  const { notes, pinnedNotes } = useSelector((state: RootState) => state.notes);
+  const { pinnedNotes, notes: allNotes } = useSelector((state: RootState) => state.notes);
 
   return (
-    <section className="flex flex-col w-full">
-      {pinnedNotes.length > 0 && <Notes title="Закріплені" notes={pinnedNotes} />}
-      <Notes title="Нотатки" notes={notes} />
-    </section>
+    <DndProvider backend={HTML5Backend}>
+      <section className="flex flex-col w-full">
+        {pinnedNotes.length > 0 && <Notes title="Закріплені" notes={pinnedNotes} />}
+        <Notes title="Нотатки" notes={allNotes} />
+      </section>
+    </DndProvider>
   );
 };
 
-export const Notes: React.FC<NotesProps> = ({ title, notes }) => {
+export const Notes: React.FC<NotesProps> = ({ title, notes: initialNotes }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const [sortOption, setSortOption] = useState<"titleAsc" | "titleDesc" | "dateAsc" | "dateDesc">("dateDesc");
+  const [sortedNotes, setSortedNotes] = useState(initialNotes);
+
+  useEffect(() => {
+    setSortedNotes(initialNotes);
+  }, [initialNotes]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -49,19 +61,57 @@ export const Notes: React.FC<NotesProps> = ({ title, notes }) => {
 
   const handleCloseModal = () => setIsModalOpen(false);
 
+  const handleSortChange = (event: any) => {
+    const value = event.target.value;
+    setSortOption(value);
+
+    let newSortedNotes = [...sortedNotes];
+
+    switch (value) {
+      case "titleAsc":
+        newSortedNotes.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case "titleDesc":
+        newSortedNotes.sort((a, b) => b.title.localeCompare(a.title));
+        break;
+      case "dateAsc":
+        newSortedNotes.sort((a, b) => a.date - b.date);
+        break;
+      case "dateDesc":
+        newSortedNotes.sort((a, b) => b.date - a.date);
+        break;
+      default:
+        break;
+    }
+
+    setSortedNotes(newSortedNotes);
+  };
+
   return (
     <>
-      <h2 className="p-3">{title}</h2>
+      <div className="p-3 flex justify-between items-center">
+        <h2 className="p-0">{title}</h2>
+        <FormControl variant="outlined" style={{ minWidth: 120 }}>
+          <InputLabel id="sort-select-label">Сортувати</InputLabel>
+          <Select labelId="sort-select-label" id="sort-select" value={sortOption} onChange={handleSortChange} label="Сортувати">
+            <MenuItem value={"titleAsc"}>Назва (А-Я)</MenuItem>
+            <MenuItem value={"titleDesc"}>Назва (Я-А)</MenuItem>
+            <MenuItem value={"dateAsc"}>Дата (Старі-Нові)</MenuItem>
+            <MenuItem value={"dateDesc"}>Дата (Нові-Старі)</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
       <ul className="columns-1 md:columns-2 lg:columns-3 gap-3 w-full">
+        {/* <ul className="grid grid-cols-3 gap-3 w-full"> */}
         {title === "Нотатки" && (
-          <li className="break-inside-avoid w-full h-[112px] mb-3 p-3 rounded-lg relative bg-[#faedcd] flex justify-center items-center">
+          <li className="break-inside-avoid aspect-[12/5] mb-3 p-3 rounded-lg relative bg-[#faedcd] flex justify-center items-center">
             <IconButton onClick={handleOpenModal}>
               <AddIcon style={{ width: "48px", height: "48px" }} />
             </IconButton>
           </li>
         )}
-        {notes.map((note) => (
-          <Note key={note.id} {...note} />
+        {sortedNotes.map((note, index) => (
+          <Note key={note.id} {...note} index={index} notes={sortedNotes} />
         ))}
       </ul>
       <Modal open={isModalOpen} onClose={handleCloseModal}>
@@ -84,10 +134,16 @@ export const Notes: React.FC<NotesProps> = ({ title, notes }) => {
   );
 };
 
-export const Note: React.FC<NoteProps> = ({ id, title, text, date, status, isTrash }) => {
+interface NoteItemProps extends NoteProps {
+  index: number;
+  notes: NoteType[];
+}
+
+export const Note: React.FC<NoteItemProps> = ({ id, title, text, date, status, isTrash, index }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const ref = useRef<HTMLLIElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
@@ -148,8 +204,54 @@ export const Note: React.FC<NoteProps> = ({ id, title, text, date, status, isTra
     return noteOperations[status];
   }, [status, noteOperations, isTrash]);
 
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "note",
+    item: { id, index },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
+  }));
+
+  const [, drop] = useDrop(() => ({
+    accept: "note",
+    hover: (item: any, monitor) => {
+      if (!ref.current) {
+        return;
+      }
+      const dragIndex = item.index;
+      const hoverIndex = index;
+
+      if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset();
+      const hoverClientY = clientOffset ? clientOffset.y - hoverBoundingRect.top : 0;
+
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return;
+      }
+
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return;
+      }
+      dispatch(reorderNotes({ dragIndex, hoverIndex }));
+      item.index = hoverIndex;
+    },
+  }));
+
+  drag(drop(ref));
+
   return (
-    <li className="break-inside-avoid inline-block w-full mb-3 p-3 rounded-lg relative bg-[#faedcd]">
+    <li
+      ref={ref}
+      className={`break-inside-avoid inline-block w-full mb-3 p-3 rounded-lg relative bg-[#faedcd] ${
+        isDragging ? "opacity-50" : "opacity-100"
+      }`}
+      // className={`mb-3 p-3 rounded-lg relative bg-[#faedcd] ${isDragging ? "opacity-50" : "opacity-100"}`}
+    >
       <div className="flex justify-between items-start">
         <h4 className="font-bold">{title}</h4>
       </div>

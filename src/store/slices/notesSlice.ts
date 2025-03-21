@@ -172,6 +172,38 @@ const notesSlice = createSlice({
         state.searchHistory.push(action.payload);
       }
     },
+    sortNotesByTitleAsc: (state) => {
+      state.notes.sort((a, b) => a.title.localeCompare(b.title, "uk", { sensitivity: "base" }));
+      state.pinnedNotes.sort((a, b) => a.title.localeCompare(b.title, "uk", { sensitivity: "base" }));
+      state.archivedNotes.sort((a, b) => a.title.localeCompare(b.title, "uk", { sensitivity: "base" }));
+      state.deletedNotes.sort((a, b) => a.title.localeCompare(b.title, "uk", { sensitivity: "base" }));
+    },
+    sortNotesByTitleDesc: (state) => {
+      state.notes.sort((a, b) => b.title.localeCompare(a.title, "uk", { sensitivity: "base" }));
+      state.pinnedNotes.sort((a, b) => b.title.localeCompare(a.title, "uk", { sensitivity: "base" }));
+      state.archivedNotes.sort((a, b) => b.title.localeCompare(a.title, "uk", { sensitivity: "base" }));
+      state.deletedNotes.sort((a, b) => b.title.localeCompare(a.title, "uk", { sensitivity: "base" }));
+    },
+    sortNotesByDateAsc: (state) => {
+      state.notes.sort((a, b) => a.date - b.date);
+      state.pinnedNotes.sort((a, b) => a.date - b.date);
+      state.archivedNotes.sort((a, b) => a.date - b.date);
+      state.deletedNotes.sort((a, b) => a.date - b.date);
+    },
+    sortNotesByDateDesc: (state) => {
+      state.notes.sort((a, b) => b.date - a.date);
+      state.pinnedNotes.sort((a, b) => b.date - a.date);
+      state.archivedNotes.sort((a, b) => b.date - a.date);
+      state.deletedNotes.sort((a, b) => b.date - a.date);
+    },
+    reorderNotes: (state, action: PayloadAction<{ dragIndex: number; hoverIndex: number }>) => {
+      const { dragIndex, hoverIndex } = action.payload;
+      const notes = state.notes;
+      const draggedNote = notes[dragIndex];
+
+      notes.splice(dragIndex, 1);
+      notes.splice(hoverIndex, 0, draggedNote);
+    },
   },
 });
 
@@ -192,6 +224,11 @@ export const {
   unarchiveNote,
   setSearchQuery,
   addSearchQueryToHistory,
+  sortNotesByTitleAsc,
+  sortNotesByTitleDesc,
+  sortNotesByDateAsc,
+  sortNotesByDateDesc,
+  reorderNotes,
 } = notesSlice.actions;
 
 export default notesSlice.reducer;
