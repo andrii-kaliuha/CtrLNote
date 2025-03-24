@@ -9,7 +9,7 @@ import {
   selectSearchHistory,
 } from "../store/notesSelectors";
 import { setSearchQuery, addSearchQueryToHistory } from "../store/slices/notesSlice";
-import { Note } from "./NotesPage";
+import { Note } from "../components/Note";
 
 export const SearchPage = () => {
   const notes = useSelector(selectNotes);
@@ -53,9 +53,9 @@ export const SearchPage = () => {
 
       <div>
         <h2>Результати пошуку</h2>
-        <ul className="columns-1 md:columns-2 lg:columns-3 gap-3 w-full">
-          {filteredNotes.map((note, index) => (
-            <Note key={note.id} {...note} index={index} notes={filteredNotes} />
+        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          {filteredNotes.map((note) => (
+            <Note key={note.id} {...note} notes={filteredNotes} />
           ))}
         </ul>
       </div>

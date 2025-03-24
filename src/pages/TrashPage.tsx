@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button } from "@mui/material";
 import { Note as NoteType, restoreNote, clearTrash } from "../store/slices/notesSlice";
-import { Note } from "./NotesPage";
+import { Note } from "../components/Note";
 import { selectDeletedNotes } from "../store/notesSelectors";
 
 export const TrashPage = () => {
@@ -40,7 +40,7 @@ const EmptyTrash = () => (
 type TrashProps = { notes: NoteType[] };
 
 const Trash: React.FC<TrashProps> = ({ notes }) => (
-  <ul className="columns-1 sm:columns-2 lg:columns-3 gap-3 w-full">
+  <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
     {notes.map((note) => (
       <Note key={note.id} {...note} notes={notes} isTrash={true} />
     ))}

@@ -1,37 +1,73 @@
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../store/store";
-import { setTitle, setContent, clearNote, addNote } from "../store/slices/notesSlice";
-import { Button } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { addNote, clearNote, editNote, setContent, setTitle } from "../store/slices/notesSlice";
+import { Box, Modal, TextField } from "@mui/material";
 
-export function NoteEditor() {
-  const dispatch = useDispatch<AppDispatch>();
-  const { title, text } = useSelector((state: RootState) => state.note);
+type NoteEditorProps = { state: boolean; closeModal: () => void };
+
+export const NoteEditor: React.FC<NoteEditorProps> = ({ state, closeModal }) => {
+  const { title, text, editedNoteId, notes, pinnedNotes } = useSelector((state: RootState) => state.notes);
+  const dispatch = useDispatch();
+  const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    setIsEditing(title || text ? true : false);
+  }, [title, text]);
+
+  const titleChange = (e: React.ChangeEvent<HTMLInputElement>) => dispatch(setTitle(e.target.value));
+  const textChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => dispatch(setContent(e.target.value));
+  const saveNote = () => {
+    if (isEditing && editedNoteId) {
+      const noteToEdit = [...notes, ...pinnedNotes].find((note) => note.id === editedNoteId);
+      if (noteToEdit) {
+        dispatch(
+          editNote({
+            id: editedNoteId,
+            title,
+            text,
+            date: noteToEdit.date,
+            status: noteToEdit.status,
+          })
+        );
+      }
+    } else {
+      dispatch(addNote());
+    }
+    dispatch(clearNote());
+    closeModal();
+  };
+
+  const cancelNote = () => {
+    dispatch(clearNote());
+    closeModal();
+  };
 
   return (
-    <div className="relative flex flex-col h-[300px] rounded-xl shadow-lg bg-[#faedcd] p-3">
-      <input
-        type="text"
-        className="w-full p-3 text-lg font-bold focus:outline-none"
-        placeholder="Заголовок"
-        name="noteTitle"
-        value={title}
-        onChange={(e) => dispatch(setTitle(e.target.value))}
-      />
-      <textarea
-        className="flex-1 w-full resize-none px-3 pb-3 focus:outline-none"
-        placeholder="Введіть текст нотатки..."
-        name="noteDescription"
-        value={text}
-        onChange={(e) => dispatch(setContent(e.target.value))}
-      />
-      <div className="absolute bottom-3 right-3 flex gap-2">
-        <Button variant="text" color="primary" onClick={() => dispatch(clearNote())}>
-          Очистити
-        </Button>
-        <Button variant="text" color="primary" onClick={() => dispatch(addNote())}>
-          Додати
-        </Button>
-      </div>
-    </div>
+    <Modal open={state} onClose={closeModal}>
+      <Box
+        sx={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: 400,
+          bgcolor: "background.paper",
+          boxShadow: 24,
+          p: 4,
+        }}
+      >
+        <TextField label="Заголовок" value={title} onChange={titleChange} fullWidth margin="normal" />
+        <TextField label="Текст нотатки" value={text} onChange={textChange} multiline rows={4} fullWidth margin="normal" />
+        <div className="flex justify-end">
+          <button onClick={saveNote} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+            Зберегти
+          </button>
+          <button onClick={cancelNote} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+            Скасувати
+          </button>
+        </div>
+      </Box>
+    </Modal>
   );
-}
+};

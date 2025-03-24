@@ -15,15 +15,10 @@ type NotesState = {
   searchHistory: string[];
 };
 
-const initialNotes = notesList.map((note) => ({
-  ...note,
-  date: new Date(note.date).getTime(),
-}));
-
 const initialState: NotesState = {
-  notes: initialNotes,
-  pinnedNotes: [],
-  deletedNotes: [],
+  notes: notesList,
+  pinnedNotes: notesList,
+  deletedNotes: notesList,
   archivedNotes: [],
   title: "",
   text: "",
@@ -94,7 +89,6 @@ const notesSlice = createSlice({
     },
     deleteNote: (state, action: PayloadAction<string>) => {
       state.deletedNotes = state.deletedNotes.filter((note) => note.id !== action.payload);
-      state.archivedNotes = state.archivedNotes.filter((note) => note.id !== action.payload);
     },
     pinNote: (state, action: PayloadAction<string>) => {
       const noteToPin = state.notes.find((note) => note.id === action.payload);

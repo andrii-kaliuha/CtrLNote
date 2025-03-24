@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import { Note as NoteType } from "../store/slices/notesSlice";
-import { Note } from "./NotesPage";
+import { Note } from "../components/Note";
 import { RootState } from "../store/store";
 
 export const ArchivePage = () => {
@@ -30,11 +30,9 @@ interface ArchiveProps {
 
 const Archive: React.FC<ArchiveProps> = ({ archivedNotes }) => {
   return (
-    <ul className="columns-1 sm:columns-2 lg:columns-3 gap-3 w-full">
+    <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
       {archivedNotes.map((note) => (
-        <li key={note.id} className="break-inside-avoid">
-          <Note key={note.id} {...note} />
-        </li>
+        <Note key={note.id} {...note} />
       ))}
     </ul>
   );
