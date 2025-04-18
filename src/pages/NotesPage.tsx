@@ -6,7 +6,8 @@ export const NotesPage = () => {
   const { pinnedNotes, notes: allNotes } = useSelector((state: RootState) => state.notes);
 
   return (
-    <section className="flex flex-col w-full">
+    // <section className="flex flex-col w-full">
+    <section>
       {pinnedNotes.length > 0 && <Notes title="Закріплені" notes={pinnedNotes} />}
       <Notes title="Нотатки" notes={allNotes} />
     </section>

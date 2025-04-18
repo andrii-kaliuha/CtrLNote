@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectNotes,
@@ -10,6 +10,8 @@ import {
 } from "../store/notesSelectors";
 import { setSearchQuery, addSearchQueryToHistory } from "../store/slices/notesSlice";
 import { Note } from "../components/Note";
+import SearchIcon from "@mui/icons-material/Search";
+import HistoryIcon from "@mui/icons-material/History";
 
 export const SearchPage = () => {
   const notes = useSelector(selectNotes);
@@ -26,7 +28,7 @@ export const SearchPage = () => {
     dispatch(addSearchQueryToHistory(searchValue));
   };
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (event: any) => {
     setSearchValue(event.target.value);
   };
 
@@ -45,28 +47,48 @@ export const SearchPage = () => {
   }, [allNotes, searchQuery]);
 
   return (
-    <section>
-      <div className="flex">
-        <input type="text" value={searchValue} onChange={handleSearchChange} placeholder="Пошук нотаток..." />
-        <button onClick={handleSearch}>Пошук</button>
+    <section className="p-4">
+      <div className="relative flex items-center mb-4">
+        <SearchIcon className="absolute left-3 text-gray-500" />
+        <input
+          type="text"
+          value={searchValue}
+          onChange={handleSearchChange}
+          placeholder="Пошук нотаток..."
+          className="w-full pl-10 pr-4 py-2 rounded-full bg-gray-100 focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none"
+        />
+        <button onClick={handleSearch} className="ml-3 px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
+          Пошук
+        </button>
       </div>
 
-      <div>
-        <h2>Результати пошуку</h2>
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {filteredNotes.map((note) => (
-            <Note key={note.id} {...note} notes={filteredNotes} />
-          ))}
-        </ul>
-      </div>
+      {searchHistory.length > 0 && (
+        <div className="mb-4">
+          <h2 className="text-lg font-semibold mb-2">Історія пошуку</h2>
+          <div className="flex gap-2 flex-wrap">
+            {searchHistory.map((query, index) => (
+              <span
+                key={index}
+                className="flex items-center gap-1 px-3 py-1 bg-gray-200 rounded-full text-sm cursor-pointer hover:bg-gray-300 transition"
+              >
+                <HistoryIcon className="text-gray-600" /> {query}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div>
-        <h2>Історія пошуку</h2>
-        <ul>
-          {searchHistory.map((query, index) => (
-            <li key={index}>{query}</li>
-          ))}
-        </ul>
+        <h2 className="text-lg font-semibold mb-2">Результати пошуку</h2>
+        {filteredNotes.length > 0 ? (
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {filteredNotes.map((note) => (
+              <Note key={note.id} {...note} notes={filteredNotes} />
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500">Нічого не знайдено</p>
+        )}
       </div>
     </section>
   );

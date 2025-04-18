@@ -32,7 +32,7 @@ export const TrashPage = () => {
 const EmptyTrash = () => (
   <div className="flex flex-col items-center justify-center h-full">
     <DeleteIcon sx={{ fontSize: 128 }} />
-    <p>У кошику немає жодних нотаток чи завдань</p>
+    <p>У кошику немає жодних нотаток</p>
     <p>Видалені нотатки автоматично зникнуть через 7 днів</p>
   </div>
 );

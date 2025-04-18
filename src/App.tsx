@@ -10,7 +10,7 @@ import { SettingsPage } from "./pages/SettingsPage";
 export const App = () => {
   return (
     <Router>
-      <div className="relative flex-col flex md:flex-row max-w-[1280px] w-full min-h-screen">
+      <div className="relative flex-col flex md:flex-row max-w-[1280px] w-full min-h-screen mx-auto">
         <Navigation />
         <main className="flex-1 py-3 px-3 overflow-y-auto">
           <Routes>
