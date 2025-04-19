@@ -3,6 +3,7 @@ import notesList from "../../notes.json";
 import { v4 as uuidv4 } from "uuid";
 
 export type Note = { id: string; title: string; text: string; date: number; status: string; originalStatus?: string };
+
 type NotesState = {
   notes: Note[];
   pinnedNotes: Note[];
@@ -17,8 +18,8 @@ type NotesState = {
 
 const initialState: NotesState = {
   notes: notesList,
-  pinnedNotes: notesList,
-  deletedNotes: notesList,
+  pinnedNotes: [],
+  deletedNotes: [],
   archivedNotes: [],
   title: "",
   text: "",
@@ -190,14 +191,6 @@ const notesSlice = createSlice({
       state.archivedNotes.sort((a, b) => b.date - a.date);
       state.deletedNotes.sort((a, b) => b.date - a.date);
     },
-    reorderNotes: (state, action: PayloadAction<{ dragIndex: number; hoverIndex: number }>) => {
-      const { dragIndex, hoverIndex } = action.payload;
-      const notes = state.notes;
-      const draggedNote = notes[dragIndex];
-
-      notes.splice(dragIndex, 1);
-      notes.splice(hoverIndex, 0, draggedNote);
-    },
   },
 });
 
@@ -222,7 +215,6 @@ export const {
   sortNotesByTitleDesc,
   sortNotesByDateAsc,
   sortNotesByDateDesc,
-  reorderNotes,
 } = notesSlice.actions;
 
 export default notesSlice.reducer;

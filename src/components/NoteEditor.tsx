@@ -21,15 +21,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ state, closeModal }) => 
     if (isEditing && editedNoteId) {
       const noteToEdit = [...notes, ...pinnedNotes].find((note) => note.id === editedNoteId);
       if (noteToEdit) {
-        dispatch(
-          editNote({
-            id: editedNoteId,
-            title,
-            text,
-            date: noteToEdit.date,
-            status: noteToEdit.status,
-          })
-        );
+        dispatch(editNote({ id: editedNoteId, title, text, date: noteToEdit.date, status: noteToEdit.status }));
       }
     } else {
       dispatch(addNote());
@@ -54,7 +46,8 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ state, closeModal }) => 
           width: 400,
           bgcolor: "background.paper",
           boxShadow: 24,
-          p: 4,
+          padding: 3,
+          borderRadius: "8px",
         }}
       >
         <TextField label="Заголовок" value={title} onChange={titleChange} fullWidth margin="normal" />

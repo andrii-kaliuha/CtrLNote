@@ -26,13 +26,9 @@ export const Notes: React.FC<NotesProps> = ({ title, notes: initialNotes }) => {
 
   const handleCloseModal = () => setIsModalOpen(false);
 
-  const handleSortChange = (event: SelectChangeEvent<string>) => {
-    setSortOption(event.target.value as "title" | "date");
-  };
+  const handleSortChange = (event: SelectChangeEvent<string>) => setSortOption(event.target.value as "title" | "date");
 
-  const toggleSortDirection = () => {
-    setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
-  };
+  const toggleSortDirection = () => setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
 
   const sortNotes = () => {
     let newSortedNotes = [...initialNotes];
@@ -71,22 +67,10 @@ export const Notes: React.FC<NotesProps> = ({ title, notes: initialNotes }) => {
                 </Box>
               )}
               sx={{
-                "& .MuiOutlinedInput-root": {
-                  padding: "0 !important",
-                  minHeight: "unset",
-                },
-                "& .MuiSelect-select": {
-                  padding: "0 12px !important",
-                  display: "flex",
-                  alignItems: "center",
-                },
-                "& .MuiSelect-icon": {
-                  display: "none",
-                },
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-
+                "& .MuiOutlinedInput-root": { padding: "0 !important", minHeight: "unset" },
+                "& .MuiSelect-select": { padding: "0 12px !important", display: "flex", alignItems: "center" },
+                "& .MuiSelect-icon": { display: "none" },
+                "& .MuiOutlinedInput-notchedOutline": { border: "none" },
                 cursor: "pointer",
               }}
             >
@@ -102,7 +86,7 @@ export const Notes: React.FC<NotesProps> = ({ title, notes: initialNotes }) => {
       </div>
       <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {title === "Нотатки" && (
-          <li className="p-3 rounded-lg relative bg-[#faedcd] flex justify-center items-center">
+          <li className="p-3 rounded-lg relative bg-surface flex justify-center items-center">
             <IconButton onClick={handleOpenModal}>
               <Add style={{ width: "48px", height: "48px" }} />
             </IconButton>

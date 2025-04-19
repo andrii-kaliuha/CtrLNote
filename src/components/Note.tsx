@@ -1,8 +1,5 @@
-import React, { useState, useMemo } from "react";
+// hooks/useNoteActions.ts
 import { useDispatch } from "react-redux";
-import { IconButton, Menu, MenuItem } from "@mui/material";
-import MoreVert from "@mui/icons-material/MoreVert";
-import { NoteEditor } from "../components/NoteEditor";
 import {
   pinNote,
   setEditedNoteId,
@@ -15,123 +12,138 @@ import {
   restoreNote,
   archiveNote,
   unarchiveNote,
-  Note as NoteType,
 } from "../store/slices/notesSlice";
 
-export type NoteProps = NoteType & { notes?: NoteType[]; isTrash?: boolean };
-type NoteOperation = { title: string; action: () => void };
-type MoreVertItemProps = { title: string; onClick: () => void; action: () => void };
+export const useNoteActions = () => {
+  const dispatch = useDispatch();
+
+  return {
+    editNote: (id: string, title: string, content: string) => {
+      dispatch(setTitle(title));
+      dispatch(setContent(content));
+      dispatch(setEditedNoteId(id));
+    },
+    clear: () => dispatch(clearNote()),
+    pin: (id: string) => dispatch(pinNote(id)),
+    unpin: (id: string) => dispatch(unpinNote(id)),
+    moveToTrash: (id: string) => dispatch(moveToTrash(id)),
+    delete: (id: string) => dispatch(deleteNote(id)),
+    restore: (id: string) => dispatch(restoreNote(id)),
+    archive: (id: string) => dispatch(archiveNote(id)),
+    unarchive: (id: string) => dispatch(unarchiveNote(id)),
+  };
+};
+
+// utils/formatDate.ts
+export const formatDate = (date: number | string): string => {
+  if (typeof date === "number") {
+    return new Date(date).toLocaleDateString();
+  }
+  return date;
+};
+
+// components/NoteActionItem.tsx
+import { MenuItem } from "@mui/material";
+
+type NoteActionItemProps = { title: string; onClick: () => void; action: () => void };
+
+export const NoteActionItem: React.FC<NoteActionItemProps> = ({ title, onClick, action }) => {
+  const handleClick = () => {
+    onClick();
+    action();
+  };
+
+  return <MenuItem onClick={handleClick}>{title}</MenuItem>;
+};
+
+// components/Note.tsx
+import { useState } from "react";
+import { IconButton, Menu } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { NoteEditor } from "./NoteEditor";
+// import { useNoteActions } from "../hooks/useNoteActions";
+// import { NoteActionItem } from "./NoteActionItem";
+// import { formatDate } from "../utils/formatDate";
+import { Note as NoteType } from "../store/slices/notesSlice";
+
+export type NoteProps = NoteType & { isTrash?: boolean };
 
 export const Note: React.FC<NoteProps> = ({ id, title, text, date, status, isTrash }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
-  const handleClose = () => setAnchorEl(null);
+  const { editNote, clear, pin, unpin, moveToTrash, delete: deleteNote, restore, archive, unarchive } = useNoteActions();
 
-  const handleEdit = (id: string, title: string, text: string) => {
-    dispatch(setTitle(title));
-    dispatch(setContent(text));
-    dispatch(setEditedNoteId(id));
-  };
+  const openMenu = (e: React.MouseEvent<HTMLElement>) => setAnchorEl(e.currentTarget);
+  const closeMenu = () => setAnchorEl(null);
 
-  const handlePin = (id: string) => dispatch(pinNote(id));
-  const handleUnpin = (id: string) => dispatch(unpinNote(id));
-  const handleDelete = (id: string) => dispatch(moveToTrash(id));
-  const handleRestore = (id: string) => dispatch(restoreNote(id));
-  const handleDeletePermanent = (id: string) => dispatch(deleteNote(id));
-  const handleArchive = (id: string) => dispatch(archiveNote(id));
-  const handleUnarchive = (id: string) => dispatch(unarchiveNote(id));
-
-  const handleOpenModal = () => {
+  const openEditModal = () => {
     setIsModalOpen(true);
-    handleEdit(id, title, text);
+    editNote(id, title, text);
   };
 
-  const handleCloseModal = () => {
+  const closeEditModal = () => {
     setIsModalOpen(false);
-    dispatch(clearNote());
+    clear();
   };
 
-  const noteOperations: { [key: string]: NoteOperation[] } = {
-    active: [
-      { title: "Редагувати", action: () => handleOpenModal() },
-      { title: "Закріпити", action: () => handlePin(id) },
-      { title: "Видалити", action: () => handleDelete(id) },
-      { title: "Архівувати", action: () => handleArchive(id) },
-    ],
-    pinned: [
-      { title: "Відкріпити", action: () => handleUnpin(id) },
-      { title: "Видалити", action: () => handleDelete(id) },
-      { title: "Архівувати", action: () => handleArchive(id) },
-    ],
-    archived: [
-      { title: "Роз-архівувати", action: () => handleUnarchive(id) },
-      { title: "Видалити", action: () => handleDelete(id) },
-    ],
-    deleted: [
-      { title: "Відновити", action: () => handleRestore(id) },
-      { title: "Видалити назавжди", action: () => handleDeletePermanent(id) },
-    ],
-  };
-
-  const menuActions = useMemo(() => {
+  const getAvailableActions = () => {
     if (isTrash) {
-      return noteOperations.deleted;
+      return [
+        { title: "Відновити", action: () => restore(id) },
+        { title: "Видалити назавжди", action: () => deleteNote(id) },
+      ];
     }
-    if (status === "archived") {
-      return noteOperations.archived;
-    }
-    return noteOperations[status];
-  }, [status, noteOperations, isTrash]);
+
+    const actionsByStatus: Record<string, { title: string; action: () => void }[]> = {
+      active: [
+        { title: "Редагувати", action: openEditModal },
+        { title: "Закріпити", action: () => pin(id) },
+        { title: "Видалити", action: () => moveToTrash(id) },
+        { title: "Архівувати", action: () => archive(id) },
+      ],
+      pinned: [
+        { title: "Відкріпити", action: () => unpin(id) },
+        { title: "Видалити", action: () => moveToTrash(id) },
+        { title: "Архівувати", action: () => archive(id) },
+      ],
+      archived: [
+        { title: "Роз-архівувати", action: () => unarchive(id) },
+        { title: "Видалити", action: () => moveToTrash(id) },
+      ],
+    };
+
+    return actionsByStatus[status] || [];
+  };
+
+  const actions = getAvailableActions();
 
   return (
-    <li className="p-3 rounded-lg relative bg-[#faedcd]">
+    <li className="p-3 rounded-lg relative bg-surface">
       <div className="flex justify-between items-start">
         <h4 className="font-bold">{title}</h4>
       </div>
       <p className="text-sm">{text}</p>
       <div className="flex justify-between items-end">
-        <p className="text-xs text-gray-600">{typeof date === "number" ? new Date(date).toLocaleDateString() : date}</p>
-        <IconButton onClick={handleClick}>
-          <MoreVert />
+        <p className="text-xs text-foreground">{formatDate(date)}</p>
+        <IconButton onClick={openMenu}>
+          <MoreVertIcon />
         </IconButton>
         <Menu
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
-          onClose={handleClose}
+          onClose={closeMenu}
           sx={{
-            "& .MuiPaper-root": {
-              paddingBottom: 0,
-              width: "200px",
-              backgroundColor: "#2c2c2c",
-              color: "white",
-              borderRadius: "8px",
-            },
+            "& .MuiPaper-root": { width: "200px", backgroundColor: "var(--color-secondary)", borderRadius: "8px" },
             "& .MuiList-root": { padding: 0 },
           }}
         >
-          {menuActions.map((item, index) => (
-            <MoreVertItem key={index} title={item.title} onClick={handleClose} action={item.action} />
+          {actions.map((item, id) => (
+            <NoteActionItem key={id} title={item.title} onClick={closeMenu} action={item.action} />
           ))}
         </Menu>
       </div>
-      <NoteEditor state={isModalOpen} closeModal={handleCloseModal} />
+      <NoteEditor state={isModalOpen} closeModal={closeEditModal} />
     </li>
-  );
-};
-
-const MoreVertItem: React.FC<MoreVertItemProps> = ({ title, onClick, action }) => {
-  return (
-    <MenuItem
-      sx={{ "&:hover": { backgroundColor: "#444" } }}
-      onClick={() => {
-        onClick();
-        action();
-      }}
-    >
-      {title}
-    </MenuItem>
   );
 };

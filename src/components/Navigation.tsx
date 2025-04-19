@@ -20,7 +20,7 @@ export const Navigation = () => {
         sx={{
           width: collapsed ? 64 : 240,
           p: 0,
-          backgroundColor: "#faedcd",
+          backgroundColor: "var(--color-surface)",
           height: "100%",
           borderRadius: "8px",
           transition: "width 0.3s ease",
@@ -49,7 +49,6 @@ export const Navigation = () => {
             key={title}
             sx={{
               py: 1.5,
-              color: "#1976d2",
               height: 48,
               "&:hover": { backgroundColor: "#0000000a" },
               justifyContent: collapsed ? "center" : "flex-start",

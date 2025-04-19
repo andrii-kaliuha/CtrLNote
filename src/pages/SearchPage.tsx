@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectNotes,
@@ -22,14 +22,27 @@ export const SearchPage = () => {
   const searchHistory = useSelector(selectSearchHistory);
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState(searchQuery);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+  const DEBOUNCE_DELAY = 1000;
 
-  const handleSearch = () => {
-    dispatch(setSearchQuery(searchValue));
-    dispatch(addSearchQueryToHistory(searchValue));
-  };
+  useEffect(() => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, []);
 
-  const handleSearchChange = (event: any) => {
+  const handleInputChange = (event: any) => {
     setSearchValue(event.target.value);
+
+    if (debounceTimeout.current) {
+      clearTimeout(debounceTimeout.current);
+    }
+
+    debounceTimeout.current = setTimeout(() => {
+      dispatch(setSearchQuery(event.target.value));
+      dispatch(addSearchQueryToHistory(event.target.value));
+    }, DEBOUNCE_DELAY);
   };
 
   const allNotes = useMemo(() => {
@@ -47,19 +60,17 @@ export const SearchPage = () => {
   }, [allNotes, searchQuery]);
 
   return (
-    <section className="p-4">
+    <section className="p-4" onKeyDown={() => searchInputRef.current?.focus()}>
       <div className="relative flex items-center mb-4">
-        <SearchIcon className="absolute left-3 text-gray-500" />
+        <SearchIcon className="absolute left-3 text-foreground" />
         <input
+          ref={searchInputRef}
           type="text"
           value={searchValue}
-          onChange={handleSearchChange}
+          onChange={handleInputChange}
           placeholder="Пошук нотаток..."
-          className="w-full pl-10 pr-4 py-2 rounded-full bg-gray-100 focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none"
+          className="w-full pl-10 pr-4 py-2 rounded-full bg-field outline-none"
         />
-        <button onClick={handleSearch} className="ml-3 px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition">
-          Пошук
-        </button>
       </div>
 
       {searchHistory.length > 0 && (
@@ -70,6 +81,14 @@ export const SearchPage = () => {
               <span
                 key={index}
                 className="flex items-center gap-1 px-3 py-1 bg-gray-200 rounded-full text-sm cursor-pointer hover:bg-gray-300 transition"
+                onClick={() => {
+                  setSearchValue(query);
+                  dispatch(setSearchQuery(query));
+                  dispatch(addSearchQueryToHistory(query));
+                  if (searchInputRef.current) {
+                    searchInputRef.current.focus();
+                  }
+                }}
               >
                 <HistoryIcon className="text-gray-600" /> {query}
               </span>
@@ -83,7 +102,7 @@ export const SearchPage = () => {
         {filteredNotes.length > 0 ? (
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredNotes.map((note) => (
-              <Note key={note.id} {...note} notes={filteredNotes} />
+              <Note key={note.id} {...note} />
             ))}
           </ul>
         ) : (

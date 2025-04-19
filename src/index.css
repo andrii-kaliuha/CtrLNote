@@ -1,8 +1,10 @@
 @import "tailwindcss";
+@config "../tailwind.config.ts";
 
 body {
   font-family: "Roboto", sans-serif;
-  background-color: #fefae0;
+  background-color: var(--color-background);
+  color: var(--color-foreground);
 }
 
 /* #root {
@@ -21,4 +23,15 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background-color: #757575;
+}
+
+:root {
+  /* Основні кольори */
+  --color-background: #cad2c5;
+  --color-surface: #52796f;
+  --color-primary: #354f52;
+  --color-secondary: #84a98c;
+  --color-accent: #2f3e46;
+  --color-foreground: #1e293b;
+  --color-hover: rgba(0, 0, 0, 0.04);
 }
