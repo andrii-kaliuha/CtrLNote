@@ -37,7 +37,7 @@ export const Navigation = () => {
           }}
         >
           <ListItemIcon sx={{ minWidth: "auto" }}>
-            <Menu />
+            <Menu sx={{ color: "var(--color-on-background)" }} />
           </ListItemIcon>
           {!collapsed && <ListItemText primary="Меню" sx={{ ml: 2 }} />}
         </ListItemButton>
@@ -54,7 +54,7 @@ export const Navigation = () => {
               justifyContent: collapsed ? "center" : "flex-start",
             }}
           >
-            <ListItemIcon sx={{ minWidth: "auto" }}>{icon}</ListItemIcon>
+            <ListItemIcon sx={{ minWidth: "auto", color: "var(--color-on-background)" }}>{icon}</ListItemIcon>
             {!collapsed && <ListItemText primary={title} sx={{ ml: 2 }} />}
           </ListItemButton>
         ))}

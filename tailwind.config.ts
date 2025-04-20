@@ -7,7 +7,7 @@ const config: Config = {
     extend: {
       colors: {
         background: "var(--color-background)",
-        foreground: "var(--color-foreground)",
+        foreground: "var(--color-on-background)",
         surface: "var(--color-surface)",
         secondary: "var(--color-secondary)",
         primary: "var(--color-primary)",

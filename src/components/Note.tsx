@@ -35,11 +35,12 @@ export const useNoteActions = () => {
 };
 
 // utils/formatDate.ts
-export const formatDate = (date: number | string): string => {
-  if (typeof date === "number") {
-    return new Date(date).toLocaleDateString();
-  }
-  return date;
+export const formatDate = (date: number): string => {
+  return new Date(date * 1000).toLocaleDateString("en", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 };
 
 // components/NoteActionItem.tsx
@@ -119,15 +120,15 @@ export const Note: React.FC<NoteProps> = ({ id, title, text, date, status, isTra
   const actions = getAvailableActions();
 
   return (
-    <li className="p-3 rounded-lg relative bg-surface">
+    <li className="p-3 rounded-lg relative bg-surface h-[180px] overflow-hidden">
       <div className="flex justify-between items-start">
         <h4 className="font-bold">{title}</h4>
       </div>
-      <p className="text-sm">{text}</p>
-      <div className="flex justify-between items-end">
-        <p className="text-xs text-foreground">{formatDate(date)}</p>
-        <IconButton onClick={openMenu}>
-          <MoreVertIcon />
+      <p className="text-sm line-clamp-5 overflow-hidden">{text}</p>
+      <div className="flex justify-between items-end self-end absolute bottom-3 left-3 right-3">
+        <p className="text-xs">{formatDate(date)}</p>
+        <IconButton onClick={openMenu} sx={{ borderRadius: "50%", ":hover": { backgroundColor: "var(--color-accent-hover)" } }}>
+          <MoreVertIcon sx={{ color: "var(--color-on-background)" }} />
         </IconButton>
         <Menu
           anchorEl={anchorEl}
@@ -138,8 +139,8 @@ export const Note: React.FC<NoteProps> = ({ id, title, text, date, status, isTra
             "& .MuiList-root": { padding: 0 },
           }}
         >
-          {actions.map((item, id) => (
-            <NoteActionItem key={id} title={item.title} onClick={closeMenu} action={item.action} />
+          {actions.map((item, index) => (
+            <NoteActionItem key={index} title={item.title} onClick={closeMenu} action={item.action} />
           ))}
         </Menu>
       </div>
