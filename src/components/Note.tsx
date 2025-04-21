@@ -36,7 +36,7 @@ export const useNoteActions = () => {
 
 // utils/formatDate.ts
 export const formatDate = (date: number): string => {
-  return new Date(date * 1000).toLocaleDateString("en", {
+  return new Date(date).toLocaleDateString("en", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -120,15 +120,17 @@ export const Note: React.FC<NoteProps> = ({ id, title, text, date, status, isTra
   const actions = getAvailableActions();
 
   return (
-    <li className="p-3 rounded-lg relative bg-surface h-[180px] overflow-hidden">
-      <div className="flex justify-between items-start">
+    <li className="p-3 rounded-lg relative bg-[var(--color-surface)] aspect-[21/9] sm:aspect-[16/9] overflow-hidden flex flex-col h-full">
+      <div className="flex justify-between items-start flex-1">
         <h4 className="font-bold">{title}</h4>
       </div>
-      <p className="text-sm line-clamp-5 overflow-hidden">{text}</p>
-      <div className="flex justify-between items-end self-end absolute bottom-3 left-3 right-3">
-        <p className="text-xs">{formatDate(date)}</p>
-        <IconButton onClick={openMenu} sx={{ borderRadius: "50%", ":hover": { backgroundColor: "var(--color-accent-hover)" } }}>
-          <MoreVertIcon sx={{ color: "var(--color-on-background)" }} />
+
+      {text && <p className="text-sm overflow-hidden aspect-square flex-grow">{text}</p>}
+
+      <div className="flex justify-between items-center flex-1">
+        <p className="text-xs leading-none">{formatDate(date)}</p>
+        <IconButton onClick={openMenu} sx={{ borderRadius: "50%", ":hover": { backgroundColor: "var(--color-hover)" } }}>
+          <MoreVertIcon sx={{ color: "var(--text-primary)" }} />
         </IconButton>
         <Menu
           anchorEl={anchorEl}

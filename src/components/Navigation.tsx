@@ -15,7 +15,7 @@ export const Navigation = () => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <nav className="hidden md:block sticky top-0 left-0 h-screen flex-shrink-0 py-3 pl-3">
+    <nav className="hidden sm:block sticky top-0 left-0 h-screen flex-shrink-0 py-3 pl-3">
       <List
         sx={{
           width: collapsed ? 64 : 240,
@@ -37,7 +37,7 @@ export const Navigation = () => {
           }}
         >
           <ListItemIcon sx={{ minWidth: "auto" }}>
-            <Menu sx={{ color: "var(--color-on-background)" }} />
+            <Menu sx={{ color: "var(--text-primary)" }} />
           </ListItemIcon>
           {!collapsed && <ListItemText primary="Меню" sx={{ ml: 2 }} />}
         </ListItemButton>
@@ -54,7 +54,7 @@ export const Navigation = () => {
               justifyContent: collapsed ? "center" : "flex-start",
             }}
           >
-            <ListItemIcon sx={{ minWidth: "auto", color: "var(--color-on-background)" }}>{icon}</ListItemIcon>
+            <ListItemIcon sx={{ minWidth: "auto", color: "var(--text-primary)" }}>{icon}</ListItemIcon>
             {!collapsed && <ListItemText primary={title} sx={{ ml: 2 }} />}
           </ListItemButton>
         ))}
@@ -67,7 +67,7 @@ export const MobileNavigation = () => {
   const [value, setValue] = useState(0);
 
   return (
-    <nav className="md:hidden sticky bottom-0 left-0 right-0 z-10">
+    <nav className="sm:hidden sticky bottom-0 left-0 right-0 z-10">
       <BottomNavigation
         value={value}
         onChange={(event, newValue) => {

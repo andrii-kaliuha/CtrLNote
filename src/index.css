@@ -1,10 +1,10 @@
 @import "tailwindcss";
-@config "../tailwind.config.ts";
+/* @config "../tailwind.config.ts"; */
 
 body {
   font-family: "Roboto", sans-serif;
   background-color: var(--color-background);
-  color: var(--color-on-background);
+  color: var(--text-primary);
 }
 
 /* #root {
@@ -25,88 +25,48 @@ body {
   background-color: #757575;
 }
 
-/* :root {
-  --color-primary: #b5a1e2;
-  --color-on-primary: #100e17;
+:root {
+  --color-background: #f8f7fa;
+  --color-surface: #ffffff;
+  --color-secondary: #f0edf5;
 
-  --color-background: #ffffff;
-  --color-on-background: #000000;
+  --color-primary: #7b5fd6;
+  --color-accent: #947fd9;
 
-  --color-surface: #f9f9f9;
-  --color-on-surface: #000000;
+  --text-primary: #1e1c22;
+  --text-secondary: #5f5b6b;
 
-  --color-accent: #725ac1;
-  --color-accent-hover: rgba(0 0 0, 4%);
-  --color-accent-active: #55449f;
-  --color-accent-muted: #cfcbe3;
+  --color-outline: #7b5fd6;
+  --color-border: #d2cfe0;
+  --color-border-hover: #bfb8d1;
 
-  --color-secondary: #8d86c9;
-  --color-secondary-hover: #7a73b5;
-  --color-secondary-active: #6a64a6;
-  --color-secondary-disabled: #dad7e8;
+  --color-hover: rgba(123, 95, 214, 0.1);
+  --color-active: rgba(123, 95, 214, 0.2);
+  --color-focus: rgba(123, 95, 214, 0.3);
 
-  --color-text-primary: #1e1e2f;
-  --color-text-secondary: #4a4a5e;
-  --color-text-muted: #7d7d8e;
-  --color-text-on-primary: #ffffff;
-
-  --color-border: #b7b1bd;
-  --color-border-hover: #a59ead;
-
-  --color-hover: rgba(141, 134, 201, 0.1);
-  --color-active: rgba(141, 134, 201, 0.2);
-  --color-focus-ring: rgba(141, 134, 201, 0.4);
-
-  --color-success: #45c478;
-  --color-error: #e74c3c;
-  --color-warning: #f39c12;
-  --color-info: #3498db;
-
-  --color-surface-muted: #e3e0e9;
-  --color-surface-hover: #d6d1e1;
-  --color-surface-active: #c8c2d7;
-} */
+  --button-primary: #2e9b5f;
+  --button-secondary: #e65050;
+}
 
 .dark {
-  /* === Основні === */
-  --color-primary: #b5a1e2;
-  --color-on-primary: #100e17;
-
   --color-background: #131214;
-  --color-on-background: #eae6f2;
+  --color-surface: #1e1d20;
+  --color-secondary: #2a2731;
 
-  --color-surface: #1d1c1f;
-  --color-on-surface: #dddae5;
-
-  /* === Додаткові з попередньої палітри (адаптовані) === */
+  --color-primary: #b5a1e2;
   --color-accent: #a38dde;
-  --color-accent-hover: #ffffff1a;
-  --color-accent-active: #7a68b7;
-  --color-accent-muted: #3b3551;
 
-  --color-secondary: #8d86c9;
-  --color-secondary-hover: #7c75b5;
-  --color-secondary-active: #6d66a5;
-  --color-secondary-disabled: #3c3951;
+  --text-primary: #eae6f2;
+  --text-secondary: #a29ead;
 
-  --color-text-primary: #eae6f2;
-  --color-text-secondary: #c8c2d7;
-  --color-text-muted: #a29ead;
-  --color-text-on-primary: #ffffff;
-
+  --color-outline: #b5a1e2;
   --color-border: #3b3843;
   --color-border-hover: #4a4656;
 
   --color-hover: rgba(181, 161, 226, 0.1);
   --color-active: rgba(181, 161, 226, 0.2);
-  --color-focus-ring: rgba(181, 161, 226, 0.3);
+  --color-focus: rgba(181, 161, 226, 0.3);
 
-  --color-success: #45c478;
-  --color-error: #ff6b6b;
-  --color-warning: #f39c12;
-  --color-info: #5dade2;
-
-  --color-surface-muted: #2a2731;
-  --color-surface-hover: #373443;
-  --color-surface-active: #423e52;
+  --button-primary: #45c478;
+  --button-secondary: #ff6b6b;
 }

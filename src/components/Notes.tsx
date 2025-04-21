@@ -87,11 +87,11 @@ export const Notes: React.FC<NotesProps> = ({ title, notes: initialNotes }) => {
           </IconButton>
         </div>
       </div>
-      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {title === "Нотатки" && (
-          <li className="p-3 rounded-lg relative bg-surface flex justify-center items-center">
+          <li className="p-3 rounded-lg relative  bg-[var(--color-surface)] flex justify-center items-center aspect-[21/9] sm:aspect-[16/9]">
             <IconButton onClick={handleOpenModal} sx={{ ":hover": { backgroundColor: "var(--color-accent-hover)" } }}>
-              <Add style={{ width: "48px", height: "48px" }} sx={{ color: "var(--color-on-background)" }} />
+              <Add style={{ width: "48px", height: "48px" }} sx={{ color: "var(--text-primary)" }} />
             </IconButton>
           </li>
         )}
