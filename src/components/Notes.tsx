@@ -52,7 +52,7 @@ export const Notes: React.FC<NotesProps> = ({ title, notes: initialNotes }) => {
     <>
       <div className="p-3 flex justify-between items-center">
         <h2 className="p-0">{title}</h2>
-        <div className="flex items-center h-6">
+        <div className="flex items-center h-6 gap-2">
           <FormControl sx={{ display: "flex" }}>
             <Select
               labelId="sort-select-label"
@@ -61,19 +61,18 @@ export const Notes: React.FC<NotesProps> = ({ title, notes: initialNotes }) => {
               onChange={handleSortChange}
               displayEmpty
               renderValue={() => (
-                <Box sx={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                  <Sort sx={{ fontSize: 20, color: "var(--color-on-background)" }} />
-                  <Typography sx={{ color: "var(--color-on-background)" }} variant="body2">
+                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  <Sort sx={{ fontSize: 20, color: "var(--text-primary)" }} />
+                  <Typography sx={{ color: "var(--text-primary)" }} variant="body2">
                     {sortOption === "title" ? "Назва" : "Дата"}
                   </Typography>
                 </Box>
               )}
+              MenuProps={{ PaperProps: { sx: { "& .MuiList-root": { padding: 0 } } } }}
               sx={{
-                "& .MuiOutlinedInput-root": { padding: "0 !important", minHeight: "unset" },
-                "& .MuiSelect-select": { padding: "0 !important", display: "flex", alignItems: "center" },
-                "& .MuiSelect-icon": { display: "none" },
-                "& .MuiOutlinedInput-notchedOutline": { border: "none" },
-                "& .MuiList-root": { padding: 0 },
+                // "& .MuiSelect-select": { padding: "0 !important", display: "flex", alignItems: "center" },
+                // "& .MuiSelect-icon": { display: "none" },
+                // "& .MuiOutlinedInput-notchedOutline": { border: "none" },
                 cursor: "pointer",
               }}
             >
@@ -82,15 +81,15 @@ export const Notes: React.FC<NotesProps> = ({ title, notes: initialNotes }) => {
             </Select>
           </FormControl>
 
-          <IconButton onClick={toggleSortDirection} sx={{ padding: 0, width: "24px", height: "24px", color: "var(--color-on-background)" }}>
+          <IconButton onClick={toggleSortDirection} sx={{ padding: 0, width: "24px", height: "24px", color: "var(--text-primary)" }}>
             {sortDirection === "asc" ? <ArrowUpward sx={{ fontSize: 20 }} /> : <ArrowDownward sx={{ fontSize: 20 }} />}
           </IconButton>
         </div>
       </div>
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {title === "Нотатки" && (
-          <li className="p-3 rounded-lg relative  bg-[var(--color-surface)] flex justify-center items-center aspect-[21/9] sm:aspect-[16/9]">
-            <IconButton onClick={handleOpenModal} sx={{ ":hover": { backgroundColor: "var(--color-accent-hover)" } }}>
+          <li className="p-3 rounded-lg relative bg-[var(--color-surface)] flex justify-center items-center h-[180px]">
+            <IconButton onClick={handleOpenModal} sx={{ ":hover": { backgroundColor: "var(--color-hover)" } }}>
               <Add style={{ width: "48px", height: "48px" }} sx={{ color: "var(--text-primary)" }} />
             </IconButton>
           </li>

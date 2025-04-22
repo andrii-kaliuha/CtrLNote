@@ -36,27 +36,65 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ state, closeModal }) => 
   };
 
   return (
-    <Modal open={state} onClose={closeModal}>
+    <Modal open={state} onClose={closeModal} sx={{ outlineColor: "transparent" }}>
       <Box
         sx={{
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 400,
-          bgcolor: "background.paper",
+          width: 600,
+          bgcolor: "var(--color-secondary)",
           boxShadow: 24,
           padding: 3,
           borderRadius: "8px",
+          outlineColor: "transparent",
         }}
       >
-        <TextField label="Заголовок" value={title} onChange={titleChange} fullWidth margin="normal" />
-        <TextField label="Текст нотатки" value={text} onChange={textChange} multiline rows={4} fullWidth margin="normal" />
+        <TextField
+          label="Заголовок"
+          sx={{
+            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "var(--color-primary)",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: "var(--color-primary)",
+            },
+          }}
+          value={title}
+          onChange={titleChange}
+          fullWidth
+          margin="normal"
+        />
+
+        <TextField
+          label="Текст нотатки"
+          sx={{
+            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "var(--color-primary)",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: "var(--color-primary)",
+            },
+          }}
+          value={text}
+          onChange={textChange}
+          multiline
+          rows={6}
+          fullWidth
+          margin="normal"
+        />
         <div className="flex justify-end">
-          <button onClick={saveNote} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+          <button
+            onClick={saveNote}
+            className="bg-[var(--button-primary)] hover:bg-[var(--button-primary-hover)] text-white font-bold py-2 px-4 rounded mr-2"
+          >
             Зберегти
           </button>
-          <button onClick={cancelNote} className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
+          <button
+            onClick={cancelNote}
+            className="bg-[var(--button-secondary)] hover:bg-[var(--button-secondary-hover)] text-gray-800 font-bold py-2 px-4 rounded"
+          >
             Скасувати
           </button>
         </div>

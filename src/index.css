@@ -1,5 +1,4 @@
 @import "tailwindcss";
-/* @config "../tailwind.config.ts"; */
 
 body {
   font-family: "Roboto", sans-serif;
@@ -7,22 +6,13 @@ body {
   color: var(--text-primary);
 }
 
-/* #root {
-  display: flex;
-  justify-content: center;
-} */
-
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
-/* ::-webkit-scrollbar {
-  display: none;
-} */
-
 ::-webkit-scrollbar-thumb {
-  background-color: #757575;
+  background-color: var(--color-primary);
 }
 
 :root {
@@ -30,7 +20,7 @@ body {
   --color-surface: #ffffff;
   --color-secondary: #f0edf5;
 
-  --color-primary: #7b5fd6;
+  --color-primary: rgb(123, 95, 214);
   --color-accent: #947fd9;
 
   --text-primary: #1e1c22;
@@ -44,8 +34,10 @@ body {
   --color-active: rgba(123, 95, 214, 0.2);
   --color-focus: rgba(123, 95, 214, 0.3);
 
-  --button-primary: #2e9b5f;
-  --button-secondary: #e65050;
+  --button-primary: var(--color-primary);
+  --button-primary-hover: rgba(123, 95, 214, 0.8);
+  --button-secondary: #d1d5dc;
+  --button-secondary-hover: #99a1af;
 }
 
 .dark {
@@ -68,5 +60,7 @@ body {
   --color-focus: rgba(181, 161, 226, 0.3);
 
   --button-primary: #45c478;
-  --button-secondary: #ff6b6b;
+  --button-primary-hover: #48a26c;
+  --button-secondary: #d1d5dc;
+  --button-secondary-hover: #99a1af;
 }

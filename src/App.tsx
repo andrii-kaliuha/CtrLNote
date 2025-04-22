@@ -1,6 +1,5 @@
-import "@fontsource/roboto/index.css";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { MobileNavigation, Navigation } from "./components/Navigation";
+import { DesktopNavigation, MobileNavigation } from "./components/Navigation";
 import { SearchPage } from "./pages/SearchPage";
 import { NotesPage } from "./pages/NotesPage";
 import { ArchivePage } from "./pages/ArchivePage";
@@ -10,8 +9,8 @@ import { SettingsPage } from "./pages/SettingsPage";
 export const App = () => {
   return (
     <Router>
-      <div className="relative flex-col flex sm:flex-row max-w-[1280px] w-full min-h-screen mx-auto">
-        <Navigation />
+      <div className="relative flex flex-col sm:flex-row max-w-[1280px] w-full min-h-screen mx-auto">
+        <DesktopNavigation />
         <main className="flex-1 py-3 px-3 overflow-y-auto">
           <Routes>
             <Route path="/" element={<Navigate to="/notes" replace />} />

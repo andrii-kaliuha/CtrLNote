@@ -120,14 +120,13 @@ export const Note: React.FC<NoteProps> = ({ id, title, text, date, status, isTra
   const actions = getAvailableActions();
 
   return (
-    <li className="p-3 rounded-lg relative bg-[var(--color-surface)] aspect-[21/9] sm:aspect-[16/9] overflow-hidden flex flex-col h-full">
-      <div className="flex justify-between items-start flex-1">
-        <h4 className="font-bold">{title}</h4>
+    <li className="p-3 rounded-lg bg-[var(--color-surface)] h-[180px] overflow-hidden flex flex-col justify-between">
+      <div>
+        <h4 className="font-bold line-clamp-1">{title}</h4>
+        {text && <p className="text-sm line-clamp-4">{text}</p>}
       </div>
 
-      {text && <p className="text-sm overflow-hidden aspect-square flex-grow">{text}</p>}
-
-      <div className="flex justify-between items-center flex-1">
+      <div className="flex justify-between items-center">
         <p className="text-xs leading-none">{formatDate(date)}</p>
         <IconButton onClick={openMenu} sx={{ borderRadius: "50%", ":hover": { backgroundColor: "var(--color-hover)" } }}>
           <MoreVertIcon sx={{ color: "var(--text-primary)" }} />
