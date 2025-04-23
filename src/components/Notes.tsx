@@ -1,104 +1,102 @@
-import { useState, useEffect } from "react";
+// import { useSelector, useDispatch } from "react-redux";
 import { useDispatch } from "react-redux";
-import { FormControl, MenuItem, Select, IconButton, SelectChangeEvent, Box, Typography } from "@mui/material";
-import { Add, Sort, ArrowUpward, ArrowDownward } from "@mui/icons-material";
-import { Note, NoteProps } from "./Note";
+import { useState } from "react";
+// import { RootState } from "../store/store";
+import { IconButton, FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { Add } from "@mui/icons-material";
+import { Note } from "./Note";
 import { NoteEditor } from "../components/NoteEditor";
-import { clearNote } from "../store/slices/notesSlice";
+import { clearNote, sortNotesByTitleAsc, sortNotesByTitleDesc, sortNotesByDateAsc, sortNotesByDateDesc } from "../store/slices/notesSlice";
+import { Note as NoteType } from "../store/slices/notesSlice";
 
-type NotesProps = { title: string; notes: NoteProps[] };
+type NotesProps = { title: string; notes: NoteType[] };
 
-export const Notes: React.FC<NotesProps> = ({ title, notes: initialNotes }) => {
+export const Notes: React.FC<NotesProps> = ({ title, notes }) => {
   const dispatch = useDispatch();
-  const [sortOption, setSortOption] = useState<"title" | "date">("date");
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
-  const [sortedNotes, setSortedNotes] = useState(initialNotes);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const notes = useSelector((state: RootState) => state.notes.notes);
+  const [isNoteEditorOpen, setNoteEditorOpen] = useState(false);
 
-  useEffect(() => {
-    sortNotes();
-  }, [initialNotes, sortOption, sortDirection]);
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
+  const openNoteEditor = () => {
+    setNoteEditorOpen(true);
     dispatch(clearNote());
   };
 
-  const handleCloseModal = () => setIsModalOpen(false);
-
-  const handleSortChange = (event: SelectChangeEvent<string>) => setSortOption(event.target.value as "title" | "date");
-
-  const toggleSortDirection = () => setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
-
-  const sortNotes = () => {
-    let newSortedNotes = [...initialNotes];
-
-    if (sortOption === "title") {
-      newSortedNotes.sort((a, b) => {
-        const comparison = a.title.localeCompare(b.title);
-        return sortDirection === "asc" ? comparison : -comparison;
-      });
-    } else if (sortOption === "date") {
-      newSortedNotes.sort((a, b) => {
-        const comparison = a.date - b.date;
-        return sortDirection === "asc" ? comparison : -comparison;
-      });
-    }
-
-    setSortedNotes(newSortedNotes);
-  };
+  const closeNoteEditor = () => setNoteEditorOpen(false);
 
   return (
     <>
       <div className="p-3 flex justify-between items-center">
-        <h2 className="p-0">{title}</h2>
-        <div className="flex items-center h-6 gap-2">
-          <FormControl sx={{ display: "flex" }}>
-            <Select
-              labelId="sort-select-label"
-              id="sort-select"
-              value={sortOption}
-              onChange={handleSortChange}
-              displayEmpty
-              renderValue={() => (
-                <Box sx={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  <Sort sx={{ fontSize: 20, color: "var(--text-primary)" }} />
-                  <Typography sx={{ color: "var(--text-primary)" }} variant="body2">
-                    {sortOption === "title" ? "Назва" : "Дата"}
-                  </Typography>
-                </Box>
-              )}
-              MenuProps={{ PaperProps: { sx: { "& .MuiList-root": { padding: 0 } } } }}
-              sx={{
-                // "& .MuiSelect-select": { padding: "0 !important", display: "flex", alignItems: "center" },
-                // "& .MuiSelect-icon": { display: "none" },
-                // "& .MuiOutlinedInput-notchedOutline": { border: "none" },
-                cursor: "pointer",
-              }}
-            >
-              <MenuItem value="title">Назва</MenuItem>
-              <MenuItem value="date">Дата</MenuItem>
-            </Select>
-          </FormControl>
-
-          <IconButton onClick={toggleSortDirection} sx={{ padding: 0, width: "24px", height: "24px", color: "var(--text-primary)" }}>
-            {sortDirection === "asc" ? <ArrowUpward sx={{ fontSize: 20 }} /> : <ArrowDownward sx={{ fontSize: 20 }} />}
-          </IconButton>
-        </div>
+        <h2>{title}</h2>
+        <NotesSorter />
       </div>
+
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {title === "Нотатки" && (
           <li className="p-3 rounded-lg relative bg-[var(--color-surface)] flex justify-center items-center h-[180px]">
-            <IconButton onClick={handleOpenModal} sx={{ ":hover": { backgroundColor: "var(--color-hover)" } }}>
-              <Add style={{ width: "48px", height: "48px" }} sx={{ color: "var(--text-primary)" }} />
+            <IconButton onClick={openNoteEditor} sx={{ ":hover": { backgroundColor: "var(--color-hover)" } }}>
+              <Add sx={{ width: 48, height: 48, color: "var(--text-primary)" }} />
             </IconButton>
           </li>
         )}
-        {sortedNotes.map((note) => (
+
+        {notes.map((note) => (
           <Note key={note.id} {...note} />
         ))}
       </ul>
-      <NoteEditor state={isModalOpen} closeModal={handleCloseModal} />
+
+      <NoteEditor state={isNoteEditorOpen} closeModal={closeNoteEditor} />
     </>
+  );
+};
+
+type SortBy = "titleAsc" | "titleDesc" | "dateAsc" | "dateDesc";
+
+const NotesSorter = () => {
+  const dispatch = useDispatch();
+  const [sortBy, setSortBy] = useState<SortBy>("dateDesc");
+
+  const sortNotes = (event: SelectChangeEvent<string>) => {
+    const selectedValue = event.target.value as SortBy;
+    setSortBy(selectedValue);
+
+    switch (selectedValue) {
+      case "titleAsc":
+        dispatch(sortNotesByTitleAsc());
+        break;
+      case "titleDesc":
+        dispatch(sortNotesByTitleDesc());
+        break;
+      case "dateAsc":
+        dispatch(sortNotesByDateAsc());
+        break;
+      case "dateDesc":
+        dispatch(sortNotesByDateDesc());
+        break;
+    }
+  };
+
+  return (
+    <FormControl>
+      <Select
+        id="sort-select"
+        value={sortBy}
+        onChange={sortNotes}
+        MenuProps={{ PaperProps: { sx: { "& .MuiList-root": { padding: 0 } } } }}
+        sx={{
+          "& .MuiSelect-select": { padding: "0.5px 12px" },
+          "& fieldset": { borderColor: "transparent !important" },
+          "&:hover fieldset": { borderColor: "var(--color-primary) !important" },
+          "&.Mui-focused fieldset": { borderColor: "var(--color-primary) !important" },
+          "& .MuiSvgIcon-root": { color: "inherit" },
+          "&.Mui-focused .MuiSvgIcon-root": { color: "var(--color-primary)" },
+          "&:hover .MuiSvgIcon-root": { color: "var(--color-primary)" },
+        }}
+      >
+        <MenuItem value="titleAsc">За назвою (А-Я)</MenuItem>
+        <MenuItem value="titleDesc">За назвою (Я-А)</MenuItem>
+        <MenuItem value="dateAsc">За датою (спочатку старі)</MenuItem>
+        <MenuItem value="dateDesc">За датою (спочатку нові)</MenuItem>
+      </Select>
+    </FormControl>
   );
 };

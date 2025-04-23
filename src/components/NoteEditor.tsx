@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { addNote, clearNote, editNote, setContent, setTitle } from "../store/slices/notesSlice";
+import { addNote, clearNote, editNote, setText, setTitle } from "../store/slices/notesSlice";
 import { Box, Modal, TextField } from "@mui/material";
 
 type NoteEditorProps = { state: boolean; closeModal: () => void };
 
 export const NoteEditor: React.FC<NoteEditorProps> = ({ state, closeModal }) => {
-  const { title, text, editedNoteId, notes, pinnedNotes } = useSelector((state: RootState) => state.notes);
+  const { title, text, editedNoteId, notes } = useSelector((state: RootState) => state.notes);
   const dispatch = useDispatch();
   const [isEditing, setIsEditing] = useState(false);
 
@@ -16,19 +16,21 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ state, closeModal }) => 
   }, [title, text]);
 
   const titleChange = (e: React.ChangeEvent<HTMLInputElement>) => dispatch(setTitle(e.target.value));
-  const textChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => dispatch(setContent(e.target.value));
-  const saveNote = () => {
-    if (isEditing && editedNoteId) {
-      const noteToEdit = [...notes, ...pinnedNotes].find((note) => note.id === editedNoteId);
-      if (noteToEdit) {
-        dispatch(editNote({ id: editedNoteId, title, text, date: noteToEdit.date, status: noteToEdit.status }));
-      }
-    } else {
-      dispatch(addNote());
-    }
-    dispatch(clearNote());
-    closeModal();
-  };
+  const textChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => dispatch(setText(e.target.value));
+  // const saveNote = () => {
+  //   if (isEditing && editedNoteId) {
+  //     const noteToEdit = [...notes, ...pinnedNotes].find((note) => note.id === editedNoteId);
+  //     if (noteToEdit) {
+  //       dispatch(editNote({ id: editedNoteId, title, text, createdAt: noteToEdit.date, status: noteToEdit.status }));
+  //     }
+  //   } else {
+  //     dispatch(addNote());
+  //   }
+  //   dispatch(clearNote());
+  //   closeModal();
+  // };
+
+  const saveNote = () => console.log(1);
 
   const cancelNote = () => {
     dispatch(clearNote());
