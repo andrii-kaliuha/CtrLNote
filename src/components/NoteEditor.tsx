@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { addNote, clearNote, editNote, setText, setTitle } from "../store/slices/notesSlice";
@@ -7,30 +7,31 @@ import { Box, Modal, TextField } from "@mui/material";
 type NoteEditorProps = { state: boolean; closeModal: () => void };
 
 export const NoteEditor: React.FC<NoteEditorProps> = ({ state, closeModal }) => {
-  const { title, text, editedNoteId, notes } = useSelector((state: RootState) => state.notes);
+  const { editableNote, title, text } = useSelector((state: RootState) => state.notes);
   const dispatch = useDispatch();
-  const [isEditing, setIsEditing] = useState(false);
+  const isEditing = editableNote !== "";
 
   useEffect(() => {
-    setIsEditing(title || text ? true : false);
-  }, [title, text]);
+    // Якщо модалка відкривається без редагування, очищаємо поля
+    if (!isEditing) {
+      dispatch(setTitle(""));
+      dispatch(setText(""));
+    }
+  }, [isEditing, dispatch]);
 
   const titleChange = (e: React.ChangeEvent<HTMLInputElement>) => dispatch(setTitle(e.target.value));
-  const textChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => dispatch(setText(e.target.value));
-  // const saveNote = () => {
-  //   if (isEditing && editedNoteId) {
-  //     const noteToEdit = [...notes, ...pinnedNotes].find((note) => note.id === editedNoteId);
-  //     if (noteToEdit) {
-  //       dispatch(editNote({ id: editedNoteId, title, text, createdAt: noteToEdit.date, status: noteToEdit.status }));
-  //     }
-  //   } else {
-  //     dispatch(addNote());
-  //   }
-  //   dispatch(clearNote());
-  //   closeModal();
-  // };
 
-  const saveNote = () => console.log(1);
+  const textChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => dispatch(setText(e.target.value));
+
+  const saveNote = () => {
+    if (isEditing) {
+      dispatch(editNote());
+    } else {
+      dispatch(addNote());
+    }
+    dispatch(clearNote());
+    closeModal();
+  };
 
   const cancelNote = () => {
     dispatch(clearNote());
@@ -55,22 +56,10 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ state, closeModal }) => 
       >
         <TextField
           label="Заголовок"
-          sx={{
-            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: "var(--color-primary)",
-            },
-            "& .MuiInputLabel-root.Mui-focused": {
-              color: "var(--color-primary)",
-            },
-          }}
           value={title}
           onChange={titleChange}
           fullWidth
           margin="normal"
-        />
-
-        <TextField
-          label="Текст нотатки"
           sx={{
             "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
               borderColor: "var(--color-primary)",
@@ -79,19 +68,32 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ state, closeModal }) => 
               color: "var(--color-primary)",
             },
           }}
+        />
+
+        <TextField
+          label="Текст нотатки"
           value={text}
           onChange={textChange}
           multiline
           rows={6}
           fullWidth
           margin="normal"
+          sx={{
+            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+              borderColor: "var(--color-primary)",
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: "var(--color-primary)",
+            },
+          }}
         />
-        <div className="flex justify-end">
+
+        <div className="flex justify-end mt-4">
           <button
             onClick={saveNote}
             className="bg-[var(--button-primary)] hover:bg-[var(--button-primary-hover)] text-white font-bold py-2 px-4 rounded mr-2"
           >
-            Зберегти
+            {isEditing ? "Зберегти зміни" : "Зберегти"}
           </button>
           <button
             onClick={cancelNote}

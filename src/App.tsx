@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { DesktopNavigation, MobileNavigation } from "./components/Navigation";
-// import { SearchPage } from "./pages/SearchPage";
+import { SearchPage } from "./pages/SearchPage";
 import { NotesPage } from "./pages/NotesPage";
 import { ArchivePage } from "./pages/ArchivePage";
 import { TrashPage } from "./pages/TrashPage";
@@ -14,9 +14,9 @@ export const App = () => {
         <main className="flex-1 py-3 px-3 overflow-y-auto">
           <Routes>
             <Route path="/" element={<Navigate to="/notes" replace />} />
-            {/* <Route path="/search" element={<SearchPage />} /> */}
             <Route path="/notes" element={<NotesPage />} />
             <Route path="/archive" element={<ArchivePage />} />
+            <Route path="/search" element={<SearchPage />} />
             <Route path="/trash" element={<TrashPage />} />
             <Route path="/settings" element={<SettingsPage />} />
           </Routes>

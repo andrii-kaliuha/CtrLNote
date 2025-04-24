@@ -6,7 +6,7 @@ import { IconButton, FormControl, MenuItem, Select, SelectChangeEvent } from "@m
 import { Add } from "@mui/icons-material";
 import { Note } from "./Note";
 import { NoteEditor } from "../components/NoteEditor";
-import { clearNote, sortNotesByTitleAsc, sortNotesByTitleDesc, sortNotesByDateAsc, sortNotesByDateDesc } from "../store/slices/notesSlice";
+import { clearNote, sortNotesByTitle, sortNotesByDate } from "../store/slices/notesSlice";
 import { Note as NoteType } from "../store/slices/notesSlice";
 
 type NotesProps = { title: string; notes: NoteType[] };
@@ -31,6 +31,9 @@ export const Notes: React.FC<NotesProps> = ({ title, notes }) => {
       </div>
 
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {notes.map((note) => (
+          <Note key={note.id} {...note} />
+        ))}
         {title === "Нотатки" && (
           <li className="p-3 rounded-lg relative bg-[var(--color-surface)] flex justify-center items-center h-[180px]">
             <IconButton onClick={openNoteEditor} sx={{ ":hover": { backgroundColor: "var(--color-hover)" } }}>
@@ -38,10 +41,6 @@ export const Notes: React.FC<NotesProps> = ({ title, notes }) => {
             </IconButton>
           </li>
         )}
-
-        {notes.map((note) => (
-          <Note key={note.id} {...note} />
-        ))}
       </ul>
 
       <NoteEditor state={isNoteEditorOpen} closeModal={closeNoteEditor} />
@@ -61,16 +60,12 @@ const NotesSorter = () => {
 
     switch (selectedValue) {
       case "titleAsc":
-        dispatch(sortNotesByTitleAsc());
-        break;
       case "titleDesc":
-        dispatch(sortNotesByTitleDesc());
+        dispatch(sortNotesByTitle(selectedValue === "titleAsc" ? "asc" : "desc"));
         break;
       case "dateAsc":
-        dispatch(sortNotesByDateAsc());
-        break;
       case "dateDesc":
-        dispatch(sortNotesByDateDesc());
+        dispatch(sortNotesByDate(selectedValue === "dateAsc" ? "asc" : "desc"));
         break;
     }
   };
