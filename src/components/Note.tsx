@@ -1,5 +1,5 @@
 // hooks/useNoteActions.ts
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   pinNote,
   unpinNote,
@@ -40,12 +40,65 @@ export const useNoteActions = () => {
 };
 
 // utils/formatDate.ts
-export const formatDate = (date: number): string => {
-  return new Date(date).toLocaleDateString("en", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+// export const formatDate = (date: number, locale: string = "uk-UA"): string => {
+//   const inputDate = new Date(date);
+//   const currentDate = new Date();
+
+//   const isSameDay =
+//     inputDate.getFullYear() === currentDate.getFullYear() &&
+//     inputDate.getMonth() === currentDate.getMonth() &&
+//     inputDate.getDate() === currentDate.getDate();
+
+//   if (isSameDay) {
+//     return inputDate.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" });
+//   }
+
+//   const isSameMonth = inputDate.getFullYear() === currentDate.getFullYear() && inputDate.getMonth() === currentDate.getMonth();
+
+//   if (isSameMonth) {
+//     return inputDate.toLocaleDateString(locale, { day: "numeric", month: "long" });
+//   }
+
+//   return inputDate.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" });
+// };
+
+export const formatDate = (date: number, locale: string = "uk-UA", dateFormat: string = "DD/MM/YYYY"): string => {
+  const inputDate = new Date(date);
+  const currentDate = new Date();
+
+  const isSameDay =
+    inputDate.getFullYear() === currentDate.getFullYear() &&
+    inputDate.getMonth() === currentDate.getMonth() &&
+    inputDate.getDate() === currentDate.getDate();
+
+  if (isSameDay) {
+    return inputDate.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit" });
+  }
+
+  const formatCustomDate = (date: Date, format: string): string => {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+
+    switch (format) {
+      case "DD/MM/YYYY":
+        return `${day}/${month}/${year}`;
+      case "MM/DD/YYYY":
+        return `${month}/${day}/${year}`;
+      case "YYYY-MM-DD":
+        return `${year}-${month}-${day}`;
+      default:
+        return inputDate.toLocaleDateString(locale, { day: "numeric", month: "long", year: "numeric" });
+    }
+  };
+
+  const isSameMonth = inputDate.getFullYear() === currentDate.getFullYear() && inputDate.getMonth() === currentDate.getMonth();
+
+  if (isSameMonth) {
+    return formatCustomDate(inputDate, dateFormat);
+  }
+
+  return formatCustomDate(inputDate, dateFormat);
 };
 
 // components/NoteActionItem.tsx
@@ -69,10 +122,15 @@ import { NoteEditor } from "./NoteEditor";
 // import { NoteActionItem } from "./NoteActionItem";
 // import { formatDate } from "../utils/formatDate";
 import { Note as NoteType } from "../store/slices/notesSlice";
+import { RootState } from "../store/store";
 
 export type NoteProps = NoteType & { isTrash?: boolean };
 
 export const Note: React.FC<NoteProps> = ({ id, title, text, createdAt, status }) => {
+  const dateFormat = useSelector((state: RootState) => state.settings.dateFormat);
+  const currentLocale = "uk-UA"; // Або отримуйте з іншого місця
+
+  const formattedDate = formatDate(createdAt, currentLocale, dateFormat);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -145,7 +203,7 @@ export const Note: React.FC<NoteProps> = ({ id, title, text, createdAt, status }
       </div>
 
       <div className="flex justify-between items-center">
-        <p className="text-xs leading-none">{formatDate(createdAt)}</p>
+        <p className="text-xs leading-none">{formatDate(createdAt, "en")}</p>
         <IconButton onClick={openMenu} sx={{ borderRadius: "50%", ":hover": { backgroundColor: "var(--color-hover)" } }}>
           <MoreVertIcon sx={{ color: "var(--text-primary)" }} />
         </IconButton>

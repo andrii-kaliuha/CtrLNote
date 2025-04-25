@@ -1,19 +1,16 @@
-// import { useSelector, useDispatch } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-// import { RootState } from "../store/store";
 import { IconButton, FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import { Note } from "./Note";
 import { NoteEditor } from "../components/NoteEditor";
-import { clearNote, sortNotesByTitle, sortNotesByDate } from "../store/slices/notesSlice";
+import { clearNote } from "../store/slices/notesSlice";
 import { Note as NoteType } from "../store/slices/notesSlice";
 
-type NotesProps = { title: string; notes: NoteType[] };
+type NotesProps = { title: string; notes: NoteType[]; sortBy: SortBy; onSortChange: (newSortBy: SortBy) => void };
 
-export const Notes: React.FC<NotesProps> = ({ title, notes }) => {
+export const Notes: React.FC<NotesProps> = ({ title, notes, sortBy, onSortChange }) => {
   const dispatch = useDispatch();
-  // const notes = useSelector((state: RootState) => state.notes.notes);
   const [isNoteEditorOpen, setNoteEditorOpen] = useState(false);
 
   const openNoteEditor = () => {
@@ -27,13 +24,15 @@ export const Notes: React.FC<NotesProps> = ({ title, notes }) => {
     <>
       <div className="p-3 flex justify-between items-center">
         <h2>{title}</h2>
-        <NotesSorter />
+        {/* Передаємо стан сортування та обробник змін у NotesSorter */}
+        <NotesSorter sortBy={sortBy} onChange={onSortChange} />
       </div>
 
       <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {notes.map((note) => (
           <Note key={note.id} {...note} />
         ))}
+        {/* Умова для кнопки додавання залишається */}
         {title === "Нотатки" && (
           <li className="p-3 rounded-lg relative bg-[var(--color-surface)] flex justify-center items-center h-[180px]">
             <IconButton onClick={openNoteEditor} sx={{ ":hover": { backgroundColor: "var(--color-hover)" } }}>
@@ -48,34 +47,27 @@ export const Notes: React.FC<NotesProps> = ({ title, notes }) => {
   );
 };
 
-type SortBy = "titleAsc" | "titleDesc" | "dateAsc" | "dateDesc";
+// Визначення типу для критеріїв сортування залишається
+export type SortBy = "titleAsc" | "titleDesc" | "dateAsc" | "dateDesc";
 
-const NotesSorter = () => {
-  const dispatch = useDispatch();
-  const [sortBy, setSortBy] = useState<SortBy>("dateDesc");
+type NotesSorterProps = {
+  sortBy: SortBy; // Приймаємо поточне значення сортування
+  onChange: (newSortBy: SortBy) => void; // Функція для зміни сортування
+};
 
-  const sortNotes = (event: SelectChangeEvent<string>) => {
+// Змінено: NotesSorter тепер приймає props
+export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, onChange }) => {
+  const handleSortChange = (event: SelectChangeEvent<string>) => {
     const selectedValue = event.target.value as SortBy;
-    setSortBy(selectedValue);
-
-    switch (selectedValue) {
-      case "titleAsc":
-      case "titleDesc":
-        dispatch(sortNotesByTitle(selectedValue === "titleAsc" ? "asc" : "desc"));
-        break;
-      case "dateAsc":
-      case "dateDesc":
-        dispatch(sortNotesByDate(selectedValue === "dateAsc" ? "asc" : "desc"));
-        break;
-    }
+    onChange(selectedValue); // Викликаємо колбек замість dispatch
   };
 
   return (
     <FormControl>
       <Select
-        id="sort-select"
+        name="sort-select"
         value={sortBy}
-        onChange={sortNotes}
+        onChange={handleSortChange}
         MenuProps={{ PaperProps: { sx: { "& .MuiList-root": { padding: 0 } } } }}
         sx={{
           "& .MuiSelect-select": { padding: "0.5px 12px" },

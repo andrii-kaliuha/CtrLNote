@@ -20,7 +20,7 @@ body {
   --color-surface: #ffffff;
   --color-secondary: #f0edf5;
 
-  --color-primary: rgb(123, 95, 214);
+  --color-primary: var(--color-primary-purple);
   --color-accent: #947fd9;
 
   --text-primary: #1e1c22;
@@ -38,6 +38,13 @@ body {
   --button-primary-hover: rgba(123, 95, 214, 0.8);
   --button-secondary: #d1d5dc;
   --button-secondary-hover: #99a1af;
+
+  --color-primary-green: rgb(39, 44, 39);
+  --color-primary-purple: #b5a1e2;
+  --color-primary-blue: blue;
+  --color-primary-red: red;
+  --color-primary-yellow: yellow;
+  --color-primary-orange: orange;
 }
 
 .dark {
@@ -45,7 +52,7 @@ body {
   --color-surface: #1e1d20;
   --color-secondary: #2a2731;
 
-  --color-primary: #b5a1e2;
+  --color-primary: var(--color-primary-purple);
   --color-accent: #a38dde;
 
   --text-primary: #eae6f2;
@@ -63,4 +70,11 @@ body {
   --button-primary-hover: #48a26c;
   --button-secondary: #d1d5dc;
   --button-secondary-hover: #99a1af;
+
+  --color-primary-green: rgb(39, 44, 39);
+  --color-primary-purple: #b5a1e2;
+  --color-primary-blue: blue;
+  --color-primary-red: red;
+  --color-primary-yellow: yellow;
+  --color-primary-orange: orange;
 }

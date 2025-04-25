@@ -1,25 +1,73 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Switch, FormControl, MenuItem, Select, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { setDateFormat, setLanguage, setMainColor, setTheme, setTimeFormat, toggleTrash } from "../store/slices/settingsSlice";
 
 export const SettingsPage = () => (
   <section className="flex-1">
     <Settings />
+    <div className="bg-[var(--color-primary)] w-32 h-32"></div>
   </section>
 );
 
 const Settings = () => {
-  const [dateFormat, setDateFormat] = useState("DD/MM/YYYY");
-  const [timeFormat, setTimeFormat] = useState("24_hour");
-  const [theme, setTheme] = useState("light");
-  const [language, setLanguage] = useState("ukrainian");
-  const [trash, toogleTrash] = useState(true);
+  const dateFormat = useSelector((state: any) => state.settings.dateFormat);
+  const timeFormat = useSelector((state: any) => state.settings.timeFormat);
+  const theme = useSelector((state: any) => state.settings.theme);
+  const language = useSelector((state: any) => state.settings.language);
+  const mainColor = useSelector((state: any) => state.settings.mainColor);
+  const trashEnabled = useSelector((state: any) => state.settings.trashEnabled);
+
+  const dispatch = useDispatch();
+
+  const handleDateFormatChange = useCallback(
+    (newFormat: string) => {
+      dispatch(setDateFormat(newFormat));
+    },
+    [dispatch]
+  );
+
+  const handleTimeFormatChange = useCallback(
+    (newFormat: string) => {
+      dispatch(setTimeFormat(newFormat));
+    },
+    [dispatch]
+  );
+
+  const handleThemeChange = useCallback(
+    (newTheme: "light" | "dark") => {
+      dispatch(setTheme(newTheme));
+    },
+    [dispatch]
+  );
+
+  const handleLanguageChange = useCallback(
+    (newLanguage: string) => {
+      dispatch(setLanguage(newLanguage));
+    },
+    [dispatch]
+  );
+
+  const handleMainColorChange = useCallback(
+    (newColor: string) => {
+      dispatch(setMainColor(newColor));
+    },
+    [dispatch]
+  );
+
+  const handleTrashToggle = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
+      dispatch(toggleTrash()); // toggleTrash не приймає аргументів, стан перемикається всередині редюсера
+    },
+    [dispatch]
+  );
 
   return (
     <ul className="flex flex-col gap-3">
       <Setting
         title="Формат дати"
         value={dateFormat}
-        function={setDateFormat}
+        function={handleDateFormatChange}
         options={[
           { name: "DD/MM/YYYY", value: "DD/MM/YYYY" },
           { name: "MM/DD/YYYY", value: "MM/DD/YYYY" },
@@ -29,7 +77,7 @@ const Settings = () => {
       <Setting
         title="Формат часу"
         value={timeFormat}
-        function={setTimeFormat}
+        function={handleTimeFormatChange}
         options={[
           { name: "12 годин", value: "12_hour" },
           { name: "24 години", value: "24_hour" },
@@ -38,7 +86,7 @@ const Settings = () => {
       <Setting
         title="Тема інтерфейсу"
         value={theme}
-        function={setTheme}
+        function={(value: string) => handleThemeChange(value as "light" | "dark")}
         options={[
           { name: "Світла", value: "light" },
           { name: "Темна", value: "dark" },
@@ -47,17 +95,30 @@ const Settings = () => {
       <Setting
         title="Мова"
         value={language}
-        function={setLanguage}
+        function={handleLanguageChange}
         options={[
           { name: "Англійська", value: "english" },
           { name: "Українська", value: "ukrainian" },
           { name: "Польська", value: "polish" },
         ]}
       />
+      <Setting
+        title="Основний колір інтерфейсу"
+        value={mainColor}
+        function={handleMainColorChange}
+        options={[
+          { name: "Зелений", value: "green" },
+          { name: "Фіолетовий", value: "purple" },
+          { name: "Синій", value: "blue" },
+          { name: "Червоний", value: "red" },
+          { name: "Жовтий", value: "yellow" },
+          { name: "Оранжевий", value: "orange" },
+        ]}
+      />
       <li>
         <div className="flex items-center justify-between w-full">
           <p>Увімкнути Кошик</p>
-          <Switch checked={trash} onChange={(e) => toogleTrash(e.target.checked)} />
+          <Switch name="trash" checked={trashEnabled} onChange={handleTrashToggle} />
         </div>
       </li>
     </ul>
@@ -72,7 +133,7 @@ const Setting = ({ title, value, options, function: handleChange }: SettingProps
     <li>
       <FormControl sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
         <Typography variant="body1">{title}</Typography>
-        <Select value={value} sx={{ height: 40, width: 200 }} onChange={(e) => handleChange(e.target.value)}>
+        <Select name={title} value={value} sx={{ height: 40, width: 200 }} onChange={(e) => handleChange(e.target.value)}>
           {options.map((item) => (
             <MenuItem key={item.value} value={item.value}>
               {item.name}

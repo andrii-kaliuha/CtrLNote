@@ -13,6 +13,8 @@ export const SearchPage = () => {
   const [query, setQuery] = useState(() => searchQuery ?? "");
 
   useEffect(() => {
+    // Синхронізуємо локальний стан з Redux, якщо потрібно
+    // Можливо, ви захочете очищати searchQuery в Redux при виході зі сторінки пошуку
     setQuery(searchQuery);
   }, [searchQuery]);
 
@@ -22,9 +24,11 @@ export const SearchPage = () => {
     dispatch(setSearchQuery(value));
   };
 
-  const filteredNotes = notes.filter(
-    (note) => note.title.toLowerCase().includes(query.toLowerCase()) || note.text.toLowerCase().includes(query.toLowerCase())
-  );
+  // Фільтруємо нотатки ТІЛЬКИ якщо є запит
+  const filteredNotes =
+    query.trim().length > 0
+      ? notes.filter((note) => note.title.toLowerCase().includes(query.toLowerCase()) || note.text.toLowerCase().includes(query.toLowerCase()))
+      : []; // Якщо запиту немає, filteredNotes - порожній масив
 
   const pinnedNotes = filteredNotes.filter((note) => note.status === "pinned");
   const activeNotes = filteredNotes.filter((note) => note.status === "active");
@@ -32,41 +36,51 @@ export const SearchPage = () => {
   const deletedNotes = filteredNotes.filter((note) => note.status === "deleted");
 
   const renderNoteGroup = (notes: NoteType[], title: string) => {
-    if (notes.length === 0) return null;
-
-    return (
-      <>
-        <h2 className="text-lg p-3">{title}</h2>
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {notes.map((note) => (
-            <NoteComponent key={note.id} {...note} />
-          ))}
-        </ul>
-      </>
-    );
+    if (notes.length > 0) {
+      return (
+        <>
+          <h2 className="text-lg p-3">{title}</h2>
+          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {notes.map((note) => (
+              <NoteComponent key={note.id} {...note} />
+            ))}
+          </ul>
+        </>
+      );
+    }
   };
 
   return (
-    <div className="search-note">
+    <>
       <input
+        name="search-note"
         type="text"
         value={query}
         onChange={handleSearchChange}
-        placeholder="Search notes..."
+        placeholder="Пошук нотаток..."
         className="p-3 outline-none border border-transparent rounded-md caret-[var(--color-primary)]
-              focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)]
-              hover:border-[var(--color-primary)] transition"
+                   focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)]
+                   hover:border-[var(--color-primary)] transition w-full"
       />
-      {filteredNotes.length > 0 ? (
-        <>
-          {renderNoteGroup(pinnedNotes, "Закріплені")}
-          {renderNoteGroup(activeNotes, "Нотатки")}
-          {renderNoteGroup(archivedNotes, "Архівні")}
-          {renderNoteGroup(deletedNotes, "Видалені")}
-        </>
+      {/* Основна зміна тут: перевіряємо чи є запит */}
+      {query.trim().length > 0 ? (
+        // Якщо є запит, перевіряємо, чи щось знайдено
+        filteredNotes.length > 0 ? (
+          <>
+            {/* Рендеримо групи тільки якщо в них є нотатки (renderNoteGroup вже це робить) */}
+            {renderNoteGroup(pinnedNotes, "Закріплені")}
+            {renderNoteGroup(activeNotes, "Нотатки")}
+            {renderNoteGroup(archivedNotes, "Архівні")}
+            {renderNoteGroup(deletedNotes, "Видалені")}
+          </>
+        ) : (
+          // Якщо є запит, але нічого не знайдено
+          <p className="text-[var(--text-secondary)] text-center p-3">Нічого не знайдено за запитом "{query}"</p>
+        )
       ) : (
-        <p className="text-[var(--text-secondary)]">Нічого не знайдено</p>
+        // Якщо запиту немає (поле пошуку порожнє)
+        <p className="text-[var(--text-secondary)] text-center p-3">Почніть вводити текст для пошуку нотаток</p>
       )}
-    </div>
+    </>
   );
 };
