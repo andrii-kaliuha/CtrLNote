@@ -1,63 +1,81 @@
-import { useCallback, useState } from "react";
-import { Switch, FormControl, MenuItem, Select, Typography } from "@mui/material";
+import React, { useCallback, useEffect } from "react";
+import { Switch, FormControl, MenuItem, Select, Typography, SelectChangeEvent } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { setDateFormat, setLanguage, setMainColor, setTheme, setTimeFormat, toggleTrash } from "../store/slices/settingsSlice";
+import { RootState } from "../store/store";
 
-export const SettingsPage = () => (
-  <section className="flex-1">
-    <Settings />
-    <div className="bg-[var(--color-primary)] w-32 h-32"></div>
-  </section>
-);
+function useThemeAndColor() {
+  const theme = useSelector((state: RootState) => state.settings.theme);
+  const mainColor = useSelector((state: RootState) => state.settings.mainColor);
+
+  useEffect(() => {
+    const htmlElement = document.documentElement;
+    if (theme === "dark") {
+      htmlElement.classList.add("dark");
+    } else {
+      htmlElement.classList.remove("dark");
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty("--color-primary", `var(--color-primary-${mainColor})`);
+  }, [mainColor]);
+}
+
+export default useThemeAndColor;
 
 const Settings = () => {
-  const dateFormat = useSelector((state: any) => state.settings.dateFormat);
-  const timeFormat = useSelector((state: any) => state.settings.timeFormat);
-  const theme = useSelector((state: any) => state.settings.theme);
-  const language = useSelector((state: any) => state.settings.language);
-  const mainColor = useSelector((state: any) => state.settings.mainColor);
-  const trashEnabled = useSelector((state: any) => state.settings.trashEnabled);
+  const dateFormat = useSelector((state: RootState) => state.settings.dateFormat);
+  const timeFormat = useSelector((state: RootState) => state.settings.timeFormat);
+  const language = useSelector((state: RootState) => state.settings.language);
+  const mainColor = useSelector((state: RootState) => state.settings.mainColor);
+  const trashEnabled = useSelector((state: RootState) => state.settings.trashEnabled);
+  const theme = useSelector((state: RootState) => state.settings.theme);
 
   const dispatch = useDispatch();
 
   const handleDateFormatChange = useCallback(
-    (newFormat: string) => {
-      dispatch(setDateFormat(newFormat));
+    (event: SelectChangeEvent<string>) => {
+      dispatch(setDateFormat(event.target.value));
     },
     [dispatch]
   );
 
   const handleTimeFormatChange = useCallback(
-    (newFormat: string) => {
-      dispatch(setTimeFormat(newFormat));
-    },
-    [dispatch]
-  );
-
-  const handleThemeChange = useCallback(
-    (newTheme: "light" | "dark") => {
-      dispatch(setTheme(newTheme));
+    (event: SelectChangeEvent<string>) => {
+      dispatch(setTimeFormat(event.target.value));
     },
     [dispatch]
   );
 
   const handleLanguageChange = useCallback(
-    (newLanguage: string) => {
-      dispatch(setLanguage(newLanguage));
+    (event: SelectChangeEvent<string>) => {
+      dispatch(setLanguage(event.target.value));
+    },
+    [dispatch]
+  );
+
+  // useThemeAndColor.ts
+
+  // Шлях до вашого store
+
+  const handleThemeChange = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      dispatch(setTheme(event.target.value as "light" | "dark"));
     },
     [dispatch]
   );
 
   const handleMainColorChange = useCallback(
-    (newColor: string) => {
-      dispatch(setMainColor(newColor));
+    (event: SelectChangeEvent<string>) => {
+      dispatch(setMainColor(event.target.value));
     },
     [dispatch]
   );
 
   const handleTrashToggle = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      dispatch(toggleTrash()); // toggleTrash не приймає аргументів, стан перемикається всередині редюсера
+    (_event: React.ChangeEvent<HTMLInputElement>, _checked: boolean) => {
+      dispatch(toggleTrash());
     },
     [dispatch]
   );
@@ -86,7 +104,7 @@ const Settings = () => {
       <Setting
         title="Тема інтерфейсу"
         value={theme}
-        function={(value: string) => handleThemeChange(value as "light" | "dark")}
+        function={handleThemeChange}
         options={[
           { name: "Світла", value: "light" },
           { name: "Темна", value: "dark" },
@@ -118,7 +136,27 @@ const Settings = () => {
       <li>
         <div className="flex items-center justify-between w-full">
           <p>Увімкнути Кошик</p>
-          <Switch name="trash" checked={trashEnabled} onChange={handleTrashToggle} />
+          <Switch
+            sx={{
+              "& .MuiSwitch-thumb": {
+                backgroundColor: "var(--color-primary)",
+              },
+              "& .MuiSwitch-track": {
+                backgroundColor: "var(--color-primary) !important",
+                opacity: 0.38,
+              },
+              "&.Mui-checked + .MuiSwitch-track": {
+                backgroundColor: "var(--color-primary)",
+                opacity: 0.5,
+              },
+              "&.Mui-checked .MuiSwitch-thumb": {
+                backgroundColor: "var(--color-primary)",
+              },
+            }}
+            name="trash"
+            checked={trashEnabled}
+            onChange={handleTrashToggle}
+          />
         </div>
       </li>
     </ul>
@@ -126,14 +164,36 @@ const Settings = () => {
 };
 
 type Option = { value: string; name: string };
-type SettingProps = { title: string; value: string; options: Option[]; function: (value: string) => void };
+type SettingProps = {
+  title: string;
+  value: string;
+  options: Option[];
+  function: (event: SelectChangeEvent<string>) => void;
+};
 
 const Setting = ({ title, value, options, function: handleChange }: SettingProps) => {
   return (
     <li>
       <FormControl sx={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
         <Typography variant="body1">{title}</Typography>
-        <Select name={title} value={value} sx={{ height: 40, width: 200 }} onChange={(e) => handleChange(e.target.value)}>
+        <Select
+          name={title}
+          value={value}
+          onChange={handleChange}
+          sx={{
+            color: "var(--text-primary)",
+            height: 40,
+            width: 200,
+            borderColor: "var(--color-primary)",
+            "& .MuiSelect-select": { padding: "0.5px 12px" },
+            "& fieldset": { borderColor: "transparent !important" },
+            "&:hover fieldset": { borderColor: "var(--color-primary) !important" },
+            "&.Mui-focused fieldset": { borderColor: "var(--color-primary) !important" },
+            "& .MuiSvgIcon-root": { color: "inherit" },
+            "&.Mui-focused .MuiSvgIcon-root": { color: "var(--color-primary)" },
+            "&:hover .MuiSvgIcon-root": { color: "var(--color-primary)" },
+          }}
+        >
           {options.map((item) => (
             <MenuItem key={item.value} value={item.value}>
               {item.name}
@@ -144,3 +204,10 @@ const Setting = ({ title, value, options, function: handleChange }: SettingProps
     </li>
   );
 };
+
+export const SettingsPage = () => (
+  <section className="flex-1">
+    <Settings />
+    <div className="bg-[var(--color-primary)] w-32 h-32 rounded-full"></div>
+  </section>
+);

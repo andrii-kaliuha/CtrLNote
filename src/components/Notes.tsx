@@ -70,6 +70,7 @@ export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, onChange }) =>
         onChange={handleSortChange}
         MenuProps={{ PaperProps: { sx: { "& .MuiList-root": { padding: 0 } } } }}
         sx={{
+          color: "var(--text-primary)",
           "& .MuiSelect-select": { padding: "0.5px 12px" },
           "& fieldset": { borderColor: "transparent !important" },
           "&:hover fieldset": { borderColor: "var(--color-primary) !important" },

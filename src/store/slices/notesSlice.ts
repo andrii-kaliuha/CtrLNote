@@ -12,7 +12,6 @@ const notesList: Note[] = rawNotes.map((note) => ({
 
 const initialState: NotesState = { notes: notesList, editableNote: "", title: "", text: "", searchQuery: "", searchHistory: [] };
 
-// Допоміжна функція пошуку нотатки
 const findNote = (state: NotesState, id: string) => state.notes.find((note) => note.id === id);
 
 const notesSlice = createSlice({
@@ -99,14 +98,6 @@ const notesSlice = createSlice({
       state.notes = state.notes.filter((note) => note.id !== action.payload);
     },
 
-    // sortNotesByTitle: (state, action: PayloadAction<"asc" | "desc">) => {
-    //   state.notes.sort((a, b) => (action.payload === "asc" ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title)));
-    // },
-
-    // sortNotesByDate: (state, action: PayloadAction<"asc" | "desc">) => {
-    //   state.notes.sort((a, b) => (action.payload === "asc" ? a.createdAt - b.createdAt : b.createdAt - a.createdAt));
-    // },
-
     setSearchQuery: (state, action: PayloadAction<string>) => {
       state.searchQuery = action.payload;
     },
@@ -127,8 +118,6 @@ export const {
   moveToTrash,
   restoreNote,
   removeNotePermanently,
-  // sortNotesByTitle,
-  // sortNotesByDate,
   setSearchQuery,
 } = notesSlice.actions;
 

@@ -5,8 +5,11 @@ import { NotesPage } from "./pages/NotesPage";
 import { ArchivePage } from "./pages/ArchivePage";
 import { TrashPage } from "./pages/TrashPage";
 import { SettingsPage } from "./pages/SettingsPage";
+import useThemeAndColor from "./pages/SettingsPage";
 
 export const App = () => {
+  useThemeAndColor();
+
   return (
     <Router>
       <div className="relative flex flex-col sm:flex-row max-w-[1280px] w-full min-h-screen mx-auto">
