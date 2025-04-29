@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react"; // Додано useState та useMemo
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { Notes, SortBy } from "../components/Notes";
+import { NotesComponent, SortBy } from "../components/NotesComponent";
 import { Note as NoteType } from "../store/slices/notesSlice"; // Переконайтеся, що шлях правильний
 
 // Допоміжна функція для сортування (можна винести в окремий файл utils)
@@ -51,7 +51,7 @@ export const NotesPage = () => {
       {/* Рендеримо закріплені, якщо вони є, передаючи стан сортування та обробник */}
       {pinnedNotes.length > 0 && (
         <>
-          <Notes
+          <NotesComponent
             title="Закріплені"
             notes={pinnedNotes} // Передаємо відфільтровані та відсортовані
             sortBy={pinnedSortBy} // Передаємо поточний критерій
@@ -61,7 +61,7 @@ export const NotesPage = () => {
       )}
 
       {/* Рендеримо активні нотатки, передаючи їх стан сортування та обробник */}
-      <Notes
+      <NotesComponent
         title="Нотатки"
         notes={activeNotes} // Передаємо відфільтровані та відсортовані
         sortBy={activeSortBy} // Передаємо поточний критерій

@@ -188,8 +188,6 @@ export const Note: React.FC<NoteProps> = ({ id, title, text, createdAt, status }
           { title: "Відновити", action: () => restore(id) },
           { title: "Видалити назавжди", action: () => deleteNote(id) },
         ];
-      default:
-        return [];
     }
   };
 

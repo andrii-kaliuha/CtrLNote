@@ -3,6 +3,7 @@ import { Switch, FormControl, MenuItem, Select, Typography, SelectChangeEvent } 
 import { useDispatch, useSelector } from "react-redux";
 import { setDateFormat, setLanguage, setMainColor, setTheme, setTimeFormat, toggleTrash } from "../store/slices/settingsSlice";
 import { RootState } from "../store/store";
+import { NoteComponent } from "../components/NoteComponent";
 
 function useThemeAndColor() {
   const theme = useSelector((state: RootState) => state.settings.theme);
@@ -209,5 +210,6 @@ export const SettingsPage = () => (
   <section className="flex-1">
     <Settings />
     <div className="bg-[var(--color-primary)] w-32 h-32 rounded-full"></div>
+    <NoteComponent title="1" text="2" createdAt={3} status="active" id="45" />
   </section>
 );
