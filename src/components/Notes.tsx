@@ -1,5 +1,5 @@
-import { Note } from "./Note";
 import { Note as NoteType } from "../store/slices/notesSlice";
+import { Note } from "./Note";
 
 type NotesProps = { notes: NoteType[] };
 

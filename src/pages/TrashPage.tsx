@@ -1,9 +1,9 @@
-import { useSelector, useDispatch } from "react-redux";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button } from "@mui/material";
-import { Note as NoteType, restoreNote, removeNotePermanently } from "../store/slices/notesSlice";
-import { Note } from "../components/Note";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
+import { restoreNote, removeNotePermanently } from "../store/slices/notesSlice";
+import { Notes } from "../components/Notes";
 
 export const TrashPage = () => {
   const allNotes = useSelector((state: RootState) => state.notes.notes);
@@ -25,7 +25,7 @@ export const TrashPage = () => {
               Видалити все
             </Button>
           </div>
-          <Trash notes={deletedNotes} />
+          <Notes notes={deletedNotes} />
         </>
       ) : (
         <EmptyTrash />
@@ -40,14 +40,4 @@ const EmptyTrash = () => (
     <p className="text-lg mt-4">У кошику немає жодних нотаток</p>
     <p className="text-sm text-[var(--text-secondary)]">Видалені нотатки автоматично зникнуть через 7 днів</p>
   </div>
-);
-
-type TrashProps = { notes: NoteType[] };
-
-const Trash: React.FC<TrashProps> = ({ notes }) => (
-  <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    {notes.map((note) => (
-      <Note key={note.id} {...note} isTrash={true} />
-    ))}
-  </ul>
 );

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NotesState, setSearchQuery } from "../store/slices/notesSlice";
-import { Note as NoteComponent } from "../components/Note";
 import type { Note as NoteType } from "../store/slices/notesSlice";
+import { Note } from "../components/Note";
 
 export const SearchPage = () => {
   const dispatch = useDispatch();
@@ -42,7 +42,7 @@ export const SearchPage = () => {
           <h2 className="text-lg p-3">{title}</h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {notes.map((note) => (
-              <NoteComponent key={note.id} {...note} />
+              <Note key={note.id} {...note} />
             ))}
           </ul>
         </>

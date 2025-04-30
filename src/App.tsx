@@ -1,11 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { DesktopNavigation, MobileNavigation } from "./components/Navigation";
-import { SearchPage } from "./pages/SearchPage";
 import { NotesPage } from "./pages/NotesPage";
 import { ArchivePage } from "./pages/ArchivePage";
+import { SearchPage } from "./pages/SearchPage";
 import { TrashPage } from "./pages/TrashPage";
-import { SettingsPage } from "./pages/SettingsPage";
-import useThemeAndColor from "./pages/SettingsPage";
+import { SettingsPage, useThemeAndColor } from "./pages/SettingsPage";
 
 export const App = () => {
   useThemeAndColor();

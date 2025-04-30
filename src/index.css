@@ -25,6 +25,7 @@ body {
 
   --text-primary: #1e1c22;
   --text-secondary: #5f5b6b;
+  --text-accent: var(--color-primary);
 
   --color-outline: #7b5fd6;
   --color-border: #d2cfe0;

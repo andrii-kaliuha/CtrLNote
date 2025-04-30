@@ -1,9 +1,7 @@
-import React from "react";
-import { useSelector } from "react-redux";
 import ArchiveIcon from "@mui/icons-material/Archive";
-import { Note as NoteType } from "../store/slices/notesSlice";
-import { Note } from "../components/Note";
+import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { Notes } from "../components/Notes";
 
 export const ArchivePage = () => {
   const { notes } = useSelector((state: RootState) => state.notes);
@@ -12,7 +10,7 @@ export const ArchivePage = () => {
 
   return (
     <section className="flex flex-col items-center w-full h-full">
-      {archivedNotes.length === 0 ? <EmptyArchive /> : <Archive archivedNotes={archivedNotes} />}
+      {archivedNotes.length > 0 ? <Notes notes={archivedNotes} /> : <EmptyArchive />}
     </section>
   );
 };
@@ -23,15 +21,3 @@ const EmptyArchive = () => (
     <p className="mt-3 text-lg text-[var(--text-secondary)]">Архів ваших нотаток знаходиться тут</p>
   </div>
 );
-
-type ArchiveProps = { archivedNotes: NoteType[] };
-
-const Archive: React.FC<ArchiveProps> = ({ archivedNotes }) => {
-  return (
-    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {archivedNotes.map((note) => (
-        <Note key={note.id} {...note} />
-      ))}
-    </ul>
-  );
-};

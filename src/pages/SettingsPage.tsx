@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect } from "react";
 import { Switch, FormControl, MenuItem, Select, Typography, SelectChangeEvent } from "@mui/material";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDateFormat, setLanguage, setMainColor, setTheme, setTimeFormat, toggleTrash } from "../store/slices/settingsSlice";
 import { RootState } from "../store/store";
-import { NoteComponent } from "../components/NoteComponent";
+import { setDateFormat, setLanguage, setMainColor, setTheme, setTimeFormat, toggleTrash } from "../store/slices/settingsSlice";
 
-function useThemeAndColor() {
+// useThemeAndColor.ts
+export function useThemeAndColor() {
   const theme = useSelector((state: RootState) => state.settings.theme);
   const mainColor = useSelector((state: RootState) => state.settings.mainColor);
 
@@ -23,9 +23,7 @@ function useThemeAndColor() {
   }, [mainColor]);
 }
 
-export default useThemeAndColor;
-
-const Settings = () => {
+export const SettingsPage = () => {
   const dateFormat = useSelector((state: RootState) => state.settings.dateFormat);
   const timeFormat = useSelector((state: RootState) => state.settings.timeFormat);
   const language = useSelector((state: RootState) => state.settings.language);
@@ -56,10 +54,6 @@ const Settings = () => {
     [dispatch]
   );
 
-  // useThemeAndColor.ts
-
-  // Шлях до вашого store
-
   const handleThemeChange = useCallback(
     (event: SelectChangeEvent<string>) => {
       dispatch(setTheme(event.target.value as "light" | "dark"));
@@ -75,7 +69,7 @@ const Settings = () => {
   );
 
   const handleTrashToggle = useCallback(
-    (_event: React.ChangeEvent<HTMLInputElement>, _checked: boolean) => {
+    (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
       dispatch(toggleTrash());
     },
     [dispatch]
@@ -134,43 +128,36 @@ const Settings = () => {
           { name: "Оранжевий", value: "orange" },
         ]}
       />
-      <li>
-        <div className="flex items-center justify-between w-full">
-          <p>Увімкнути Кошик</p>
-          <Switch
-            sx={{
-              "& .MuiSwitch-thumb": {
-                backgroundColor: "var(--color-primary)",
-              },
-              "& .MuiSwitch-track": {
-                backgroundColor: "var(--color-primary) !important",
-                opacity: 0.38,
-              },
-              "&.Mui-checked + .MuiSwitch-track": {
-                backgroundColor: "var(--color-primary)",
-                opacity: 0.5,
-              },
-              "&.Mui-checked .MuiSwitch-thumb": {
-                backgroundColor: "var(--color-primary)",
-              },
-            }}
-            name="trash"
-            checked={trashEnabled}
-            onChange={handleTrashToggle}
-          />
-        </div>
+      <li className="flex items-center justify-between w-full">
+        <p>Увімкнути Кошик</p>
+        <Switch
+          sx={{
+            "& .MuiSwitch-thumb": {
+              backgroundColor: "var(--color-primary)",
+            },
+            "& .MuiSwitch-track": {
+              backgroundColor: "var(--color-primary) !important",
+              opacity: 0.38,
+            },
+            "&.Mui-checked + .MuiSwitch-track": {
+              backgroundColor: "var(--color-primary)",
+              opacity: 0.5,
+            },
+            "&.Mui-checked .MuiSwitch-thumb": {
+              backgroundColor: "var(--color-primary)",
+            },
+          }}
+          name="trash"
+          checked={trashEnabled}
+          onChange={handleTrashToggle}
+        />
       </li>
     </ul>
   );
 };
 
 type Option = { value: string; name: string };
-type SettingProps = {
-  title: string;
-  value: string;
-  options: Option[];
-  function: (event: SelectChangeEvent<string>) => void;
-};
+type SettingProps = { title: string; value: string; options: Option[]; function: (event: SelectChangeEvent<string>) => void };
 
 const Setting = ({ title, value, options, function: handleChange }: SettingProps) => {
   return (
@@ -205,11 +192,3 @@ const Setting = ({ title, value, options, function: handleChange }: SettingProps
     </li>
   );
 };
-
-export const SettingsPage = () => (
-  <section className="flex-1">
-    <Settings />
-    <div className="bg-[var(--color-primary)] w-32 h-32 rounded-full"></div>
-    <NoteComponent title="1" text="2" createdAt={3} status="active" id="45" />
-  </section>
-);

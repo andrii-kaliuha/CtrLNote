@@ -1,12 +1,17 @@
-import { useState, useMemo } from "react"; // Додано useState та useMemo
+import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { useState, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { NotesComponent, SortBy } from "../components/NotesComponent";
-import { Note as NoteType } from "../store/slices/notesSlice"; // Переконайтеся, що шлях правильний
+import { Note as NoteType } from "../store/slices/notesSlice";
+import { NoteEditor } from "../components/NoteEditor"; //or EditNoteModal
+import { Notes } from "../components/Notes";
 
-// Допоміжна функція для сортування (можна винести в окремий файл utils)
+export type SortBy = "titleAsc" | "titleDesc" | "dateAsc" | "dateDesc";
+export type NotesSorterProps = { sortBy: SortBy; changeSortBy: (newSortBy: SortBy) => void };
+
+// utils/sortNotesArray.ts
 const sortNotesArray = (notes: NoteType[], sortBy: SortBy): NoteType[] => {
-  const sortedNotes = [...notes]; // Створюємо копію
+  const sortedNotes = [...notes];
   switch (sortBy) {
     case "titleAsc":
       sortedNotes.sort((a, b) => a.title.localeCompare(b.title));
@@ -25,48 +30,69 @@ const sortNotesArray = (notes: NoteType[], sortBy: SortBy): NoteType[] => {
 };
 
 export const NotesPage = () => {
-  // Отримуємо всі нотатки з Redux
   const { notes } = useSelector((state: RootState) => state.notes);
+  const [pinnedSortBy, setPinnedSortBy] = useState<SortBy>("dateDesc");
+  const [activeSortBy, setActiveSortBy] = useState<SortBy>("dateDesc");
 
-  // Локальний стан для сортування кожної секції
-  const [pinnedSortBy, setPinnedSortBy] = useState<SortBy>("dateDesc"); // Початкове сортування для закріплених
-  const [activeSortBy, setActiveSortBy] = useState<SortBy>("dateDesc"); // Початкове сортування для активних
-
-  // Фільтруємо та СОРТУЄМО закріплені нотатки за допомогою useMemo
   const pinnedNotes = useMemo(() => {
     const filtered = notes.filter((note) => note.status === "pinned");
-    // Сортуємо ВЖЕ відфільтрований масив
-    return sortNotesArray(filtered, pinnedSortBy);
-  }, [notes, pinnedSortBy]); // Перераховуємо, якщо змінився весь список або критерій сортування закріплених
 
-  // Фільтруємо та СОРТУЄМО активні нотатки за допомогою useMemo
+    return sortNotesArray(filtered, pinnedSortBy);
+  }, [notes, pinnedSortBy]);
+
   const activeNotes = useMemo(() => {
     const filtered = notes.filter((note) => note.status === "active");
-    // Сортуємо ВЖЕ відфільтрований масив
+
     return sortNotesArray(filtered, activeSortBy);
-  }, [notes, activeSortBy]); // Перераховуємо, якщо змінився весь список або критерій сортування активних
+  }, [notes, activeSortBy]);
 
   return (
     <section>
-      {/* Рендеримо закріплені, якщо вони є, передаючи стан сортування та обробник */}
-      {pinnedNotes.length > 0 && (
+      {pinnedNotes.length > 0 ? (
         <>
-          <NotesComponent
-            title="Закріплені"
-            notes={pinnedNotes} // Передаємо відфільтровані та відсортовані
-            sortBy={pinnedSortBy} // Передаємо поточний критерій
-            onSortChange={setPinnedSortBy} // Передаємо функцію для оновлення критерію
-          />
+          <div className="p-3 flex justify-between items-center">
+            <h2>Pinned</h2>
+            <NotesSorter sortBy={pinnedSortBy} changeSortBy={setPinnedSortBy} />
+          </div>
+          <Notes notes={pinnedNotes} />
         </>
-      )}
-
-      {/* Рендеримо активні нотатки, передаючи їх стан сортування та обробник */}
-      <NotesComponent
-        title="Нотатки"
-        notes={activeNotes} // Передаємо відфільтровані та відсортовані
-        sortBy={activeSortBy} // Передаємо поточний критерій
-        onSortChange={setActiveSortBy} // Передаємо функцію для оновлення критерію
-      />
+      ) : null}
+      <div className="p-3 flex justify-between items-center">
+        <h2>Notes</h2>
+        <NotesSorter sortBy={activeSortBy} changeSortBy={setActiveSortBy} />
+      </div>
+      <Notes notes={activeNotes} />
+      <NoteEditor />
     </section>
+  );
+};
+
+export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }) => {
+  const handleSortChange = (event: SelectChangeEvent<SortBy>) => changeSortBy(event.target.value as SortBy);
+
+  return (
+    <FormControl>
+      <Select
+        name="sort-select"
+        value={sortBy}
+        onChange={handleSortChange}
+        MenuProps={{ PaperProps: { sx: { "& .MuiList-root": { padding: 0 } } } }}
+        sx={{
+          color: "var(--text-primary)",
+          "& .MuiSelect-select": { padding: "0.5px 12px" },
+          "& fieldset": { borderColor: "transparent !important" },
+          "&:hover fieldset": { borderColor: "var(--color-primary) !important" },
+          "&.Mui-focused fieldset": { borderColor: "var(--color-primary) !important" },
+          "& .MuiSvgIcon-root": { color: "inherit" },
+          "&.Mui-focused .MuiSvgIcon-root": { color: "var(--color-primary)" },
+          "&:hover .MuiSvgIcon-root": { color: "var(--color-primary)" },
+        }}
+      >
+        <MenuItem value="titleAsc">За назвою (А-Я)</MenuItem>
+        <MenuItem value="titleDesc">За назвою (Я-А)</MenuItem>
+        <MenuItem value="dateAsc">За датою (спочатку старі)</MenuItem>
+        <MenuItem value="dateDesc">За датою (спочатку нові)</MenuItem>
+      </Select>
+    </FormControl>
   );
 };

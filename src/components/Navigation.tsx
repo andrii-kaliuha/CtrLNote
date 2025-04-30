@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { List, ListItemButton, ListItemText, ListItemIcon, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { Menu, StickyNote2, Archive, Search, Delete, Settings } from "@mui/icons-material";
+import { List, ListItemButton, ListItemText, ListItemIcon, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const navigationLinks = [
   { title: "Нотатки", path: "/notes", icon: <StickyNote2 /> },

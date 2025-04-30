@@ -12,7 +12,7 @@ type SettingsState = {
 const initialState: SettingsState = {
   dateFormat: "DD/MM/YYYY",
   timeFormat: "24_hour",
-  theme: "dark",
+  theme: "light",
   language: "ukrainian",
   mainColor: "purple",
   trashEnabled: true,
