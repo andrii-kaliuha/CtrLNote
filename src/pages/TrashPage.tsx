@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { restoreNote, removeNotePermanently } from "../store/slices/notesSlice";
 import { Notes } from "../components/Notes";
+import { t } from "i18next";
 
 export const TrashPage = () => {
   const allNotes = useSelector((state: RootState) => state.notes.notes);
@@ -18,11 +19,11 @@ export const TrashPage = () => {
       {deletedNotes.length > 0 ? (
         <>
           <div className="flex gap-3 h-12 self-end items-center">
-            <Button variant="text" sx={{ color: "var(--color-primary)" }} onClick={restoreAll}>
-              Відновити все
+            <Button variant="text" sx={{ color: "var(--color-primary)", borderRadius: "8px" }} onClick={restoreAll}>
+              {t("trash_restore_all")}
             </Button>
-            <Button variant="text" sx={{ color: "var(--color-primary)" }} onClick={removeAll}>
-              Видалити все
+            <Button variant="text" sx={{ color: "var(--color-primary)", borderRadius: "8px" }} onClick={removeAll}>
+              {t("trash_delete_all")}
             </Button>
           </div>
           <Notes notes={deletedNotes} />
@@ -37,7 +38,7 @@ export const TrashPage = () => {
 const EmptyTrash = () => (
   <div className="flex flex-col items-center justify-center h-full text-center">
     <DeleteIcon sx={{ fontSize: 128 }} />
-    <p className="text-lg mt-4">У кошику немає жодних нотаток</p>
-    <p className="text-sm text-[var(--text-secondary)]">Видалені нотатки автоматично зникнуть через 7 днів</p>
+    <p className="text-lg mt-3">{t("trash_empty_message")}</p>
+    <p className="text-sm text-[var(--text-secondary)]">{t("trash_auto_delete_message")}</p>
   </div>
 );

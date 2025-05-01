@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { openNoteEditor } from "../store/slices/noteEditorSlice";
 import type { Note as NoteType } from "../store/slices/notesSlice";
 import { pinNote, unpinNote, archiveNote, unarchiveNote, moveToTrash, restoreNote, removeNotePermanently } from "../store/slices/notesSlice";
+import { t } from "i18next";
 
 export type MoreVertMenuItemProps = { title: string; onClick: () => void; action: () => void };
 export type MoreVertMenuProps = { status: string; id: string };
@@ -36,7 +37,7 @@ const MoreVertMenuItem = ({ title, onClick, action }: MoreVertMenuItemProps): JS
       onClick={handleClick}
       sx={{ padding: "10px 16px", color: "var(--text-primary)", fontSize: "14px", "&:hover": { backgroundColor: "var(--color-hover)" } }}
     >
-      {title}
+      {t(title)}
     </MenuItem>
   );
 };
@@ -53,26 +54,26 @@ export const MoreVertMenu: React.FC<MoreVertMenuProps> = ({ status, id }): JSX.E
     switch (status) {
       case "active":
         return [
-          { title: "Редагувати", action: () => dispatch(openNoteEditor(id)) },
-          { title: "Закріпити", action: () => dispatch(pinNote(id)) },
-          { title: "Видалити", action: () => dispatch(moveToTrash(id)) },
-          { title: "Архівувати", action: () => dispatch(archiveNote(id)) },
+          { title: "note_action_edit", action: () => dispatch(openNoteEditor(id)) },
+          { title: "note_action_pin", action: () => dispatch(pinNote(id)) },
+          { title: "note_action_delete", action: () => dispatch(moveToTrash(id)) },
+          { title: "note_action_archive", action: () => dispatch(archiveNote(id)) },
         ];
       case "pinned":
         return [
-          { title: "Відкріпити", action: () => dispatch(unpinNote(id)) },
-          { title: "Видалити", action: () => dispatch(moveToTrash(id)) },
-          { title: "Архівувати", action: () => dispatch(archiveNote(id)) },
+          { title: "note_action_unpin", action: () => dispatch(unpinNote(id)) },
+          { title: "note_action_delete", action: () => dispatch(moveToTrash(id)) },
+          { title: "note_action_archive", action: () => dispatch(archiveNote(id)) },
         ];
       case "archived":
         return [
-          { title: "Роз-архівувати", action: () => dispatch(unarchiveNote(id)) },
-          { title: "Видалити", action: () => dispatch(moveToTrash(id)) },
+          { title: "note_action_unarchive", action: () => dispatch(unarchiveNote(id)) },
+          { title: "note_action_delete", action: () => dispatch(moveToTrash(id)) },
         ];
       case "deleted":
         return [
-          { title: "Відновити", action: () => dispatch(restoreNote(id)) },
-          { title: "Видалити назавжди", action: () => dispatch(removeNotePermanently(id)) },
+          { title: "note_action_restore", action: () => dispatch(restoreNote(id)) },
+          { title: "note_action_delete_permanent", action: () => dispatch(removeNotePermanently(id)) },
         ];
       default:
         return [];

@@ -2,13 +2,14 @@ import { Menu, StickyNote2, Archive, Search, Delete, Settings } from "@mui/icons
 import { List, ListItemButton, ListItemText, ListItemIcon, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { t } from "i18next";
 
 const navigationLinks = [
-  { title: "Нотатки", path: "/notes", icon: <StickyNote2 /> },
-  { title: "Архів", path: "/archive", icon: <Archive /> },
-  { title: "Пошук", path: "/search", icon: <Search /> },
-  { title: "Кошик", path: "/trash", icon: <Delete /> },
-  { title: "Налаштування", path: "/settings", icon: <Settings /> },
+  { title: "notes", path: "/notes", icon: <StickyNote2 /> },
+  { title: "archive", path: "/archive", icon: <Archive /> },
+  { title: "search", path: "/search", icon: <Search /> },
+  { title: "trash", path: "/trash", icon: <Delete /> },
+  { title: "settings", path: "/settings", icon: <Settings /> },
 ];
 
 export const DesktopNavigation = () => {
@@ -40,7 +41,7 @@ export const DesktopNavigation = () => {
           <ListItemIcon sx={{ minWidth: "auto" }}>
             <Menu sx={{ color: "var(--text-primary)" }} />
           </ListItemIcon>
-          {!isSidebarCollapsed && <ListItemText primary="Меню" sx={{ ml: 2 }} />}
+          {!isSidebarCollapsed && <ListItemText primary={t("menu")} sx={{ ml: 2 }} />}
         </ListItemButton>
 
         {navigationLinks.map(({ title, path, icon }) => (
@@ -56,7 +57,7 @@ export const DesktopNavigation = () => {
             }}
           >
             <ListItemIcon sx={{ minWidth: "auto", color: "var(--text-primary)" }}>{icon}</ListItemIcon>
-            {!isSidebarCollapsed && <ListItemText primary={title} sx={{ ml: 2 }} />}
+            {!isSidebarCollapsed && <ListItemText primary={t(title)} sx={{ ml: 2 }} />}
           </ListItemButton>
         ))}
       </List>

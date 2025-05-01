@@ -3,11 +3,14 @@ import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setDateFormat, setLanguage, setMainColor, setTheme, setTimeFormat, toggleTrash } from "../store/slices/settingsSlice";
+import i18n from "../i18n";
+import { t } from "i18next";
 
-// useThemeAndColor.ts
-export function useThemeAndColor() {
+// useSettings.ts
+export const useSettings = () => {
   const theme = useSelector((state: RootState) => state.settings.theme);
   const mainColor = useSelector((state: RootState) => state.settings.mainColor);
+  const language = useSelector((state: RootState) => state.settings.language);
 
   useEffect(() => {
     const htmlElement = document.documentElement;
@@ -21,7 +24,11 @@ export function useThemeAndColor() {
   useEffect(() => {
     document.documentElement.style.setProperty("--color-primary", `var(--color-primary-${mainColor})`);
   }, [mainColor]);
-}
+
+  useEffect(() => {
+    i18n.changeLanguage(language);
+  }, [language]);
+};
 
 export const SettingsPage = () => {
   const dateFormat = useSelector((state: RootState) => state.settings.dateFormat);
@@ -68,68 +75,65 @@ export const SettingsPage = () => {
     [dispatch]
   );
 
-  const handleTrashToggle = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-      dispatch(toggleTrash());
-    },
-    [dispatch]
-  );
+  const handleTrashToggle = useCallback(() => {
+    dispatch(toggleTrash());
+  }, [dispatch]);
 
   return (
     <ul className="flex flex-col gap-3">
       <Setting
-        title="Формат дати"
+        title={t("settings_date_format")}
         value={dateFormat}
         function={handleDateFormatChange}
         options={[
-          { name: "DD/MM/YYYY", value: "DD/MM/YYYY" },
-          { name: "MM/DD/YYYY", value: "MM/DD/YYYY" },
-          { name: "YYYY-MM-DD", value: "YYYY-MM-DD" },
+          { name: t("date_format_dd_mm_yyyy"), value: "DD/MM/YYYY" },
+          { name: t("date_format_mm_dd_yyyy"), value: "MM/DD/YYYY" },
+          { name: t("date_format_yyyy_mm_dd"), value: "YYYY-MM-DD" },
         ]}
       />
       <Setting
-        title="Формат часу"
+        title={t("settings_time_format")}
         value={timeFormat}
         function={handleTimeFormatChange}
         options={[
-          { name: "12 годин", value: "12_hour" },
-          { name: "24 години", value: "24_hour" },
+          { name: t("time_format_12_hour"), value: "12_hour" },
+          { name: t("time_format_24_hour"), value: "24_hour" },
         ]}
       />
       <Setting
-        title="Тема інтерфейсу"
+        title={t("settings_theme")}
         value={theme}
         function={handleThemeChange}
         options={[
-          { name: "Світла", value: "light" },
-          { name: "Темна", value: "dark" },
+          { name: t("theme_light"), value: "light" },
+          { name: t("theme_dark"), value: "dark" },
         ]}
       />
       <Setting
-        title="Мова"
+        title={t("settings_language")}
         value={language}
         function={handleLanguageChange}
         options={[
-          { name: "Англійська", value: "english" },
-          { name: "Українська", value: "ukrainian" },
-          { name: "Польська", value: "polish" },
+          { name: t("language_english"), value: "english" },
+          { name: t("language_ukrainian"), value: "ukrainian" },
+          { name: t("language_polish"), value: "polish" },
         ]}
       />
       <Setting
-        title="Основний колір інтерфейсу"
+        title={t("settings_main_color")}
         value={mainColor}
         function={handleMainColorChange}
         options={[
-          { name: "Зелений", value: "green" },
-          { name: "Фіолетовий", value: "purple" },
-          { name: "Синій", value: "blue" },
-          { name: "Червоний", value: "red" },
-          { name: "Жовтий", value: "yellow" },
-          { name: "Оранжевий", value: "orange" },
+          { name: t("color_green"), value: "green" },
+          { name: t("color_purple"), value: "purple" },
+          { name: t("color_blue"), value: "blue" },
+          { name: t("color_red"), value: "red" },
+          { name: t("color_yellow"), value: "yellow" },
+          { name: t("color_orange"), value: "orange" },
         ]}
       />
       <li className="flex items-center justify-between w-full">
-        <p>Увімкнути Кошик</p>
+        <p>{t("settings_enable_trash")}</p>
         <Switch
           sx={{
             "& .MuiSwitch-thumb": {

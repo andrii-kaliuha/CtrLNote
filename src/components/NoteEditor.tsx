@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { closeNoteEditor, setTitle, setText, setNoteToEdit } from "../store/slices/noteEditorSlice";
 import { editNote } from "../store/slices/notesSlice";
+import { t } from "i18next";
 
 export const NoteEditor = () => {
   const dispatch = useDispatch();
@@ -50,12 +51,11 @@ export const NoteEditor = () => {
           boxShadow: 24,
           borderRadius: isMobile ? 0 : "12px",
           padding: "24px",
-
           outline: "none",
         }}
       >
         <TextField
-          label="Заголовок"
+          label={t("note_editor_title_label")}
           variant="outlined"
           fullWidth
           value={editorTitle}
@@ -70,7 +70,7 @@ export const NoteEditor = () => {
         />
 
         <TextField
-          label="Текст"
+          label={t("note_editor_text_label")}
           variant="outlined"
           fullWidth
           multiline
@@ -88,10 +88,10 @@ export const NoteEditor = () => {
 
         <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
           <Button variant="text" sx={{ color: "var(--color-primary)", borderRadius: "8px" }} onClick={handleClose}>
-            Скасувати
+            {t("note_editor_cancel")}
           </Button>
           <Button variant="text" sx={{ color: "var(--color-primary)", borderRadius: "8px" }} onClick={handleSave}>
-            Зберегти
+            {t("note_editor_save")}
           </Button>
         </Box>
       </Box>

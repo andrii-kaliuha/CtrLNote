@@ -4,10 +4,10 @@ import { NotesPage } from "./pages/NotesPage";
 import { ArchivePage } from "./pages/ArchivePage";
 import { SearchPage } from "./pages/SearchPage";
 import { TrashPage } from "./pages/TrashPage";
-import { SettingsPage, useThemeAndColor } from "./pages/SettingsPage";
+import { SettingsPage, useSettings } from "./pages/SettingsPage";
 
 export const App = () => {
-  useThemeAndColor();
+  useSettings();
 
   return (
     <Router>

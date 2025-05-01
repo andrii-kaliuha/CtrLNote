@@ -5,6 +5,7 @@ import { RootState } from "../store/store";
 import { Note as NoteType } from "../store/slices/notesSlice";
 import { NoteEditor } from "../components/NoteEditor"; //or EditNoteModal
 import { Notes } from "../components/Notes";
+import { t } from "i18next";
 
 export type SortBy = "titleAsc" | "titleDesc" | "dateAsc" | "dateDesc";
 export type NotesSorterProps = { sortBy: SortBy; changeSortBy: (newSortBy: SortBy) => void };
@@ -51,14 +52,14 @@ export const NotesPage = () => {
       {pinnedNotes.length > 0 ? (
         <>
           <div className="p-3 flex justify-between items-center">
-            <h2>Pinned</h2>
+            <h2>{t("pinned")}</h2>
             <NotesSorter sortBy={pinnedSortBy} changeSortBy={setPinnedSortBy} />
           </div>
           <Notes notes={pinnedNotes} />
         </>
       ) : null}
       <div className="p-3 flex justify-between items-center">
-        <h2>Notes</h2>
+        <h2>{t("notes")}</h2>
         <NotesSorter sortBy={activeSortBy} changeSortBy={setActiveSortBy} />
       </div>
       <Notes notes={activeNotes} />
@@ -88,10 +89,10 @@ export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }
           "&:hover .MuiSvgIcon-root": { color: "var(--color-primary)" },
         }}
       >
-        <MenuItem value="titleAsc">За назвою (А-Я)</MenuItem>
-        <MenuItem value="titleDesc">За назвою (Я-А)</MenuItem>
-        <MenuItem value="dateAsc">За датою (спочатку старі)</MenuItem>
-        <MenuItem value="dateDesc">За датою (спочатку нові)</MenuItem>
+        <MenuItem value="titleAsc">{t("titleAsc")}</MenuItem>
+        <MenuItem value="titleDesc">{t("titleDesc")}</MenuItem>
+        <MenuItem value="dateAsc">{t("dateAsc")}</MenuItem>
+        <MenuItem value="dateDesc">{t("dateDesc")}</MenuItem>
       </Select>
     </FormControl>
   );

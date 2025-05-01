@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { NotesState, setSearchQuery } from "../store/slices/notesSlice";
 import type { Note as NoteType } from "../store/slices/notesSlice";
 import { Note } from "../components/Note";
+import { t } from "i18next";
 
 export const SearchPage = () => {
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ export const SearchPage = () => {
         type="text"
         value={query}
         onChange={handleSearchChange}
-        placeholder="Пошук нотаток..."
+        placeholder={t("search_placeholder")}
         className="p-3 outline-none border border-transparent rounded-md caret-[var(--color-primary)]
                    focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)]
                    hover:border-[var(--color-primary)] transition w-full"
@@ -68,18 +69,18 @@ export const SearchPage = () => {
         filteredNotes.length > 0 ? (
           <>
             {/* Рендеримо групи тільки якщо в них є нотатки (renderNoteGroup вже це робить) */}
-            {renderNoteGroup(pinnedNotes, "Закріплені")}
-            {renderNoteGroup(activeNotes, "Нотатки")}
-            {renderNoteGroup(archivedNotes, "Архівні")}
-            {renderNoteGroup(deletedNotes, "Видалені")}
+            {renderNoteGroup(pinnedNotes, t("pinned"))}
+            {renderNoteGroup(activeNotes, t("notes"))}
+            {renderNoteGroup(archivedNotes, t("archive"))}
+            {renderNoteGroup(deletedNotes, t("trash"))}
           </>
         ) : (
           // Якщо є запит, але нічого не знайдено
-          <p className="text-[var(--text-secondary)] text-center p-3">Нічого не знайдено за запитом "{query}"</p>
+          <p className="text-[var(--text-secondary)] text-center p-3">{t("search_no_results", { query })}</p>
         )
       ) : (
         // Якщо запиту немає (поле пошуку порожнє)
-        <p className="text-[var(--text-secondary)] text-center p-3">Почніть вводити текст для пошуку нотаток</p>
+        <p className="text-[var(--text-secondary)] text-center p-3">{t("search_instruction")}</p>
       )}
     </>
   );
