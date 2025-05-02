@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { closeNoteEditor, setTitle, setText, setNoteToEdit } from "../store/slices/noteEditorSlice";
-import { editNote } from "../store/slices/notesSlice";
+import { addNote, editNote } from "../store/slices/notesSlice";
 import { t } from "i18next";
 
 export const NoteEditor = () => {
@@ -33,8 +33,10 @@ export const NoteEditor = () => {
   const handleSave = () => {
     if (noteId) {
       dispatch(editNote({ id: noteId, title: editorTitle, text: editorText }));
-      dispatch(closeNoteEditor());
+    } else {
+      dispatch(addNote({ title: editorTitle, text: editorText }));
     }
+    dispatch(closeNoteEditor());
   };
 
   return (

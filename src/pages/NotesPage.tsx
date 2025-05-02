@@ -1,11 +1,14 @@
-import { FormControl, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { FormControl, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useState, useMemo } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { Note as NoteType } from "../store/slices/notesSlice";
 import { NoteEditor } from "../components/NoteEditor"; //or EditNoteModal
 import { Notes } from "../components/Notes";
 import { t } from "i18next";
+import { Note } from "../components/Note";
+import { Add } from "@mui/icons-material";
+import { openEmptyNoteEditor } from "../store/slices/noteEditorSlice";
 
 export type SortBy = "titleAsc" | "titleDesc" | "dateAsc" | "dateDesc";
 export type NotesSorterProps = { sortBy: SortBy; changeSortBy: (newSortBy: SortBy) => void };
@@ -47,6 +50,12 @@ export const NotesPage = () => {
     return sortNotesArray(filtered, activeSortBy);
   }, [notes, activeSortBy]);
 
+  const dispatch = useDispatch();
+
+  const handleCreateNewNote = () => {
+    dispatch(openEmptyNoteEditor());
+  };
+
   return (
     <section>
       {pinnedNotes.length > 0 ? (
@@ -62,7 +71,17 @@ export const NotesPage = () => {
         <h2>{t("notes")}</h2>
         <NotesSorter sortBy={activeSortBy} changeSortBy={setActiveSortBy} />
       </div>
-      <Notes notes={activeNotes} />
+      {/* <Notes notes={activeNotes} /> */}
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {activeNotes.map((note) => (
+          <Note key={note.id} {...note} />
+        ))}
+        <li className="p-3 rounded-lg relative bg-[var(--color-surface)] flex justify-center items-center h-[180px]">
+          <IconButton onClick={handleCreateNewNote} sx={{ ":hover": { backgroundColor: "var(--color-hover)" } }}>
+            <Add sx={{ width: 48, height: 48, color: "var(--text-primary)" }} />
+          </IconButton>
+        </li>
+      </ul>
       <NoteEditor />
     </section>
   );

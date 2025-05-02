@@ -5,9 +5,18 @@ import { ArchivePage } from "./pages/ArchivePage";
 import { SearchPage } from "./pages/SearchPage";
 import { TrashPage } from "./pages/TrashPage";
 import { SettingsPage, useSettings } from "./pages/SettingsPage";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { cleanupTrash } from "./store/slices/notesSlice";
 
 export const App = () => {
   useSettings();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(cleanupTrash());
+  }, [dispatch]);
 
   return (
     <Router>

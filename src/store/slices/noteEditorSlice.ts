@@ -13,6 +13,12 @@ const noteEditorSlice = createSlice({
       state.isOpen = true;
       state.noteId = action.payload;
     },
+    openEmptyNoteEditor: (state) => {
+      state.isOpen = true;
+      state.noteId = null;
+      state.title = "";
+      state.text = "";
+    },
     closeNoteEditor: (state) => {
       state.isOpen = false;
       state.noteId = null;
@@ -32,6 +38,6 @@ const noteEditorSlice = createSlice({
   },
 });
 
-export const { openNoteEditor, closeNoteEditor, setTitle, setText, setNoteToEdit } = noteEditorSlice.actions;
+export const { openNoteEditor, openEmptyNoteEditor, closeNoteEditor, setTitle, setText, setNoteToEdit } = noteEditorSlice.actions;
 
 export default noteEditorSlice.reducer;

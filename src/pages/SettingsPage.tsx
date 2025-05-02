@@ -2,15 +2,15 @@ import { Switch, FormControl, MenuItem, Select, Typography, SelectChangeEvent } 
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { setDateFormat, setLanguage, setMainColor, setTheme, setTimeFormat, toggleTrash } from "../store/slices/settingsSlice";
+import { setTheme, setLanguage, setMainColor, toggleTrash } from "../store/slices/settingsSlice";
 import i18n from "../i18n";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 // useSettings.ts
 export const useSettings = () => {
   const theme = useSelector((state: RootState) => state.settings.theme);
-  const mainColor = useSelector((state: RootState) => state.settings.mainColor);
   const language = useSelector((state: RootState) => state.settings.language);
+  const mainColor = useSelector((state: RootState) => state.settings.mainColor);
 
   useEffect(() => {
     const htmlElement = document.documentElement;
@@ -31,34 +31,21 @@ export const useSettings = () => {
 };
 
 export const SettingsPage = () => {
-  const dateFormat = useSelector((state: RootState) => state.settings.dateFormat);
-  const timeFormat = useSelector((state: RootState) => state.settings.timeFormat);
+  const { t, i18n } = useTranslation();
+
+  const theme = useSelector((state: RootState) => state.settings.theme);
   const language = useSelector((state: RootState) => state.settings.language);
   const mainColor = useSelector((state: RootState) => state.settings.mainColor);
   const trashEnabled = useSelector((state: RootState) => state.settings.trashEnabled);
-  const theme = useSelector((state: RootState) => state.settings.theme);
 
   const dispatch = useDispatch();
 
-  const handleDateFormatChange = useCallback(
-    (event: SelectChangeEvent<string>) => {
-      dispatch(setDateFormat(event.target.value));
-    },
-    [dispatch]
-  );
-
-  const handleTimeFormatChange = useCallback(
-    (event: SelectChangeEvent<string>) => {
-      dispatch(setTimeFormat(event.target.value));
-    },
-    [dispatch]
-  );
-
   const handleLanguageChange = useCallback(
     (event: SelectChangeEvent<string>) => {
+      i18n.changeLanguage(event.target.value);
       dispatch(setLanguage(event.target.value));
     },
-    [dispatch]
+    [dispatch, i18n]
   );
 
   const handleThemeChange = useCallback(
@@ -82,25 +69,6 @@ export const SettingsPage = () => {
   return (
     <ul className="flex flex-col gap-3">
       <Setting
-        title={t("settings_date_format")}
-        value={dateFormat}
-        function={handleDateFormatChange}
-        options={[
-          { name: t("date_format_dd_mm_yyyy"), value: "DD/MM/YYYY" },
-          { name: t("date_format_mm_dd_yyyy"), value: "MM/DD/YYYY" },
-          { name: t("date_format_yyyy_mm_dd"), value: "YYYY-MM-DD" },
-        ]}
-      />
-      <Setting
-        title={t("settings_time_format")}
-        value={timeFormat}
-        function={handleTimeFormatChange}
-        options={[
-          { name: t("time_format_12_hour"), value: "12_hour" },
-          { name: t("time_format_24_hour"), value: "24_hour" },
-        ]}
-      />
-      <Setting
         title={t("settings_theme")}
         value={theme}
         function={handleThemeChange}
@@ -114,9 +82,9 @@ export const SettingsPage = () => {
         value={language}
         function={handleLanguageChange}
         options={[
-          { name: t("language_english"), value: "english" },
-          { name: t("language_ukrainian"), value: "ukrainian" },
-          { name: t("language_polish"), value: "polish" },
+          { name: "English", value: "english" },
+          { name: "Українська", value: "ukrainian" },
+          { name: "Polski", value: "polish" },
         ]}
       />
       <Setting
