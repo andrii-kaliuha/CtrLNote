@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type SettingsState = { theme: "light" | "dark"; language: string; mainColor: string; trashEnabled: boolean };
+type SettingsState = { theme: "light" | "dark"; language: string; mainColor: string; trashEnabled: boolean; autoDeletePeriod: number };
 
-const initialState: SettingsState = { theme: "light", language: "ukrainian", mainColor: "purple", trashEnabled: true };
+const initialState: SettingsState = { theme: "light", language: "english", mainColor: "red", trashEnabled: true, autoDeletePeriod: 2592000000 };
 
 export const settingsSlice = createSlice({
   name: "settings",
@@ -14,6 +14,9 @@ export const settingsSlice = createSlice({
     setLanguage: (state, action: PayloadAction<string>) => {
       state.language = action.payload;
     },
+    setAutoDeletePeriod: (state, action: PayloadAction<number>) => {
+      state.autoDeletePeriod = action.payload;
+    },
     setMainColor: (state, action: PayloadAction<string>) => {
       state.mainColor = action.payload;
     },
@@ -23,6 +26,6 @@ export const settingsSlice = createSlice({
   },
 });
 
-export const { setTheme, setLanguage, setMainColor, toggleTrash } = settingsSlice.actions;
+export const { setTheme, setLanguage, setAutoDeletePeriod, setMainColor, toggleTrash } = settingsSlice.actions;
 
 export default settingsSlice.reducer;

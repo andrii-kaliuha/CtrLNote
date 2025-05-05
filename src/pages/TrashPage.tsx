@@ -1,18 +1,29 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../store/store";
-import { restoreNote, removeNotePermanently } from "../store/slices/notesSlice";
+import { AppDispatch, RootState } from "../store/store";
+import { restoreNote, removeNotePermanently, clearExpiredTrash } from "../store/slices/notesSlice";
 import { Notes } from "../components/Notes";
 import { t } from "i18next";
+import { useEffect } from "react";
 
 export const TrashPage = () => {
   const allNotes = useSelector((state: RootState) => state.notes.notes);
   const deletedNotes = allNotes.filter((note) => note.status === "deleted");
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const restoreAll = () => deletedNotes.forEach((note) => dispatch(restoreNote(note.id)));
   const removeAll = () => deletedNotes.forEach((note) => dispatch(removeNotePermanently(note.id)));
+
+  useEffect(() => {
+    dispatch(clearExpiredTrash());
+
+    const interval = setInterval(() => {
+      dispatch(clearExpiredTrash());
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [dispatch]);
 
   return (
     <section className="flex flex-col items-center w-full h-full">

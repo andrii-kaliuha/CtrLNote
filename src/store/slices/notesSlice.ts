@@ -1,12 +1,23 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import rawNotes from "../../notes.json";
+import { RootState } from "../store";
+
+export const clearExpiredTrash = createAsyncThunk("notes/clearExpiredTrash", async (_, { getState }) => {
+  const { autoDeletePeriod } = (getState() as RootState).settings;
+  const currentTime = Date.now();
+
+  const notes = (getState() as RootState).notes.notes;
+
+  return notes.filter((note) => {
+    const shouldDelete = note.status === "deleted" && note.deletedAt && currentTime - note.deletedAt >= autoDeletePeriod;
+    return !shouldDelete;
+  });
+});
 
 type NoteStatus = "active" | "pinned" | "archived" | "deleted";
 export type Note = { id: string; title: string; text: string; createdAt: number; status: NoteStatus; deletedAt?: number };
 
 export type NotesState = { notes: Note[]; searchQuery: string; searchHistory: string[] };
-
-const TRASH_AUTO_DELETE_PERIOD = 30 * 24 * 60 * 60 * 1000;
 
 const notesList: Note[] = rawNotes.map((note) => ({
   ...note,
@@ -74,32 +85,11 @@ const notesSlice = createSlice({
     setSearchQuery: (state, action: PayloadAction<string>) => {
       state.searchQuery = action.payload;
     },
-
-    // cleanupTrash: (state, action: PayloadAction<number | undefined>) => {
-    //   const currentTime = Date.now();
-    //   const deleteThreshold = action.payload || TRASH_AUTO_DELETE_PERIOD;
-
-    //   console.log(`Cleanup trash: ${currentTime} - ${deleteThreshold}`);
-
-    //   state.notes = state.notes.filter((note) => {
-    //     return note.status !== "deleted" || !note.deletedAt || currentTime - note.deletedAt < deleteThreshold;
-    //   });
-    // },
-
-    cleanupTrash: (state, action: PayloadAction<number | undefined>) => {
-      const currentTime = Date.now();
-      const deleteThreshold = action.payload || TRASH_AUTO_DELETE_PERIOD;
-
-      console.log("🔥 Running cleanupTrash");
-
-      state.notes = state.notes.filter((note) => {
-        const shouldDelete = note.status === "deleted" && note.deletedAt && currentTime - note.deletedAt >= deleteThreshold;
-        if (shouldDelete) {
-          console.log("🗑️ Deleting:", note.id);
-        }
-        return !shouldDelete;
-      });
-    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(clearExpiredTrash.fulfilled, (state, action) => {
+      state.notes = action.payload;
+    });
   },
 });
 
@@ -114,7 +104,6 @@ export const {
   restoreNote,
   removeNotePermanently,
   setSearchQuery,
-  cleanupTrash,
 } = notesSlice.actions;
 
 export default notesSlice.reducer;
