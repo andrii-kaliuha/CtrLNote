@@ -1,13 +1,16 @@
-import { Modal, Box, TextField, Button, useMediaQuery, useTheme } from "@mui/material";
+import { Modal, Box, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { closeNoteEditor, setTitle, setText, setNoteToEdit } from "../store/slices/noteEditorSlice";
 import { addNote, editNote } from "../store/slices/notesSlice";
-import { t } from "i18next";
+import { Button } from "../ui/Button";
+import { TextField } from "../ui/TextField";
+import { useTranslation } from "react-i18next";
 
 export const NoteEditor = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -56,45 +59,12 @@ export const NoteEditor = () => {
           outline: "none",
         }}
       >
-        <TextField
-          label={t("note_editor_title_label")}
-          variant="outlined"
-          fullWidth
-          value={editorTitle}
-          onChange={handleTitleChange}
-          margin="normal"
-          sx={{
-            "& label.Mui-focused": { color: "var(--color-primary)" },
-            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: "var(--color-primary)",
-            },
-          }}
-        />
-
-        <TextField
-          label={t("note_editor_text_label")}
-          variant="outlined"
-          fullWidth
-          multiline
-          rows={isMobile ? 12 : 6}
-          value={editorText}
-          onChange={handleTextChange}
-          margin="normal"
-          sx={{
-            "& label.Mui-focused": { color: "var(--color-primary)" },
-            "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: "var(--color-primary)",
-            },
-          }}
-        />
+        <TextField label={t("note_editor_title_label")} text={editorTitle} action={handleTitleChange} rows={1} />
+        <TextField label={t("note_editor_text_label")} text={editorText} action={handleTextChange} rows={6} />
 
         <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
-          <Button variant="text" sx={{ color: "var(--color-primary)", borderRadius: "8px" }} onClick={handleClose}>
-            {t("note_editor_cancel")}
-          </Button>
-          <Button variant="text" sx={{ color: "var(--color-primary)", borderRadius: "8px" }} onClick={handleSave}>
-            {t("note_editor_save")}
-          </Button>
+          <Button action={handleClose} text={t("note_editor_cancel")} />
+          <Button action={handleSave} text={t("note_editor_save")} />
         </Box>
       </Box>
     </Modal>

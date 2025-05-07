@@ -2,7 +2,7 @@ import ArchiveIcon from "@mui/icons-material/Archive";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { Notes } from "../components/Notes";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
 
 export const ArchivePage = () => {
   const { notes } = useSelector((state: RootState) => state.notes);
@@ -15,9 +15,12 @@ export const ArchivePage = () => {
   );
 };
 
-const EmptyArchive = () => (
-  <div className="flex flex-col items-center justify-center h-full text-center">
-    <ArchiveIcon sx={{ fontSize: 128 }} />
-    <p className="mt-3 text-lg text-[var(--text-secondary)]">{t("archive_empty_message")}</p>
-  </div>
-);
+const EmptyArchive = () => {
+  const { t } = useTranslation();
+  return (
+    <div className="flex flex-col items-center justify-center h-full text-center">
+      <ArchiveIcon sx={{ fontSize: 128 }} />
+      <p className="mt-3 text-lg text-[var(--text-secondary)]">{t("archive_empty_message")}</p>
+    </div>
+  );
+};

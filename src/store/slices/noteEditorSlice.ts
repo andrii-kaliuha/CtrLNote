@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { Note } from "./notesSlice";
-
-type NoteEditorState = { isOpen: boolean; noteId: string | null; title: string; text: string };
+import type { NoteProps, NoteEditorState } from "../../types";
 
 const initialState: NoteEditorState = { isOpen: false, noteId: null, title: "", text: "" };
 
@@ -31,7 +29,7 @@ const noteEditorSlice = createSlice({
     setText: (state, action: PayloadAction<string>) => {
       state.text = action.payload;
     },
-    setNoteToEdit: (state, action: PayloadAction<Note>) => {
+    setNoteToEdit: (state, action: PayloadAction<NoteProps>) => {
       state.title = action.payload.title;
       state.text = action.payload.text;
     },

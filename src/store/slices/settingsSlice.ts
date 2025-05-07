@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-type SettingsState = { theme: "light" | "dark"; language: string; mainColor: string; trashEnabled: boolean; autoDeletePeriod: number };
+import type { SettingsState } from "../../types";
 
 const initialState: SettingsState = { theme: "light", language: "english", mainColor: "red", trashEnabled: true, autoDeletePeriod: 2592000000 };
 

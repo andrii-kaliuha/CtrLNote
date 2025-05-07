@@ -1,6 +1,12 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import rawNotes from "../../notes.json";
 import { RootState } from "../store";
+import type { NoteProps, NoteStatus, NotesState } from "../../types";
+
+import rawNotes from "../../assets/notes.json";
+const notesList: NoteProps[] = rawNotes.map((note) => ({
+  ...note,
+  status: note.status as NoteStatus,
+}));
 
 export const clearExpiredTrash = createAsyncThunk("notes/clearExpiredTrash", async (_, { getState }) => {
   const { autoDeletePeriod } = (getState() as RootState).settings;
@@ -14,16 +20,6 @@ export const clearExpiredTrash = createAsyncThunk("notes/clearExpiredTrash", asy
   });
 });
 
-type NoteStatus = "active" | "pinned" | "archived" | "deleted";
-export type Note = { id: string; title: string; text: string; createdAt: number; status: NoteStatus; deletedAt?: number };
-
-export type NotesState = { notes: Note[]; searchQuery: string; searchHistory: string[] };
-
-const notesList: Note[] = rawNotes.map((note) => ({
-  ...note,
-  status: note.status as NoteStatus,
-}));
-
 const initialState: NotesState = { notes: notesList, searchQuery: "", searchHistory: [] };
 
 const findNote = (state: NotesState, id: string) => state.notes.find((note) => note.id === id);
@@ -33,7 +29,7 @@ const notesSlice = createSlice({
   initialState,
   reducers: {
     addNote: (state, action: PayloadAction<{ title: string; text: string }>) => {
-      const newNote: Note = {
+      const newNote: NoteProps = {
         id: crypto.randomUUID(),
         title: action.payload.title,
         text: action.payload.text,

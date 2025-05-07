@@ -1,0 +1,29 @@
+import { SelectChangeEvent } from "@mui/material";
+
+export type NoteEditorState = { isOpen: boolean; noteId: string | null; title: string; text: string };
+
+export type NoteStatus = "active" | "pinned" | "archived" | "deleted";
+
+export type NoteProps = { id: string; title: string; text: string; createdAt: number; status: NoteStatus; deletedAt?: number };
+
+export type NotesState = { notes: NoteProps[]; searchQuery: string; searchHistory: string[] };
+
+export type SettingsState = { theme: "light" | "dark"; language: string; mainColor: string; trashEnabled: boolean; autoDeletePeriod: number };
+
+export type SortBy = "titleAsc" | "titleDesc" | "dateAsc" | "dateDesc";
+
+export type NotesSorterProps = { sortBy: SortBy; changeSortBy: (newSortBy: SortBy) => void };
+
+export type MoreVertMenuItemProps = { title: string; onClick: () => void; action: () => void };
+
+export type MoreVertMenuProps = { status: string; id: string };
+
+export type NotesProps = { notes: NoteProps[] };
+
+type Option = { value: string; name: string };
+
+export type SettingProps = { title: string; value: string; options: Option[]; function: (event: SelectChangeEvent<string>) => void };
+
+export type ButtonProps = { action: () => void; text: string };
+
+export type TextFieldProps = { label: string; text: string; action: (e: React.ChangeEvent<HTMLInputElement>) => void; rows: number };

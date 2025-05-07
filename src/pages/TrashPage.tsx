@@ -1,15 +1,16 @@
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Button } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { restoreNote, removeNotePermanently, clearExpiredTrash } from "../store/slices/notesSlice";
 import { Notes } from "../components/Notes";
-import { t } from "i18next";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { Button } from "../ui/Button";
 
 export const TrashPage = () => {
   const allNotes = useSelector((state: RootState) => state.notes.notes);
   const deletedNotes = allNotes.filter((note) => note.status === "deleted");
+  const { t } = useTranslation();
 
   const dispatch = useDispatch<AppDispatch>();
   const restoreAll = () => deletedNotes.forEach((note) => dispatch(restoreNote(note.id)));
@@ -30,12 +31,8 @@ export const TrashPage = () => {
       {deletedNotes.length > 0 ? (
         <>
           <div className="flex gap-3 h-12 self-end items-center">
-            <Button variant="text" sx={{ color: "var(--color-primary)", borderRadius: "8px" }} onClick={restoreAll}>
-              {t("trash_restore_all")}
-            </Button>
-            <Button variant="text" sx={{ color: "var(--color-primary)", borderRadius: "8px" }} onClick={removeAll}>
-              {t("trash_delete_all")}
-            </Button>
+            <Button action={restoreAll} text={t("trash_restore_all")} />
+            <Button action={removeAll} text={t("trash_delete_all")} />
           </div>
           <Notes notes={deletedNotes} />
         </>
@@ -46,10 +43,13 @@ export const TrashPage = () => {
   );
 };
 
-const EmptyTrash = () => (
-  <div className="flex flex-col items-center justify-center h-full text-center">
-    <DeleteIcon sx={{ fontSize: 128 }} />
-    <p className="text-lg mt-3">{t("trash_empty_message")}</p>
-    <p className="text-sm text-[var(--text-secondary)]">{t("trash_auto_delete_message")}</p>
-  </div>
-);
+const EmptyTrash = () => {
+  const { t } = useTranslation();
+  return (
+    <div className="flex flex-col items-center justify-center h-full text-center">
+      <DeleteIcon sx={{ fontSize: 128 }} />
+      <p className="text-lg mt-3">{t("trash_empty_message")}</p>
+      <p className="text-sm text-[var(--text-secondary)]">{t("trash_auto_delete_message")}</p>
+    </div>
+  );
+};

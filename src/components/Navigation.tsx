@@ -1,8 +1,8 @@
 import { Menu, StickyNote2, Archive, Search, Delete, Settings } from "@mui/icons-material";
 import { List, ListItemButton, ListItemText, ListItemIcon, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { t } from "i18next";
 
 const navigationLinks = [
   { title: "notes", path: "/notes", icon: <StickyNote2 /> },
@@ -14,6 +14,7 @@ const navigationLinks = [
 
 export const DesktopNavigation = () => {
   const [isSidebarCollapsed, setCollapsed] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <nav className="hidden sm:block sticky top-0 left-0 h-screen flex-shrink-0 py-3 pl-3">
