@@ -1,4 +1,5 @@
 import { SelectChangeEvent } from "@mui/material";
+import { ChangeEvent } from "react";
 
 export type NoteEditorState = { isOpen: boolean; noteId: string | null; title: string; text: string };
 
@@ -18,7 +19,7 @@ export type MoreVertMenuItemProps = { title: string; onClick: () => void; action
 
 export type MoreVertMenuProps = { status: string; id: string };
 
-export type NotesProps = { notes: NoteProps[] };
+export type NotesProps = { notes: NoteProps[]; addButton?: Boolean; action?: () => void };
 
 type Option = { value: string; name: string };
 
@@ -27,3 +28,14 @@ export type SettingProps = { title: string; value: string; options: Option[]; fu
 export type ButtonProps = { action: () => void; text: string };
 
 export type TextFieldProps = { label: string; text: string; action: (e: React.ChangeEvent<HTMLInputElement>) => void; rows: number };
+
+export type NotesGroupProps = { notes: NoteProps[]; title: string };
+
+export type SearchInputProps = {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  name?: string;
+};
+
+export type SwitchProps = { text: string; name: string; checked: boolean; onChange: (event: ChangeEvent<HTMLInputElement>) => void };

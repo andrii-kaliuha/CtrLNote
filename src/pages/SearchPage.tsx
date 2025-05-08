@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery } from "../store/slices/notesSlice";
-import type { NoteProps, NotesState } from "../types";
-import { Note } from "../components/Note";
+import type { NotesState } from "../types";
 import { useTranslation } from "react-i18next";
+import { NotesGroup } from "../ui/NotesGroup";
+import { SearchInput } from "../ui/SearchInput";
 
 export const SearchPage = () => {
   const dispatch = useDispatch();
@@ -33,43 +34,18 @@ export const SearchPage = () => {
   const archivedNotes = filteredNotes.filter((note) => note.status === "archived");
   const deletedNotes = filteredNotes.filter((note) => note.status === "deleted");
 
-  const renderNoteGroup = (notes: NoteProps[], title: string) => {
-    if (notes.length > 0) {
-      return (
-        <>
-          <h2 className="text-lg p-3">{title}</h2>
-          <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {notes.map((note) => (
-              <Note key={note.id} {...note} />
-            ))}
-          </ul>
-        </>
-      );
-    }
-  };
-
   return (
     <>
-      <input
-        name="search-note"
-        type="text"
-        value={query}
-        onChange={handleSearchChange}
-        placeholder={t("search_placeholder")}
-        className="p-3 outline-none border border-transparent rounded-md caret-[var(--color-primary)]
-                   focus:border-[var(--color-primary)] focus:ring-[var(--color-primary)]
-                   hover:border-[var(--color-primary)] transition w-full"
-      />
+      <SearchInput name="search-note" value={query} onChange={handleSearchChange} placeholder={t("search_placeholder")} />
       {/* Перевіряємо чи є запит */}
       {query.trim().length > 0 ? (
         // Якщо є запит, перевіряємо, чи щось знайдено
         filteredNotes.length > 0 ? (
           <>
-            {/* Рендеримо групи тільки якщо в них є нотатки (renderNoteGroup вже це робить) */}
-            {renderNoteGroup(pinnedNotes, t("pinned"))}
-            {renderNoteGroup(activeNotes, t("notes"))}
-            {renderNoteGroup(archivedNotes, t("archive"))}
-            {renderNoteGroup(deletedNotes, t("trash"))}
+            <NotesGroup notes={pinnedNotes} title={t("pinned")} />
+            <NotesGroup notes={activeNotes} title={t("notes")} />
+            <NotesGroup notes={archivedNotes} title={t("archive")} />
+            <NotesGroup notes={deletedNotes} title={t("trash")} />
           </>
         ) : (
           // Якщо є запит, але нічого не знайдено

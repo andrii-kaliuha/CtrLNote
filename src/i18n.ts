@@ -30,7 +30,12 @@ i18n
           trash_restore_all: "Restore All",
           trash_delete_all: "Delete All",
           trash_empty_message: "Your trash is empty",
-          trash_auto_delete_message: "Deleted notes will automatically disappear after 7 days",
+          settings_auto_delete: "Auto-delete after",
+          auto_delete_1: "1 day",
+          auto_delete_7: "7 days",
+          auto_delete_10: "10 days",
+          auto_delete_30: "30 days",
+          trash_auto_delete_message: "Notes will be deleted after {{count}} days",
 
           search_placeholder: "Search notes...",
 
@@ -97,7 +102,12 @@ i18n
           trash_restore_all: "Відновити все",
           trash_delete_all: "Видалити все",
           trash_empty_message: "Ваш кошик порожній",
-          trash_auto_delete_message: "Видалені нотатки автоматично зникнуть через 7 днів",
+          settings_auto_delete: "Автовидалення через",
+          auto_delete_1: "1 день",
+          auto_delete_7: "7 днів",
+          auto_delete_10: "10 днів",
+          auto_delete_30: "30 днів",
+          trash_auto_delete_message: "Нотатки буде видалено через {{count}} днів",
 
           search_placeholder: "Пошук нотаток...",
 
@@ -165,7 +175,12 @@ i18n
           trash_restore_all: "Przywróć wszystko",
           trash_delete_all: "Usuń wszystko",
           trash_empty_message: "Twój kosz jest pusty",
-          trash_auto_delete_message: "Usunięte notatki znikną automatycznie po 7 dniach",
+          settings_auto_delete: "Automatyczne usuwanie po",
+          trash_auto_delete_message: "Notatki zostaną usunięte za {{count}} dni",
+          auto_delete_1: "1 dzień",
+          auto_delete_7: "7 dni",
+          auto_delete_10: "10 dni",
+          auto_delete_30: "30 dni",
 
           search_placeholder: "Szukaj notatek...",
 

@@ -1,4 +1,5 @@
 import type { NoteProps } from "../types";
+import { formatDate } from "../utils/formatDate";
 import { MoreVertMenu } from "./MoreVertMenu";
 
 export const Note: React.FC<NoteProps> = ({ id, title, text, createdAt, status }) => (
@@ -9,7 +10,7 @@ export const Note: React.FC<NoteProps> = ({ id, title, text, createdAt, status }
     </div>
 
     <div className="flex justify-between items-center">
-      <p className="text-xs leading-none">{createdAt}</p>
+      <p className="text-xs leading-none">{formatDate(createdAt, "uk")}</p>
       <MoreVertMenu status={status} id={id} />
     </div>
   </li>

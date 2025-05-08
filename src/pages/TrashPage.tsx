@@ -45,11 +45,15 @@ export const TrashPage = () => {
 
 const EmptyTrash = () => {
   const { t } = useTranslation();
+  const autoDeletePeriod = useSelector((state: RootState) => state.settings.autoDeletePeriod);
+
+  const days = autoDeletePeriod / (1000 * 60 * 60 * 24);
+
   return (
     <div className="flex flex-col items-center justify-center h-full text-center">
       <DeleteIcon sx={{ fontSize: 128 }} />
       <p className="text-lg mt-3">{t("trash_empty_message")}</p>
-      <p className="text-sm text-[var(--text-secondary)]">{t("trash_auto_delete_message")}</p>
+      <p className="text-sm text-[var(--text-secondary)]">{t("trash_auto_delete_message", { count: days })}</p>
     </div>
   );
 };

@@ -1,26 +1,6 @@
 import { FormControl, Select, SelectChangeEvent, MenuItem } from "@mui/material";
-import type { NoteProps, SortBy, NotesSorterProps } from "../types";
+import type { SortBy, NotesSorterProps } from "../types";
 import { useTranslation } from "react-i18next";
-
-// utils/sortNotesArray.ts
-export const sortNotesArray = (notes: NoteProps[], sortBy: SortBy): NoteProps[] => {
-  const sortedNotes = [...notes];
-  switch (sortBy) {
-    case "titleAsc":
-      sortedNotes.sort((a, b) => a.title.localeCompare(b.title));
-      break;
-    case "titleDesc":
-      sortedNotes.sort((a, b) => b.title.localeCompare(a.title));
-      break;
-    case "dateAsc":
-      sortedNotes.sort((a, b) => a.createdAt - b.createdAt);
-      break;
-    case "dateDesc":
-      sortedNotes.sort((a, b) => b.createdAt - a.createdAt);
-      break;
-  }
-  return sortedNotes;
-};
 
 export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }) => {
   const { t } = useTranslation();

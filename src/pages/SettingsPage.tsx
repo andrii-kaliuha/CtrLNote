@@ -1,11 +1,12 @@
-import { Switch, SelectChangeEvent } from "@mui/material";
+import { SelectChangeEvent } from "@mui/material";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
-import { setTheme, setLanguage, setMainColor, toggleTrash } from "../store/slices/settingsSlice";
+import { setTheme, setLanguage, setMainColor, toggleTrash, setAutoDeletePeriod } from "../store/slices/settingsSlice";
 import i18n from "../i18n";
 import { useTranslation } from "react-i18next";
 import { Setting } from "../components/Setting";
+import { Switch } from "../ui/Switch";
 
 // useSettings.ts
 export const useSettings = () => {
@@ -32,14 +33,14 @@ export const useSettings = () => {
 };
 
 export const SettingsPage = () => {
+  const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
 
   const theme = useSelector((state: RootState) => state.settings.theme);
   const language = useSelector((state: RootState) => state.settings.language);
   const mainColor = useSelector((state: RootState) => state.settings.mainColor);
   const trashEnabled = useSelector((state: RootState) => state.settings.trashEnabled);
-
-  const dispatch = useDispatch();
+  const autoDeletePeriod = useSelector((state: RootState) => state.settings.autoDeletePeriod);
 
   const handleLanguageChange = useCallback(
     (event: SelectChangeEvent<string>) => {
@@ -66,6 +67,13 @@ export const SettingsPage = () => {
   const handleTrashToggle = useCallback(() => {
     dispatch(toggleTrash());
   }, [dispatch]);
+
+  const handleAutoDeleteChange = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      dispatch(setAutoDeletePeriod(Number(event.target.value)));
+    },
+    [dispatch]
+  );
 
   return (
     <ul className="flex flex-col gap-3">
@@ -101,30 +109,18 @@ export const SettingsPage = () => {
           { name: t("color_orange"), value: "orange" },
         ]}
       />
-      <li className="flex items-center justify-between w-full">
-        <p>{t("settings_enable_trash")}</p>
-        <Switch
-          sx={{
-            "& .MuiSwitch-thumb": {
-              backgroundColor: "var(--color-primary)",
-            },
-            "& .MuiSwitch-track": {
-              backgroundColor: "var(--color-primary) !important",
-              opacity: 0.38,
-            },
-            "&.Mui-checked + .MuiSwitch-track": {
-              backgroundColor: "var(--color-primary)",
-              opacity: 0.5,
-            },
-            "&.Mui-checked .MuiSwitch-thumb": {
-              backgroundColor: "var(--color-primary)",
-            },
-          }}
-          name="trash"
-          checked={trashEnabled}
-          onChange={handleTrashToggle}
-        />
-      </li>
+      <Setting
+        title={t("settings_auto_delete")}
+        value={String(autoDeletePeriod)}
+        function={handleAutoDeleteChange}
+        options={[
+          { name: t("auto_delete_1"), value: String(1 * 24 * 60 * 60 * 1000) },
+          { name: t("auto_delete_7"), value: String(7 * 24 * 60 * 60 * 1000) },
+          { name: t("auto_delete_10"), value: String(10 * 24 * 60 * 60 * 1000) },
+          { name: t("auto_delete_30"), value: String(30 * 24 * 60 * 60 * 1000) },
+        ]}
+      />
+      <Switch text={t("settings_enable_trash")} name="trash" checked={trashEnabled} onChange={handleTrashToggle} />
     </ul>
   );
 };
