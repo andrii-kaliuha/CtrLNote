@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { Notes } from "../components/Notes";
 import { useTranslation } from "react-i18next";
+import { t } from "i18next";
 
 export const ArchivePage = () => {
   const { notes } = useSelector((state: RootState) => state.notes);
@@ -10,7 +11,14 @@ export const ArchivePage = () => {
 
   return (
     <section className="flex flex-col items-center w-full h-full">
-      {archivedNotes.length > 0 ? <Notes notes={archivedNotes} /> : <EmptyArchive />}
+      {archivedNotes.length > 0 ? (
+        <div>
+          <h2 className="p-3">{t("archive")}</h2>
+          <Notes notes={archivedNotes} />
+        </div>
+      ) : (
+        <EmptyArchive />
+      )}
     </section>
   );
 };

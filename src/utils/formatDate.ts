@@ -1,4 +1,19 @@
-export const formatDate = (timestamp: number, locale: string = "uk") => {
+const getLocaleFromLanguage = (language: string): string => {
+  switch (language.toLowerCase()) {
+    case "ukrainian":
+      return "uk";
+    case "english":
+      return "en";
+    case "polish":
+      return "pl";
+    default:
+      return "en";
+  }
+};
+
+export const formatDate = (timestamp: number, language: string) => {
+  const locale = getLocaleFromLanguage(language);
+
   const date = new Date(timestamp);
   const now = new Date();
 

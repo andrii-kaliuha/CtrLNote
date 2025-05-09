@@ -5,6 +5,7 @@ import type { NotesState } from "../types";
 import { useTranslation } from "react-i18next";
 import { NotesGroup } from "../ui/NotesGroup";
 import { SearchInput } from "../ui/SearchInput";
+import { NoteEditor } from "../components/NoteEditor";
 
 export const SearchPage = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ export const SearchPage = () => {
             <NotesGroup notes={activeNotes} title={t("notes")} />
             <NotesGroup notes={archivedNotes} title={t("archive")} />
             <NotesGroup notes={deletedNotes} title={t("trash")} />
+            <NoteEditor />
           </>
         ) : (
           // Якщо є запит, але нічого не знайдено
