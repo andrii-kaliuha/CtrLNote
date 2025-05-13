@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchQuery } from "../store/slices/notesSlice";
-import type { NotesState } from "../types";
+import { setSearchQuery } from "../store/slices/searchSlice";
 import { useTranslation } from "react-i18next";
 import { NotesGroup } from "../ui/NotesGroup";
 import { SearchInput } from "../ui/SearchInput";
 import { NoteEditor } from "../components/NoteEditor";
+import { RootState } from "../store/store";
 
 export const SearchPage = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  const searchQuery = useSelector((state: { notes: NotesState }) => state.notes.searchQuery);
-  const notes = useSelector((state: { notes: NotesState }) => state.notes.notes);
+  const notes = useSelector((state: RootState) => state.notes.notes);
+  const searchQuery = useSelector((state: RootState) => state.search.searchQuery);
   const [query, setQuery] = useState(() => searchQuery ?? "");
 
   useEffect(() => {

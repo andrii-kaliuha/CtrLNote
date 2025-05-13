@@ -1,26 +1,8 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-import type { NoteProps, NoteStatus, NotesState } from "../../types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { NoteProps, NotesState } from "../../types";
+import { notesList } from "../../assets/notes";
 
-import rawNotes from "../../assets/notes.json";
-const notesList: NoteProps[] = rawNotes.map((note) => ({
-  ...note,
-  status: note.status as NoteStatus,
-}));
-
-export const clearExpiredTrash = createAsyncThunk("notes/clearExpiredTrash", async (_, { getState }) => {
-  const { autoDeletePeriod } = (getState() as RootState).settings;
-  const currentTime = Date.now();
-
-  const notes = (getState() as RootState).notes.notes;
-
-  return notes.filter((note) => {
-    const shouldDelete = note.status === "deleted" && note.deletedAt && currentTime - note.deletedAt >= autoDeletePeriod;
-    return !shouldDelete;
-  });
-});
-
-const initialState: NotesState = { notes: notesList, searchQuery: "", searchHistory: [] };
+const initialState: NotesState = { notes: notesList };
 
 const findNote = (state: NotesState, id: string) => state.notes.find((note) => note.id === id);
 
@@ -75,31 +57,12 @@ const notesSlice = createSlice({
         delete note.deletedAt;
       }
     },
-    removeNotePermanently: (state, action: PayloadAction<string>) => {
+    removeNote: (state, action: PayloadAction<string>) => {
       state.notes = state.notes.filter((note) => note.id !== action.payload);
     },
-    setSearchQuery: (state, action: PayloadAction<string>) => {
-      state.searchQuery = action.payload;
-    },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(clearExpiredTrash.fulfilled, (state, action) => {
-      state.notes = action.payload;
-    });
   },
 });
 
-export const {
-  addNote,
-  editNote,
-  pinNote,
-  unpinNote,
-  archiveNote,
-  unarchiveNote,
-  moveToTrash,
-  restoreNote,
-  removeNotePermanently,
-  setSearchQuery,
-} = notesSlice.actions;
+export const { addNote, editNote, pinNote, unpinNote, archiveNote, unarchiveNote, moveToTrash, restoreNote, removeNote } = notesSlice.actions;
 
 export default notesSlice.reducer;

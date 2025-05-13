@@ -36,6 +36,8 @@ i18n
           auto_delete_10: "10 days",
           auto_delete_30: "30 days",
           trash_auto_delete_message: "Notes will be deleted after {{count}} days",
+          trash_disabled_message: "Trash is disabled",
+          trash_enable_instruction: "To enable trash, go to settings",
 
           search_placeholder: "Search notes...",
 
@@ -109,6 +111,9 @@ i18n
           auto_delete_30: "30 днів",
           trash_auto_delete_message: "Нотатки буде видалено через {{count}} днів",
 
+          trash_disabled_message: "Кошик вимкнено",
+          trash_enable_instruction: "Щоб увімкнути кошик, перейдіть до налаштувань",
+
           search_placeholder: "Пошук нотаток...",
 
           search_no_results: 'Нічого не знайдено за запитом "{{query}}"',
@@ -181,6 +186,9 @@ i18n
           auto_delete_7: "7 dni",
           auto_delete_10: "10 dni",
           auto_delete_30: "30 dni",
+
+          trash_disabled_message: "Kosz jest wyłączony",
+          trash_enable_instruction: "Aby włączyć kosz, przejdź do ustawień",
 
           search_placeholder: "Szukaj notatek...",
 

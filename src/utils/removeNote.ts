@@ -1,5 +1,5 @@
 import { AppDispatch } from "../store/store";
-import { moveToTrash, removeNotePermanently } from "../store/slices/notesSlice";
+import { moveToTrash, removeNote as removeNotePermanently } from "../store/slices/notesSlice";
 
 export const removeNote = (dispatch: AppDispatch, noteId: string, trashEnabled: boolean) => {
   if (trashEnabled === true) {

@@ -4,7 +4,7 @@ import { JSX, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { openNoteEditor } from "../store/slices/noteEditorSlice";
 import type { MoreVertMenuItemProps, MoreVertMenuProps } from "../types";
-import { pinNote, unpinNote, archiveNote, unarchiveNote, restoreNote, removeNotePermanently } from "../store/slices/notesSlice";
+import { pinNote, unpinNote, archiveNote, unarchiveNote, restoreNote, removeNote as removeNotePermanently } from "../store/slices/notesSlice";
 import { useTranslation } from "react-i18next";
 import { removeNote } from "../utils/removeNote";
 import { RootState } from "../store/store";

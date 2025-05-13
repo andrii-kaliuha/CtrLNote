@@ -7,7 +7,9 @@ export type NoteStatus = "active" | "pinned" | "archived" | "deleted";
 
 export type NoteProps = { id: string; title: string; text: string; createdAt: number; status: NoteStatus; deletedAt?: number };
 
-export type NotesState = { notes: NoteProps[]; searchQuery: string; searchHistory: string[] };
+export type NotesState = { notes: NoteProps[] };
+
+export type SearchState = { searchQuery: string; searchHistory: string[] };
 
 export type SettingsState = { theme: "light" | "dark"; language: string; mainColor: string; trashEnabled: boolean; autoDeletePeriod: number };
 
