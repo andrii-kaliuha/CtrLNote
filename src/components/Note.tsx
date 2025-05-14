@@ -6,6 +6,7 @@ import { RootState } from "../store/store";
 
 export const Note: React.FC<NoteProps> = ({ id, title, text, createdAt, status }) => {
   const language = useSelector((state: RootState) => state.settings.language);
+
   return (
     <li className="p-3 rounded-lg bg-[var(--color-surface)] h-[180px] overflow-hidden flex flex-col justify-between">
       <div>

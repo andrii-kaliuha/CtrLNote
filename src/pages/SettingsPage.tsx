@@ -3,23 +3,23 @@ import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { setTheme, setLanguage, setMainColor, toggleTrash, setAutoDeletePeriod } from "../store/slices/settingsSlice";
-import i18n from "../i18n";
 import { useTranslation } from "react-i18next";
 import { Setting } from "../components/Setting";
 import { Switch } from "../ui/Switch";
 
 // useSettings.ts
 export const useSettings = () => {
+  const { i18n } = useTranslation();
+
   const theme = useSelector((state: RootState) => state.settings.theme);
   const language = useSelector((state: RootState) => state.settings.language);
   const mainColor = useSelector((state: RootState) => state.settings.mainColor);
 
   useEffect(() => {
-    const htmlElement = document.documentElement;
     if (theme === "dark") {
-      htmlElement.classList.add("dark");
+      document.documentElement.classList.add("dark");
     } else {
-      htmlElement.classList.remove("dark");
+      document.documentElement.classList.remove("dark");
     }
   }, [theme]);
 
@@ -41,6 +41,8 @@ export const SettingsPage = () => {
   const mainColor = useSelector((state: RootState) => state.settings.mainColor);
   const trashEnabled = useSelector((state: RootState) => state.settings.trashEnabled);
   const autoDeletePeriod = useSelector((state: RootState) => state.settings.autoDeletePeriod);
+
+  const MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24;
 
   const handleLanguageChange = useCallback(
     (event: SelectChangeEvent<string>) => {
@@ -114,10 +116,10 @@ export const SettingsPage = () => {
         value={String(autoDeletePeriod)}
         function={handleAutoDeleteChange}
         options={[
-          { name: t("auto_delete_1"), value: String(1 * 24 * 60 * 60 * 1000) },
-          { name: t("auto_delete_7"), value: String(7 * 24 * 60 * 60 * 1000) },
-          { name: t("auto_delete_10"), value: String(10 * 24 * 60 * 60 * 1000) },
-          { name: t("auto_delete_30"), value: String(30 * 24 * 60 * 60 * 1000) },
+          { name: t("auto_delete_1"), value: String(1 * MILLISECONDS_IN_DAY) },
+          { name: t("auto_delete_7"), value: String(7 * MILLISECONDS_IN_DAY) },
+          { name: t("auto_delete_10"), value: String(10 * MILLISECONDS_IN_DAY) },
+          { name: t("auto_delete_30"), value: String(30 * MILLISECONDS_IN_DAY) },
         ]}
       />
       <Switch text={t("settings_enable_trash")} name="trash" checked={trashEnabled} onChange={handleTrashToggle} />

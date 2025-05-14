@@ -25,7 +25,19 @@ export const Setting = ({ title, value, options, function: handleChange }: Setti
           }}
         >
           {options.map((item) => (
-            <MenuItem key={item.value} value={item.value}>
+            // <MenuItem key={item.value} value={item.value}>
+            //   {item.name}
+            // </MenuItem>
+            <MenuItem
+              value={item.value}
+              key={item.value}
+              sx={{
+                padding: "10px 16px",
+                color: "var(--text-primary)",
+                fontSize: "14px",
+                "&:hover": { backgroundColor: "var(--color-hover)" },
+              }}
+            >
               {item.name}
             </MenuItem>
           ))}
