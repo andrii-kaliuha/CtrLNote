@@ -36,27 +36,24 @@ export const SearchPage = () => {
   const deletedNotes = filteredNotes.filter((note) => note.status === "deleted");
 
   return (
-    <>
+    <section>
       <SearchInput name="search-note" value={query} onChange={handleSearchChange} placeholder={t("search_placeholder")} />
-      {/* Перевіряємо чи є запит */}
-      {query.trim().length > 0 ? (
-        // Якщо є запит, перевіряємо, чи щось знайдено
-        filteredNotes.length > 0 ? (
-          <>
-            <NotesGroup notes={pinnedNotes} title={t("pinned")} />
-            <NotesGroup notes={activeNotes} title={t("notes")} />
-            <NotesGroup notes={archivedNotes} title={t("archive")} />
-            <NotesGroup notes={deletedNotes} title={t("trash")} />
-            <NoteEditor />
-          </>
-        ) : (
-          // Якщо є запит, але нічого не знайдено
-          <p className="text-[var(--text-secondary)] text-center p-3">{t("search_no_results", { query })}</p>
-        )
-      ) : (
-        // Якщо запиту немає (поле пошуку порожнє)
-        <p className="text-[var(--text-secondary)] text-center p-3">{t("search_instruction")}</p>
+
+      {query.trim().length === 0 && <p className="text-[var(--text-secondary)] text-center p-3">{t("search_instruction")}</p>}
+
+      {query.trim().length > 0 && filteredNotes.length === 0 && (
+        <p className="text-[var(--text-secondary)] text-center p-3">{t("search_no_results", { query })}</p>
       )}
-    </>
+
+      {query.trim().length > 0 && filteredNotes.length > 0 && (
+        <>
+          <NotesGroup notes={pinnedNotes} title={t("pinned")} />
+          <NotesGroup notes={activeNotes} title={t("notes")} />
+          <NotesGroup notes={archivedNotes} title={t("archive")} />
+          <NotesGroup notes={deletedNotes} title={t("trash")} />
+          <NoteEditor />
+        </>
+      )}
+    </section>
   );
 };

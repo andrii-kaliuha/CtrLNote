@@ -25,9 +25,6 @@ export const Setting = ({ title, value, options, function: handleChange }: Setti
           }}
         >
           {options.map((item) => (
-            // <MenuItem key={item.value} value={item.value}>
-            //   {item.name}
-            // </MenuItem>
             <MenuItem
               value={item.value}
               key={item.value}

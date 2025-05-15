@@ -11,22 +11,22 @@ export const ArchivePage = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="flex flex-col items-center w-full h-full">
+    <section className="flex flex-col justify-center items-center h-full">
       {archivedNotes.length > 0 ? <Archive text={t("archive")} notes={archivedNotes} /> : <EmptyArchive text={t("archive_empty_message")} />}
     </section>
   );
 };
 
 const Archive = ({ text, notes }: { text: string; notes: NoteProps[] }) => (
-  <>
-    <h2 className="p-3">{text}</h2>
+  <section className="flex flex-col items-center w-full h-full">
+    <h2 className="pl-3 pb-3 sm:p-3 self-start">{text}</h2>
     <Notes notes={notes} />
-  </>
+  </section>
 );
 
 const EmptyArchive = ({ text }: { text: string }) => (
-  <div className="flex flex-col items-center justify-center h-full text-center">
+  <section className="flex flex-col items-center justify-center">
     <ArchiveIcon sx={{ fontSize: 128 }} />
     <p className="mt-3 text-lg text-[var(--text-secondary)]">{text}</p>
-  </div>
+  </section>
 );

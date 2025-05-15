@@ -31,7 +31,11 @@ export const TrashPage = () => {
 
   if (trashEnabled === false) return <TrashDisabled />;
 
-  return <>{deletedNotes.length > 0 ? <Trash notes={deletedNotes} /> : <EmptyTrash days={days} />}</>;
+  return (
+    <section className="flex flex-col justify-center items-center h-full">
+      {deletedNotes.length > 0 ? <Trash notes={deletedNotes} /> : <EmptyTrash days={days} />}
+    </section>
+  );
 };
 
 const Trash = ({ notes }: { notes: NoteProps[] }) => {
@@ -42,13 +46,13 @@ const Trash = ({ notes }: { notes: NoteProps[] }) => {
   const removeAll = () => notes.forEach((note) => dispatch(removeNotePermanently(note.id)));
 
   return (
-    <>
+    <div className="flex flex-col">
       <div className="flex gap-3 h-12 self-end items-center">
         <Button action={restoreAll} text={t("trash_restore_all")} />
         <Button action={removeAll} text={t("trash_delete_all")} />
       </div>
       <Notes notes={notes} />
-    </>
+    </div>
   );
 };
 
@@ -56,7 +60,7 @@ const EmptyTrash = ({ days }: { days: number }) => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col items-center justify-center h-full text-center">
+    <div className="flex flex-col items-center">
       <DeleteIcon sx={{ fontSize: 128 }} />
       <p className="text-lg mt-3">{t("trash_empty_message")}</p>
       <p className="text-sm text-[var(--text-secondary)]">{t("trash_auto_delete_message", { count: days })}</p>
@@ -68,9 +72,9 @@ const TrashDisabled = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col items-center justify-center h-full text-center">
+    <section className="flex flex-col items-center justify-center h-full text-center">
       <p className="text-lg mt-3">{t("trash_disabled_message")}</p>
       <p className="text-lg text-[var(--text-secondary)]">{t("trash_enable_instruction")}</p>
-    </div>
+    </section>
   );
 };

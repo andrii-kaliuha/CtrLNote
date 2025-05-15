@@ -37,7 +37,7 @@ export const NotesPage = () => {
     <section>
       {pinnedNotes.length > 0 && (
         <>
-          <div className="p-3 flex justify-between items-center">
+          <div className="pl-3 pb-3 sm:p-3 flex justify-between items-center">
             <h2>{t("pinned")}</h2>
             <NotesSorter sortBy={pinnedSortBy} changeSortBy={setPinnedSortBy} />
           </div>

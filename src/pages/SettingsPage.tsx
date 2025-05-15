@@ -78,51 +78,53 @@ export const SettingsPage = () => {
   );
 
   return (
-    <ul className="flex flex-col gap-3">
-      <Setting
-        title={t("settings_theme")}
-        value={theme}
-        function={handleThemeChange}
-        options={[
-          { name: t("theme_light"), value: "light" },
-          { name: t("theme_dark"), value: "dark" },
-        ]}
-      />
-      <Setting
-        title={t("settings_language")}
-        value={language}
-        function={handleLanguageChange}
-        options={[
-          { name: "English", value: "english" },
-          { name: "Українська", value: "ukrainian" },
-          { name: "Polski", value: "polish" },
-        ]}
-      />
-      <Setting
-        title={t("settings_main_color")}
-        value={mainColor}
-        function={handleMainColorChange}
-        options={[
-          { name: t("color_green"), value: "green" },
-          { name: t("color_purple"), value: "purple" },
-          { name: t("color_blue"), value: "blue" },
-          { name: t("color_red"), value: "red" },
-          { name: t("color_yellow"), value: "yellow" },
-          { name: t("color_orange"), value: "orange" },
-        ]}
-      />
-      <Setting
-        title={t("settings_auto_delete")}
-        value={String(autoDeletePeriod)}
-        function={handleAutoDeleteChange}
-        options={[
-          { name: t("auto_delete_1"), value: String(1 * MILLISECONDS_IN_DAY) },
-          { name: t("auto_delete_7"), value: String(7 * MILLISECONDS_IN_DAY) },
-          { name: t("auto_delete_10"), value: String(10 * MILLISECONDS_IN_DAY) },
-          { name: t("auto_delete_30"), value: String(30 * MILLISECONDS_IN_DAY) },
-        ]}
-      />
-      <Switch text={t("settings_enable_trash")} name="trash" checked={trashEnabled} onChange={handleTrashToggle} />
-    </ul>
+    <section className="flex flex-col self-start justify-between w-full">
+      <ul className="flex flex-col gap-3">
+        <Setting
+          title={t("settings_theme")}
+          value={theme}
+          function={handleThemeChange}
+          options={[
+            { name: t("theme_light"), value: "light" },
+            { name: t("theme_dark"), value: "dark" },
+          ]}
+        />
+        <Setting
+          title={t("settings_language")}
+          value={language}
+          function={handleLanguageChange}
+          options={[
+            { name: "English", value: "english" },
+            { name: "Українська", value: "ukrainian" },
+            { name: "Polski", value: "polish" },
+          ]}
+        />
+        <Setting
+          title={t("settings_main_color")}
+          value={mainColor}
+          function={handleMainColorChange}
+          options={[
+            { name: t("color_green"), value: "green" },
+            { name: t("color_purple"), value: "purple" },
+            { name: t("color_blue"), value: "blue" },
+            { name: t("color_red"), value: "red" },
+            { name: t("color_yellow"), value: "yellow" },
+            { name: t("color_orange"), value: "orange" },
+          ]}
+        />
+        <Setting
+          title={t("settings_auto_delete")}
+          value={String(autoDeletePeriod)}
+          function={handleAutoDeleteChange}
+          options={[
+            { name: t("auto_delete_1"), value: String(1 * MILLISECONDS_IN_DAY) },
+            { name: t("auto_delete_7"), value: String(7 * MILLISECONDS_IN_DAY) },
+            { name: t("auto_delete_10"), value: String(10 * MILLISECONDS_IN_DAY) },
+            { name: t("auto_delete_30"), value: String(30 * MILLISECONDS_IN_DAY) },
+          ]}
+        />
+        <Switch text={t("settings_enable_trash")} name="trash" checked={trashEnabled} onChange={handleTrashToggle} />
+      </ul>
+    </section>
   );
 };
