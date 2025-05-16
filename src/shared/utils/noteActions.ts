@@ -1,8 +1,15 @@
 import { Dispatch } from "@reduxjs/toolkit";
-import { openNoteEditor } from "../store/slices/noteEditorSlice";
-import { pinNote, unpinNote, archiveNote, unarchiveNote, restoreNote, removeNote as removeNotePermanently } from "../store/slices/notesSlice";
+import { openNoteEditor } from "../../store/slices/noteEditorSlice";
+import {
+  pinNote,
+  unpinNote,
+  archiveNote,
+  unarchiveNote,
+  restoreNote,
+  removeNote as removeNotePermanently,
+} from "../../store/slices/notesSlice";
 import { removeNote } from "./removeNote";
-import { Action } from "../types";
+import { Action } from "../types/types";
 
 export const getAvailableActions = (status: string, id: string, dispatch: Dispatch, trashEnabled: boolean): Action[] => {
   switch (status) {

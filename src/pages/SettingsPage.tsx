@@ -5,7 +5,8 @@ import { RootState } from "../store/store";
 import { setTheme, setLanguage, setMainColor, toggleTrash, setAutoDeletePeriod } from "../store/slices/settingsSlice";
 import { useTranslation } from "react-i18next";
 import { Setting } from "../components/Setting";
-import { Switch } from "../ui/Switch";
+import { Switch } from "..//shared/ui/Switch";
+import { removeNote as removeNotePermanently } from "../store/slices/notesSlice";
 
 // useSettings.ts
 export const useSettings = () => {
@@ -35,6 +36,7 @@ export const useSettings = () => {
 export const SettingsPage = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
+  const notes = useSelector((state: RootState) => state.notes.notes);
 
   const theme = useSelector((state: RootState) => state.settings.theme);
   const language = useSelector((state: RootState) => state.settings.language);
@@ -67,8 +69,12 @@ export const SettingsPage = () => {
   );
 
   const handleTrashToggle = useCallback(() => {
+    if (trashEnabled) {
+      notes.filter((note) => note.status === "deleted").forEach((note) => dispatch(removeNotePermanently(note.id)));
+    }
+
     dispatch(toggleTrash());
-  }, [dispatch]);
+  }, [dispatch, trashEnabled, notes]);
 
   const handleAutoDeleteChange = useCallback(
     (event: SelectChangeEvent<string>) => {

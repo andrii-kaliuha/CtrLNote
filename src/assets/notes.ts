@@ -1,4 +1,4 @@
-import type { NoteProps } from "../types";
+import type { NoteProps } from "../shared/types/types";
 
 export const notesList: NoteProps[] = [
   {

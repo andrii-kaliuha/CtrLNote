@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { SettingsState } from "../../types";
+import type { SettingsState } from "../../shared/types/types";
 
 const initialState: SettingsState = { theme: "light", language: "english", mainColor: "red", trashEnabled: true, autoDeletePeriod: 2592000000 };
 

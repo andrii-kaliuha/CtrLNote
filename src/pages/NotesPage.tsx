@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { openEmptyNoteEditor } from "../store/slices/noteEditorSlice";
 import { useTranslation } from "react-i18next";
-import type { SortBy } from "../types";
+import type { SortBy } from "../shared/types/types";
 import { NoteEditor } from "../components/NoteEditor";
 import { Notes } from "../components/Notes";
 import { NotesSorter } from "../components/NotesSorter";
-import { sortNotesArray } from "../utils/sortNotesArray";
+import { sortNotesArray } from "../shared/utils/sortNotesArray";
 
 export const NotesPage = () => {
   const { notes } = useSelector((state: RootState) => state.notes);

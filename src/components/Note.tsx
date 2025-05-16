@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import type { NoteProps } from "../types";
-import { formatDate } from "../utils/formatDate";
+import type { NoteProps } from "../shared/types/types";
+import { formatDate } from "..//shared/utils/formatDate";
 import { MoreVertMenu } from "./MoreVertMenu";
 import { RootState } from "../store/store";
 

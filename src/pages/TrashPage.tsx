@@ -5,9 +5,9 @@ import { restoreNote, removeNote as removeNotePermanently } from "../store/slice
 import { Notes } from "../components/Notes";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "../ui/Button";
-import { autoDeleteNotes } from "../utils/autoDeleteNotes";
-import { NoteProps } from "../types";
+import { Button } from "..//shared/ui/Button";
+import { autoDeleteNotes } from "..//shared/utils/autoDeleteNotes";
+import { NoteProps } from "../shared/types/types";
 
 export const TrashPage = () => {
   const notes = useSelector((state: RootState) => state.notes.notes);
@@ -46,12 +46,14 @@ const Trash = ({ notes }: { notes: NoteProps[] }) => {
   const removeAll = () => notes.forEach((note) => dispatch(removeNotePermanently(note.id)));
 
   return (
-    <div className="flex flex-col">
-      <div className="flex gap-3 h-12 self-end items-center">
+    <div className="flex flex-col min-h-full gap-3">
+      <div className="flex gap-3 self-end items-center">
         <Button action={restoreAll} text={t("trash_restore_all")} />
         <Button action={removeAll} text={t("trash_delete_all")} />
       </div>
-      <Notes notes={notes} />
+      <div className="pb-3">
+        <Notes notes={notes} />
+      </div>
     </div>
   );
 };

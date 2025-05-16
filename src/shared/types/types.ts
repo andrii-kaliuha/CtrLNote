@@ -43,3 +43,5 @@ export type SearchInputProps = {
 export type SwitchProps = { text: string; name: string; checked: boolean; onChange: (event: ChangeEvent<HTMLInputElement>) => void };
 
 export type Action = { title: string; action: () => void };
+
+export type MenuItemProps = { value: SortBy; text: string };

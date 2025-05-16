@@ -1,16 +1,9 @@
-import { Menu, StickyNote2, Archive, Search, Delete, Settings } from "@mui/icons-material";
+import { Menu } from "@mui/icons-material";
 import { List, ListItemButton, ListItemText, ListItemIcon, BottomNavigation, BottomNavigationAction } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-
-const navigationLinks = [
-  { title: "notes", path: "/notes", icon: <StickyNote2 /> },
-  { title: "archive", path: "/archive", icon: <Archive /> },
-  { title: "search", path: "/search", icon: <Search /> },
-  { title: "trash", path: "/trash", icon: <Delete /> },
-  { title: "settings", path: "/settings", icon: <Settings /> },
-];
+import { appPages } from "../routes/pages";
 
 export const DesktopNavigation = () => {
   const [isSidebarCollapsed, setCollapsed] = useState(false);
@@ -40,12 +33,12 @@ export const DesktopNavigation = () => {
           }}
         >
           <ListItemIcon sx={{ minWidth: "auto" }}>
-            <Menu sx={{ color: "var(--text-primary)" }} />
+            <Menu sx={{ color: "var(--color-primary)" }} />
           </ListItemIcon>
           {!isSidebarCollapsed && <ListItemText primary={t("menu")} sx={{ ml: 2 }} />}
         </ListItemButton>
 
-        {navigationLinks.map(({ title, path, icon }) => (
+        {appPages.map(({ title, path, icon }) => (
           <ListItemButton
             component={Link}
             to={path}
@@ -57,7 +50,7 @@ export const DesktopNavigation = () => {
               justifyContent: isSidebarCollapsed ? "center" : "flex-start",
             }}
           >
-            <ListItemIcon sx={{ minWidth: "auto", color: "var(--text-primary)" }}>{icon}</ListItemIcon>
+            <ListItemIcon sx={{ minWidth: "auto", color: "var(--color-primary)" }}>{icon}</ListItemIcon>
             {!isSidebarCollapsed && <ListItemText primary={t(title)} sx={{ ml: 2 }} />}
           </ListItemButton>
         ))}
@@ -69,13 +62,13 @@ export const DesktopNavigation = () => {
 export const MobileNavigation = () => (
   <nav className="sm:hidden sticky bottom-0 left-0 right-0 z-10">
     <BottomNavigation sx={{ backgroundColor: "var(--color-surface)", borderTop: "4px solid var(--color-background)" }}>
-      {navigationLinks.map((item) => (
+      {appPages.map(({ title, path, icon }) => (
         <BottomNavigationAction
-          key={item.title}
+          key={title}
           component={Link}
-          to={item.path}
-          icon={item.icon}
-          sx={{ width: 48, minWidth: 48, padding: 0, color: "#1976d2", "&.Mui-selected": { color: "#1976d2" } }}
+          to={path}
+          icon={icon}
+          sx={{ width: 48, minWidth: 48, padding: 0, color: "var(--color-primary)", "&.Mui-selected": { color: "var(--color-primary)" } }}
         />
       ))}
     </BottomNavigation>

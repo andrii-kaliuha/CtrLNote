@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { NoteProps, NotesState } from "../../types";
+import type { NoteProps, NotesState } from "../../shared/types/types";
 import { notesList } from "../../assets/notes";
 
 const initialState: NotesState = { notes: notesList };

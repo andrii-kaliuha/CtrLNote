@@ -1,5 +1,5 @@
 import { Button as MuiButton } from "@mui/material";
-import type { ButtonProps } from "../types";
+import type { ButtonProps } from "../types/types";
 
 export const Button: React.FC<ButtonProps> = ({ action, text }) => {
   return (

@@ -1,5 +1,5 @@
 import { Switch as MuiSwitch } from "@mui/material";
-import { SwitchProps } from "../types";
+import { SwitchProps } from "../types/types";
 
 export const Switch: React.FC<SwitchProps> = ({ text, name, checked, onChange }) => (
   <li className="flex items-center justify-between w-full">

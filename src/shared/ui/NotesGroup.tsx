@@ -1,5 +1,5 @@
-import { Notes } from "../components/Notes";
-import { NotesGroupProps } from "../types";
+import { Notes } from "../../components/Notes";
+import { NotesGroupProps } from "../types/types";
 
 export const NotesGroup: React.FC<NotesGroupProps> = ({ notes, title }) =>
   notes.length > 0 && (

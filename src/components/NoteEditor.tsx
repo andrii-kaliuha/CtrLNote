@@ -4,8 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { closeNoteEditor, setTitle, setText, setNoteToEdit } from "../store/slices/noteEditorSlice";
 import { addNote, editNote } from "../store/slices/notesSlice";
-import { Button } from "../ui/Button";
-import { TextField } from "../ui/TextField";
+import { Button } from "..//shared/ui/Button";
+import { TextField } from "..//shared/ui/TextField";
 import { useTranslation } from "react-i18next";
 
 export const NoteEditor = () => {

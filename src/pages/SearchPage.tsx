@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuery } from "../store/slices/searchSlice";
 import { useTranslation } from "react-i18next";
-import { NotesGroup } from "../ui/NotesGroup";
-import { SearchInput } from "../ui/SearchInput";
+import { NotesGroup } from "..//shared/ui/NotesGroup";
+import { SearchInput } from "..//shared/ui/SearchInput";
 import { NoteEditor } from "../components/NoteEditor";
 import { RootState } from "../store/store";
 

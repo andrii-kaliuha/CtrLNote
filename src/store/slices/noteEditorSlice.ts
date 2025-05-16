@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { NoteProps, NoteEditorState } from "../../types";
+import type { NoteProps, NoteEditorState } from "../../shared/types/types";
 
 const initialState: NoteEditorState = { isOpen: false, noteId: null, title: "", text: "" };
 

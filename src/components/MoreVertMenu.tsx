@@ -2,10 +2,10 @@ import { MoreVert } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import type { MoreVertMenuItemProps, MoreVertMenuProps } from "../types";
+import type { MoreVertMenuItemProps, MoreVertMenuProps } from "../shared/types/types";
 import { useTranslation } from "react-i18next";
 import { RootState } from "../store/store";
-import { getAvailableActions } from "../utils/noteActions";
+import { getAvailableActions } from "..//shared/utils/noteActions";
 
 const MoreVertMenuItem = ({ title, onClick, action }: MoreVertMenuItemProps) => {
   const handleClick = (): void => {

@@ -1,4 +1,4 @@
-import { NoteProps, SortBy } from "../types";
+import { NoteProps, SortBy } from "../types/types";
 
 export const sortNotesArray = (notes: NoteProps[], sortBy: SortBy): NoteProps[] => {
   const sortedNotes = [...notes];

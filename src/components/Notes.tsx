@@ -1,5 +1,5 @@
 import { IconButton } from "@mui/material";
-import { NotesProps } from "../types";
+import { NotesProps } from "../shared/types/types";
 import { Note } from "./Note";
 import { Add } from "@mui/icons-material";
 

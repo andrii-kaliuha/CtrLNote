@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { Notes } from "../components/Notes";
 import { useTranslation } from "react-i18next";
-import { NoteProps } from "../types";
+import { NoteProps } from "../shared/types/types";
 
 export const ArchivePage = () => {
   const { notes } = useSelector((state: RootState) => state.notes);
