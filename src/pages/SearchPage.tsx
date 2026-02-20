@@ -26,9 +26,9 @@ export const SearchPage = () => {
   };
 
   const filteredNotes =
-    query.trim().length > 0
-      ? notes.filter((note) => note.title.toLowerCase().includes(query.toLowerCase()) || note.text.toLowerCase().includes(query.toLowerCase()))
-      : [];
+    query.trim().length > 0 ?
+      notes.filter((note) => note.title.toLowerCase().includes(query.toLowerCase()) || note.text.toLowerCase().includes(query.toLowerCase()))
+    : [];
 
   const pinnedNotes = filteredNotes.filter((note) => note.status === "pinned");
   const activeNotes = filteredNotes.filter((note) => note.status === "active");

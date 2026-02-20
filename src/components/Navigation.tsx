@@ -10,7 +10,9 @@ export const DesktopNavigation = () => {
   const { t } = useTranslation();
 
   return (
-    <nav className="hidden sm:block sticky top-0 left-0 h-full py-3 pl-3">
+    // <nav className="hidden sm:block sticky top-0 left-0 h-full py-3 pl-3">
+    // <nav className="hidden sm:block h-full py-3 pl-3">
+    <nav className="hidden sm:block py-3 pl-3">
       <List
         sx={{
           width: isSidebarCollapsed ? 64 : 240,

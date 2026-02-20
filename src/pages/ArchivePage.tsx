@@ -4,6 +4,7 @@ import { RootState } from "../store/store";
 import { Notes } from "../components/Notes";
 import { useTranslation } from "react-i18next";
 import { NoteProps } from "../shared/types/types";
+import { EmptyState } from "../shared/ui/EmptyState";
 
 export const ArchivePage = () => {
   const { notes } = useSelector((state: RootState) => state.notes);
@@ -11,22 +12,20 @@ export const ArchivePage = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="flex flex-col justify-center items-center h-full">
-      {archivedNotes.length > 0 ? <Archive text={t("archive")} notes={archivedNotes} /> : <EmptyArchive text={t("archive_empty_message")} />}
+    // <section className="flex flex-col min-h-full w-full">
+    <section className="flex flex-col h-full w-full">
+      {archivedNotes.length > 0 ?
+        <Archive text={t("archive")} notes={archivedNotes} />
+      : <EmptyState icon={ArchiveIcon} title={t("archive_empty_message")} />}
     </section>
   );
 };
 
 const Archive = ({ text, notes }: { text: string; notes: NoteProps[] }) => (
-  <section className="flex flex-col items-center w-full h-full">
+  <>
     <h2 className="pl-3 pb-3 sm:p-3 self-start">{text}</h2>
-    <Notes notes={notes} />
-  </section>
-);
-
-const EmptyArchive = ({ text }: { text: string }) => (
-  <section className="flex flex-col items-center justify-center">
-    <ArchiveIcon sx={{ fontSize: 128 }} />
-    <p className="mt-3 text-lg text-[var(--text-secondary)]">{text}</p>
-  </section>
+    <div className="overflow-y-auto">
+      <Notes notes={notes} />
+    </div>
+  </>
 );
