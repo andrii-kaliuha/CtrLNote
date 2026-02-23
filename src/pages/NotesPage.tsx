@@ -84,10 +84,9 @@ export const NotesPage = () => {
             <Notes notes={activeNotes} addButton={true} action={handleCreateNewNote} />
           </div>
         </div>
-
-        {/* <NoteEditor /> */}
       </div>
-      <NoteEditor2 />
+      {/* <NoteEditor2 /> */}
+      <NoteEditor />
     </section>
   );
 };

@@ -10,9 +10,7 @@ export const DesktopNavigation = () => {
   const { t } = useTranslation();
 
   return (
-    // <nav className="hidden sm:block sticky top-0 left-0 h-full py-3 pl-3">
-    // <nav className="hidden sm:block h-full py-3 pl-3">
-    <nav className="hidden sm:block py-3 pl-3">
+    <nav className="hidden sm:block">
       <List
         sx={{
           width: isSidebarCollapsed ? 64 : 240,
@@ -62,15 +60,21 @@ export const DesktopNavigation = () => {
 };
 
 export const MobileNavigation = () => (
-  <nav className="sm:hidden sticky bottom-0 left-0 right-0 z-10">
-    <BottomNavigation sx={{ backgroundColor: "var(--color-surface)", borderTop: "4px solid var(--color-background)" }}>
+  <nav className="sm:hidden">
+    <BottomNavigation sx={{ backgroundColor: "var(--color-surface)", borderRadius: "12px" }}>
       {appPages.map(({ title, path, icon }) => (
         <BottomNavigationAction
           key={title}
           component={Link}
           to={path}
           icon={icon}
-          sx={{ width: 48, minWidth: 48, padding: 0, color: "var(--color-primary)", "&.Mui-selected": { color: "var(--color-primary)" } }}
+          sx={{
+            width: 48,
+            minWidth: 48,
+            padding: 0,
+            color: "var(--color-primary)",
+            "&.Mui-selected": { color: "var(--color-primary)" },
+          }}
         />
       ))}
     </BottomNavigation>

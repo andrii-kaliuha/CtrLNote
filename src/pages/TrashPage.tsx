@@ -5,11 +5,10 @@ import { restoreNote, removeNote as removeNotePermanently } from "../store/slice
 import { Notes } from "../components/Notes";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "..//shared/ui/Button";
 import { autoDeleteNotes } from "..//shared/utils/autoDeleteNotes";
 import { NoteProps } from "../shared/types/types";
 import { EmptyState } from "../shared/ui/EmptyState";
-import { IconButton } from "@mui/material";
+import { Button as MuiButton } from "@mui/material";
 import { Replay } from "@mui/icons-material";
 
 export const TrashPage = () => {
@@ -51,19 +50,17 @@ const Trash = ({ notes }: { notes: NoteProps[] }) => {
   const removeAll = () => notes.forEach((note) => dispatch(removeNotePermanently(note.id)));
 
   return (
-    <div className="relative flex flex-col h-full w-full flex-1">
-      <div className="sticky top-0 left-0 flex gap-3 justify-between items-center w-full pb-3 bg-[var(--color-background)]">
+    <div className="flex flex-col flex-1 gap-3 h-full w-full ">
+      <div className="flex justify-between items-center gap-3">
         <h2 className="hidden sm:block pl-3">Кошик</h2>
 
-        <div className="flex gap-3 justify-end flex-1">
-          {/* <Button action={restoreAll} text={t("trash_restore_all")} />
-          <Button action={removeAll} text={t("trash_delete_all")} /> */}
+        <div className="flex justify-end gap-3">
           <TrashButton action={restoreAll} text={t("trash_restore_all")} />
           <TrashButton action={removeAll} text={t("trash_delete_all")} />
         </div>
       </div>
 
-      <div className="overflow-y-auto pb-3">
+      <div className="overflow-y-auto">
         <Notes notes={notes} />
       </div>
     </div>
@@ -81,35 +78,6 @@ const TrashDisabled = () => {
 
   return <EmptyState icon={DeleteIcon} title={t("trash_disabled_message")} description={t("trash_enable_instruction")} />;
 };
-
-// import { Button } from "@mui/material"; // або твій shared UI Button, якщо він прокидає пропси
-
-import { Button as MuiButton } from "@mui/material";
-
-// const TrashButton = ({ action }: { action: () => void }) => {
-//   const { t } = useTranslation();
-
-//   return (
-//     <MuiButton
-//       onClick={action}
-//       startIcon={<Replay sx={{ width: 20, height: 20 }} />}
-//       sx={{
-//         backgroundColor: "var(--color-surface)",
-//         color: "var(--text-primary)",
-//         borderRadius: "8px",
-//         padding: "6px 16px",
-//         height: "36px",
-//         textTransform: "none",
-//         border: "1px solid var(--color-border)",
-//         "&:hover": {
-//           backgroundColor: "var(--color-hover)",
-//         },
-//       }}
-//     >
-//       {t("trash_delete_all")}
-//     </MuiButton>
-//   );
-// };
 
 const TrashButton = ({ action, text }: { action: () => void; text: string }) => {
   return (

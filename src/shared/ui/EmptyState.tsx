@@ -1,38 +1,19 @@
-import { ReactNode, ElementType } from "react";
+import { ElementType } from "react";
 
 interface EmptyStateProps {
   icon?: ElementType;
   title: string;
-  description?: string | ReactNode;
-  className?: string;
+  description?: string;
 }
 
-export const EmptyState = ({ icon: Icon, title, description, className = "" }: EmptyStateProps) => {
+export const EmptyState = ({ icon: Icon, title, description }: EmptyStateProps) => {
   return (
-    <Wrapper className={className}>
-      {Icon && <Icon sx={{ fontSize: 128, color: "var(--text-secondary)", opacity: 0.5 }} />}
-      <p className="text-lg mt-3 text-center font-medium">{title}</p>
-      {description && <p className="text-sm text-[var(--text-secondary)] text-center mt-1">{description}</p>}
-    </Wrapper>
-  );
-};
-
-type WrapperProps = { children: ReactNode; className?: string };
-
-export const Wrapper = ({ children, className = "" }: WrapperProps) => {
-  return (
-    <section
-      className={`
-        flex-1 min-h-full w-full 
-        
-        flex flex-col items-center justify-center 
-        
-        p-3 
-        
-        ${className}
-      `}
-    >
-      {children}
+    <section className="flex flex-col items-center justify-center gap-3 flex-1 h-full w-full">
+      {Icon && <Icon sx={{ fontSize: 128, color: "var(--text-secondary)" }} />}
+      <div>
+        <p className="text-lg text-center font-medium">{title}</p>
+        {description && <p className="text-sm text-center text-[var(--text-primary)]">{description}</p>}
+      </div>
     </section>
   );
 };

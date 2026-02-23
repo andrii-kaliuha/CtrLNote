@@ -12,12 +12,11 @@ export const ArchivePage = () => {
   const { t } = useTranslation();
 
   return (
-    // <section className="flex flex-col min-h-full w-full">
-    <section className="flex flex-col h-full w-full">
+    <>
       {archivedNotes.length > 0 ?
         <Archive text={t("archive")} notes={archivedNotes} />
       : <EmptyState icon={ArchiveIcon} title={t("archive_empty_message")} />}
-    </section>
+    </>
   );
 };
 

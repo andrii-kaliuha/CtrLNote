@@ -51,21 +51,21 @@ export const SettingsPage = () => {
       i18n.changeLanguage(event.target.value);
       dispatch(setLanguage(event.target.value));
     },
-    [dispatch, i18n]
+    [dispatch, i18n],
   );
 
   const handleThemeChange = useCallback(
     (event: SelectChangeEvent<string>) => {
       dispatch(setTheme(event.target.value as "light" | "dark"));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const handleMainColorChange = useCallback(
     (event: SelectChangeEvent<string>) => {
       dispatch(setMainColor(event.target.value));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const handleTrashToggle = useCallback(() => {
@@ -80,11 +80,11 @@ export const SettingsPage = () => {
     (event: SelectChangeEvent<string>) => {
       dispatch(setAutoDeletePeriod(Number(event.target.value)));
     },
-    [dispatch]
+    [dispatch],
   );
 
   return (
-    <section className="flex flex-col self-start justify-between w-full">
+    <section className="flex flex-col self-start justify-between h-full w-full overflow-y-auto">
       <ul className="flex flex-col gap-3">
         <Setting
           title={t("settings_theme")}
