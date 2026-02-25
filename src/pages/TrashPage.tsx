@@ -8,8 +8,8 @@ import { useTranslation } from "react-i18next";
 import { autoDeleteNotes } from "..//shared/utils/autoDeleteNotes";
 import { NoteProps } from "../shared/types/types";
 import { EmptyState } from "../shared/ui/EmptyState";
-import { Button as MuiButton } from "@mui/material";
-import { Replay } from "@mui/icons-material";
+import { Button } from "@mui/material";
+// import { Replay } from "@mui/icons-material";
 
 export const TrashPage = () => {
   const notes = useSelector((state: RootState) => state.notes.notes);
@@ -54,7 +54,7 @@ const Trash = ({ notes }: { notes: NoteProps[] }) => {
       <div className="flex justify-between items-center gap-3">
         <h2 className="hidden sm:block pl-3">Кошик</h2>
 
-        <div className="flex justify-end gap-3">
+        <div className="flex gap-3">
           <TrashButton action={restoreAll} text={t("trash_restore_all")} />
           <TrashButton action={removeAll} text={t("trash_delete_all")} />
         </div>
@@ -81,9 +81,9 @@ const TrashDisabled = () => {
 
 const TrashButton = ({ action, text }: { action: () => void; text: string }) => {
   return (
-    <MuiButton
+    <Button
       onClick={action}
-      startIcon={<Replay sx={{ width: 20, height: 20 }} />}
+      // startIcon={<Replay sx={{ width: 20, height: 20 }} />}
       sx={{
         backgroundColor: "var(--color-surface)",
         color: "var(--text-primary)",
@@ -91,13 +91,13 @@ const TrashButton = ({ action, text }: { action: () => void; text: string }) => 
         padding: "6px 16px",
         height: "36px",
         textTransform: "none",
-        border: "1px solid var(--color-border)",
+        // border: "2px solid var(--color-border)",
         "&:hover": {
           backgroundColor: "var(--color-hover)",
         },
       }}
     >
       {text}
-    </MuiButton>
+    </Button>
   );
 };

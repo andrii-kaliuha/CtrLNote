@@ -21,7 +21,7 @@ export type MoreVertMenuItemProps = { title: string; onClick: () => void; action
 
 export type MoreVertMenuProps = { status: string; id: string };
 
-export type NotesProps = { notes: NoteProps[]; addButton?: Boolean; action?: () => void };
+export type NotesProps = { notes: NoteProps[] };
 
 type Option = { value: string; name: string };
 
