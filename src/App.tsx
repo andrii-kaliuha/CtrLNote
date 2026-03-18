@@ -8,7 +8,7 @@ export const App = () => {
 
   return (
     <BrowserRouter basename="/CtrLNote/">
-      <div className="flex flex-col sm:flex-row overflow-hidden h-screen max-w-7xl mx-auto p-3 gap-3">
+      <div className="flex flex-col md:flex-row overflow-hidden h-screen max-w-7xl mx-auto p-3 gap-3">
         <DesktopNavigation />
         <main className="flex-1 min-h-0">
           <Routes>

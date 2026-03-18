@@ -1,12 +1,12 @@
-import { SelectChangeEvent } from "@mui/material";
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { SelectChangeEvent } from "@mui/material";
 import { RootState } from "../store/store";
 import { setTheme, setLanguage, setMainColor, toggleTrash, setAutoDeletePeriod } from "../store/slices/settingsSlice";
-import { useTranslation } from "react-i18next";
-import { Setting } from "../components/Setting";
-import { Switch } from "..//shared/ui/Switch";
 import { removeNote as removeNotePermanently } from "../store/slices/notesSlice";
+import { Setting } from "../components/Setting";
+import { Switch } from "../shared/ui/Switch";
 
 // useSettings.ts
 export const useSettings = () => {

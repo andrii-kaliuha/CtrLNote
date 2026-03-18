@@ -17,8 +17,8 @@
   "dateDesc": "By date (newest first)",
   "archive_empty_message": "Your archived notes are here",
 
-  "trash_restore_all": "Restore All",
-  "trash_delete_all": "Delete All",
+  "trash_restore_all": "Restore_all",
+  "trash_delete_all": "Delete_all",
   "trash_empty_message": "Your trash is empty",
   "settings_auto_delete": "Auto-delete after",
   "auto_delete_1": "1 day",
@@ -29,7 +29,7 @@
   "trash_disabled_message": "Trash is disabled",
   "trash_enable_instruction": "To enable trash, go to settings",
 
-  "search_placeholder": "Search notes...",
+  "search_placeholder": "Search",
 
   "search_no_results": "No results found for \"{{query}}\"",
   "search_instruction": "Start typing to search your notes",

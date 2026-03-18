@@ -1,9 +1,9 @@
-import ArchiveIcon from "@mui/icons-material/Archive";
 import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
-import { Notes } from "../components/Notes";
 import { useTranslation } from "react-i18next";
+import ArchiveIcon from "@mui/icons-material/Archive";
+import { RootState } from "../store/store";
 import { NoteProps } from "../shared/types/types";
+import { Notes } from "../components/Notes";
 import { EmptyState } from "../shared/ui/EmptyState";
 
 export const ArchivePage = () => {
@@ -12,11 +12,11 @@ export const ArchivePage = () => {
   const { t } = useTranslation();
 
   return (
-    <>
+    <div className="flex flex-col flex-1 h-full w-full">
       {archivedNotes.length > 0 ?
         <Archive text={t("archive")} notes={archivedNotes} />
       : <EmptyState icon={ArchiveIcon} title={t("archive_empty_message")} />}
-    </>
+    </div>
   );
 };
 

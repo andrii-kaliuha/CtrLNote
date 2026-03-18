@@ -7,28 +7,6 @@ export const menuItemStyles = {
   },
 };
 
-export const selectStyles = {
-  color: "var(--text-primary)",
-  height: 40,
-  width: 200,
-  textAlign: "end",
-  "& .MuiSelect-select": {
-    padding: "0.5px 12px",
-  },
-  "& fieldset": {
-    borderColor: "transparent !important",
-  },
-  "&:hover": {
-    backgroundColor: "var(--color-hover) !important",
-  },
-  "&.Mui-focused": {
-    backgroundColor: "var(--color-hover) !important",
-  },
-  "& .MuiSvgIcon-root": {
-    color: "inherit",
-  },
-};
-
 export const menuProps = {
   PaperProps: {
     sx: {

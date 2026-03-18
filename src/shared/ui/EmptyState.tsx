@@ -1,10 +1,10 @@
 import { ElementType } from "react";
 
-interface EmptyStateProps {
+type EmptyStateProps = {
   icon?: ElementType;
   title: string;
   description?: string;
-}
+};
 
 export const EmptyState = ({ icon: Icon, title, description }: EmptyStateProps) => {
   return (

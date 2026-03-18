@@ -3,7 +3,7 @@ import { ChangeEvent } from "react";
 
 export type NoteEditorState = { isOpen: boolean; noteId: string | null; title: string; text: string };
 
-export type NoteStatus = "active" | "pinned" | "archived" | "deleted";
+export type NoteStatus = "active" | "archived" | "deleted";
 
 export type NoteProps = { id: string; title: string; text: string; createdAt: number; status: NoteStatus; deletedAt?: number };
 
@@ -29,9 +29,12 @@ export type SettingProps = { title: string; value: string; options: Option[]; fu
 
 export type ButtonProps = { action: () => void; text: string };
 
-export type TextFieldProps = { label: string; text: string; action: (e: React.ChangeEvent<HTMLInputElement>) => void; rows: number };
-
-export type NotesGroupProps = { notes: NoteProps[]; title: string };
+export type TextFieldProps = {
+  label: string;
+  text: string;
+  action: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  rows?: number;
+};
 
 export type SearchInputProps = {
   value: string;

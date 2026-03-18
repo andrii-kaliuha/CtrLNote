@@ -1,15 +1,14 @@
-import DeleteIcon from "@mui/icons-material/Delete";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useTranslation } from "react-i18next";
+import { Button } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { RootState } from "../store/store";
 import { restoreNote, removeNote as removeNotePermanently } from "../store/slices/notesSlice";
-import { Notes } from "../components/Notes";
-import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { autoDeleteNotes } from "..//shared/utils/autoDeleteNotes";
 import { NoteProps } from "../shared/types/types";
+import { Notes } from "../components/Notes";
 import { EmptyState } from "../shared/ui/EmptyState";
-import { Button } from "@mui/material";
-// import { Replay } from "@mui/icons-material";
+import { autoDeleteNotes } from "../shared/utils/autoDeleteNotes";
 
 export const TrashPage = () => {
   const notes = useSelector((state: RootState) => state.notes.notes);
@@ -83,17 +82,20 @@ const TrashButton = ({ action, text }: { action: () => void; text: string }) => 
   return (
     <Button
       onClick={action}
-      // startIcon={<Replay sx={{ width: 20, height: 20 }} />}
+      disableRipple
       sx={{
         backgroundColor: "var(--color-surface)",
         color: "var(--text-primary)",
         borderRadius: "8px",
-        padding: "6px 16px",
-        height: "36px",
+        height: "32px",
         textTransform: "none",
-        // border: "2px solid var(--color-border)",
+        border: "2px solid transparent",
+
         "&:hover": {
-          backgroundColor: "var(--color-hover)",
+          borderColor: "var(--color-border)",
+        },
+        "&:active": {
+          borderColor: "var(--color-primary)",
         },
       }}
     >

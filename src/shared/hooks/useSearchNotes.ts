@@ -19,7 +19,6 @@ export const useSearchNotes = (notes: NoteProps[]) => {
     dispatch(setSearchQuery(value));
   };
 
-  // Використовуємо useMemo для оптимізації фільтрації
   const filteredNotes = useMemo(() => {
     const lowerQuery = query.trim().toLowerCase();
     if (!lowerQuery) return notes;

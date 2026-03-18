@@ -30,7 +30,7 @@
   "trash_disabled_message": "Kosz jest wyłączony",
   "trash_enable_instruction": "Aby włączyć kosz, przejdź do ustawień",
 
-  "search_placeholder": "Szukaj notatek...",
+  "search_placeholder": "Szukaj",
 
   "search_no_results": "Nie znaleziono wyników dla \"{{query}}\"",
   "search_instruction": "Zacznij pisać, aby wyszukać notatki",

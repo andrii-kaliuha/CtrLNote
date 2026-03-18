@@ -30,7 +30,7 @@
   "trash_disabled_message": "Кошик вимкнено",
   "trash_enable_instruction": "Щоб увімкнути кошик, перейдіть до налаштувань",
 
-  "search_placeholder": "Пошук нотаток...",
+  "search_placeholder": "Пошук",
 
   "search_no_results": "Нічого не знайдено за запитом \"{{query}}\"",
 

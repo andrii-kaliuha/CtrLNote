@@ -10,7 +10,7 @@ export const DesktopNavigation = () => {
   const { t } = useTranslation();
 
   return (
-    <nav className="hidden sm:block">
+    <nav className="hidden md:block">
       <List
         sx={{
           width: isSidebarCollapsed ? 64 : 240,
@@ -60,7 +60,7 @@ export const DesktopNavigation = () => {
 };
 
 export const MobileNavigation = () => (
-  <nav className="sm:hidden">
+  <nav className="md:hidden">
     <BottomNavigation sx={{ backgroundColor: "var(--color-surface)", borderRadius: "12px" }}>
       {appPages.map(({ title, path, icon }) => (
         <BottomNavigationAction

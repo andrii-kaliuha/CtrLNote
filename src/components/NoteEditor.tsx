@@ -1,11 +1,10 @@
-import { Modal, Box, useMediaQuery, useTheme } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { closeNoteEditor, setTitle, setText, setNoteToEdit } from "../store/slices/noteEditorSlice";
 import { addNote, editNote } from "../store/slices/notesSlice";
 import { Button } from "..//shared/ui/Button";
-import { TextField } from "..//shared/ui/TextField";
 import { useTranslation } from "react-i18next";
 
 export const NoteEditor = () => {
@@ -27,9 +26,13 @@ export const NoteEditor = () => {
     }
   }, [isOpen, noteId, notes, dispatch]);
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => dispatch(setTitle(e.target.value));
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setTitle(e.target.value));
+  };
 
-  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => dispatch(setText(e.target.value));
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    dispatch(setText(e.target.value));
+  };
 
   const handleClose = () => dispatch(closeNoteEditor());
 
@@ -43,30 +46,63 @@ export const NoteEditor = () => {
   };
 
   return (
-    <Modal open={isOpen} onClose={handleClose}>
+    <div
+      style={{
+        backgroundColor: "var(--color-surface)",
+        borderRadius: isMobile ? 0 : "12px",
+        flexGrow: 1,
+        minWidth: 0,
+        height: "100%",
+        display: isOpen ? "flex" : "none",
+        flexDirection: "column",
+        overflow: "hidden",
+        minHeight: 0,
+        boxSizing: "border-box",
+      }}
+    >
+      <input
+        type="text"
+        value={editorTitle}
+        onChange={(e) => handleTitleChange(e)}
+        placeholder={t("note_editor_title_label")}
+        style={{
+          width: "100%",
+          outline: "transparent",
+          borderRadius: "8px",
+          padding: "24px 24px 12px",
+          color: "var(--text-primary)",
+          background: "var(--color-surface)",
+        }}
+      />
+      <textarea
+        value={editorText}
+        onChange={(e) => handleTextChange(e)}
+        placeholder={t("note_editor_text_label")}
+        style={{
+          width: "100%",
+          flex: 1,
+          minHeight: 0,
+          resize: "none",
+          outline: "transparent",
+
+          color: "var(--text-primary)",
+          background: "var(--color-surface)",
+          padding: "12px 24px 24px",
+        }}
+      />
+
       <Box
         sx={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: isMobile ? "100%" : 600,
-          height: isMobile ? "100%" : "auto",
-          bgcolor: "var(--color-secondary)",
-          boxShadow: 24,
-          borderRadius: isMobile ? 0 : "12px",
-          padding: "24px",
-          outline: "none",
+          display: "flex",
+          justifyContent: "flex-end",
+          gap: 1,
+          borderTop: "2px solid var(--color-primary)",
+          padding: 3,
         }}
       >
-        <TextField label={t("note_editor_title_label")} text={editorTitle} action={handleTitleChange} rows={1} />
-        <TextField label={t("note_editor_text_label")} text={editorText} action={handleTextChange} rows={6} />
-
-        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 1 }}>
-          <Button action={handleClose} text={t("note_editor_cancel")} />
-          <Button action={handleSave} text={t("note_editor_save")} />
-        </Box>
+        <Button action={handleClose} text={t("note_editor_cancel")} />
+        <Button action={handleSave} text={t("note_editor_save")} />
       </Box>
-    </Modal>
+    </div>
   );
 };

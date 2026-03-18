@@ -27,14 +27,6 @@ const notesSlice = createSlice({
         note.text = action.payload.text;
       }
     },
-    pinNote: (state, action: PayloadAction<string>) => {
-      const note = findNote(state, action.payload);
-      if (note) note.status = "pinned";
-    },
-    unpinNote: (state, action: PayloadAction<string>) => {
-      const note = findNote(state, action.payload);
-      if (note?.status === "pinned") note.status = "active";
-    },
     archiveNote: (state, action: PayloadAction<string>) => {
       const note = findNote(state, action.payload);
       if (note) note.status = "archived";
@@ -63,6 +55,6 @@ const notesSlice = createSlice({
   },
 });
 
-export const { addNote, editNote, pinNote, unpinNote, archiveNote, unarchiveNote, moveToTrash, restoreNote, removeNote } = notesSlice.actions;
+export const { addNote, editNote, archiveNote, unarchiveNote, moveToTrash, restoreNote, removeNote } = notesSlice.actions;
 
 export default notesSlice.reducer;
