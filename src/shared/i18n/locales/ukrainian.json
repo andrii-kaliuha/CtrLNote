@@ -27,6 +27,10 @@
   "auto_delete_30": "30 днів",
   "trash_auto_delete_message": "Нотатки буде видалено через {{count}} днів",
 
+  "trash_title": "Кошик",
+  "confirm_restore_all_message": "Відновити всі нотатки?",
+  "confirm_delete_all_message": "Видалити всі нотатки назавжди?",
+
   "trash_disabled_message": "Кошик вимкнено",
   "trash_enable_instruction": "Щоб увімкнути кошик, перейдіть до налаштувань",
 

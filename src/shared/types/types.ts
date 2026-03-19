@@ -9,7 +9,7 @@ export type NoteProps = { id: string; title: string; text: string; createdAt: nu
 
 export type NotesState = { notes: NoteProps[] };
 
-export type SearchState = { searchQuery: string; searchHistory: string[] };
+export type SearchState = { searchQuery: string };
 
 export type SettingsState = { theme: "light" | "dark"; language: string; mainColor: string; trashEnabled: boolean; autoDeletePeriod: number };
 

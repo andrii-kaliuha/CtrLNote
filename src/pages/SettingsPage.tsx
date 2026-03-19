@@ -1,62 +1,29 @@
-import { useCallback, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
+import { useCallback } from "react";
 import { SelectChangeEvent } from "@mui/material";
-import { RootState } from "../store/store";
 import { setTheme, setLanguage, setMainColor, toggleTrash, setAutoDeletePeriod } from "../store/slices/settingsSlice";
-import { removeNote as removeNotePermanently } from "../store/slices/notesSlice";
+import { clearTrash } from "../store/slices/notesSlice";
 import { Setting } from "../components/Setting";
 import { Switch } from "../shared/ui/Switch";
-
-// useSettings.ts
-export const useSettings = () => {
-  const { i18n } = useTranslation();
-
-  const theme = useSelector((state: RootState) => state.settings.theme);
-  const language = useSelector((state: RootState) => state.settings.language);
-  const mainColor = useSelector((state: RootState) => state.settings.mainColor);
-
-  useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [theme]);
-
-  useEffect(() => {
-    document.documentElement.style.setProperty("--color-primary", `var(--color-primary-${mainColor})`);
-  }, [mainColor]);
-
-  useEffect(() => {
-    i18n.changeLanguage(language);
-  }, [language]);
-};
+import { MILLISECONDS_IN_DAY, useSettings } from "../shared/hooks/useSettings";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
 
 export const SettingsPage = () => {
+  const { theme, language, mainColor, trashEnabled, days } = useSettings();
+
+  const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { t, i18n } = useTranslation();
-  const notes = useSelector((state: RootState) => state.notes.notes);
-
-  const theme = useSelector((state: RootState) => state.settings.theme);
-  const language = useSelector((state: RootState) => state.settings.language);
-  const mainColor = useSelector((state: RootState) => state.settings.mainColor);
-  const trashEnabled = useSelector((state: RootState) => state.settings.trashEnabled);
-  const autoDeletePeriod = useSelector((state: RootState) => state.settings.autoDeletePeriod);
-
-  const MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24;
-
-  const handleLanguageChange = useCallback(
-    (event: SelectChangeEvent<string>) => {
-      i18n.changeLanguage(event.target.value);
-      dispatch(setLanguage(event.target.value));
-    },
-    [dispatch, i18n],
-  );
 
   const handleThemeChange = useCallback(
     (event: SelectChangeEvent<string>) => {
       dispatch(setTheme(event.target.value as "light" | "dark"));
+    },
+    [dispatch],
+  );
+
+  const handleLanguageChange = useCallback(
+    (event: SelectChangeEvent<string>) => {
+      dispatch(setLanguage(event.target.value));
     },
     [dispatch],
   );
@@ -70,21 +37,24 @@ export const SettingsPage = () => {
 
   const handleTrashToggle = useCallback(() => {
     if (trashEnabled) {
-      notes.filter((note) => note.status === "deleted").forEach((note) => dispatch(removeNotePermanently(note.id)));
+      dispatch(clearTrash());
     }
-
     dispatch(toggleTrash());
-  }, [dispatch, trashEnabled, notes]);
+  }, [dispatch, trashEnabled]);
 
   const handleAutoDeleteChange = useCallback(
     (event: SelectChangeEvent<string>) => {
-      dispatch(setAutoDeletePeriod(Number(event.target.value)));
+      const selectedDays = Number(event.target.value);
+
+      const milliseconds = selectedDays * MILLISECONDS_IN_DAY;
+
+      dispatch(setAutoDeletePeriod(milliseconds));
     },
     [dispatch],
   );
 
   return (
-    <section className="flex flex-col self-start justify-between h-full w-full overflow-y-auto">
+    <section className="flex flex-col self-start h-full w-full overflow-y-auto">
       <ul className="flex flex-col gap-3">
         <Setting
           title={t("settings_theme")}
@@ -120,13 +90,13 @@ export const SettingsPage = () => {
         />
         <Setting
           title={t("settings_auto_delete")}
-          value={String(autoDeletePeriod)}
+          value={String(days)}
           function={handleAutoDeleteChange}
           options={[
-            { name: t("auto_delete_1"), value: String(1 * MILLISECONDS_IN_DAY) },
-            { name: t("auto_delete_7"), value: String(7 * MILLISECONDS_IN_DAY) },
-            { name: t("auto_delete_10"), value: String(10 * MILLISECONDS_IN_DAY) },
-            { name: t("auto_delete_30"), value: String(30 * MILLISECONDS_IN_DAY) },
+            { name: t("auto_delete_1"), value: "1" },
+            { name: t("auto_delete_7"), value: "7" },
+            { name: t("auto_delete_10"), value: "10" },
+            { name: t("auto_delete_30"), value: "30" },
           ]}
         />
         <Switch text={t("settings_enable_trash")} name="trash" checked={trashEnabled} onChange={handleTrashToggle} />

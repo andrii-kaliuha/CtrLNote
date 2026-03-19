@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { DesktopNavigation, MobileNavigation } from "./components/Navigation";
-import { useSettings } from "./pages/SettingsPage";
+import { useSettings } from "./shared/hooks/useSettings";
 import { appPages } from "./routes/pages";
 
 export const App = () => {

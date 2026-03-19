@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { NoteProps, NotesState } from "../../shared/types/types";
+import type { NotesState } from "../../shared/types/types";
 import { notesList } from "../../assets/notes";
 
 const initialState: NotesState = { notes: notesList };
@@ -11,14 +11,13 @@ const notesSlice = createSlice({
   initialState,
   reducers: {
     addNote: (state, action: PayloadAction<{ title: string; text: string }>) => {
-      const newNote: NoteProps = {
+      state.notes.push({
         id: crypto.randomUUID(),
         title: action.payload.title,
         text: action.payload.text,
         createdAt: Date.now(),
         status: "active",
-      };
-      state.notes.push(newNote);
+      });
     },
     editNote: (state, action: PayloadAction<{ id: string; title: string; text: string }>) => {
       const note = findNote(state, action.payload.id);
@@ -52,9 +51,21 @@ const notesSlice = createSlice({
     removeNote: (state, action: PayloadAction<string>) => {
       state.notes = state.notes.filter((note) => note.id !== action.payload);
     },
+    clearTrash: (state) => {
+      state.notes = state.notes.filter((note) => note.status !== "deleted");
+    },
+    restoreAllNotes: (state) => {
+      state.notes.forEach((note) => {
+        if (note.status === "deleted") {
+          note.status = "active";
+          delete note.deletedAt;
+        }
+      });
+    },
   },
 });
 
-export const { addNote, editNote, archiveNote, unarchiveNote, moveToTrash, restoreNote, removeNote } = notesSlice.actions;
+export const { addNote, editNote, archiveNote, unarchiveNote, moveToTrash, restoreNote, removeNote, clearTrash, restoreAllNotes } =
+  notesSlice.actions;
 
 export default notesSlice.reducer;

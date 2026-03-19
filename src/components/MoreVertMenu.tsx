@@ -1,45 +1,31 @@
 import { MoreVert } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import type { MoreVertMenuItemProps, MoreVertMenuProps } from "../shared/types/types";
 import { useTranslation } from "react-i18next";
-import { RootState } from "../store/store";
-import { getAvailableActions } from "..//shared/utils/noteActions";
+import { getAvailableActions } from "../shared/utils/noteActions";
+import { useDeleteNote } from "../shared/hooks/useDeleteNote";
+import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
+import { MoreVertMenuProps } from "../shared/types/types";
+import { useDispatch } from "react-redux";
 
-const MoreVertMenuItem = ({ title, onClick, action }: MoreVertMenuItemProps) => {
-  const handleClick = (): void => {
-    action && action();
-    onClick();
-  };
-
+export const MoreVertMenu = ({ status, id }: MoreVertMenuProps) => {
   const { t } = useTranslation();
-
-  return (
-    <MenuItem
-      onClick={handleClick}
-      sx={{ padding: "10px 16px", color: "var(--text-primary)", fontSize: "14px", "&:hover": { backgroundColor: "var(--color-hover)" } }}
-    >
-      {t(title)}
-    </MenuItem>
-  );
-};
-
-export const MoreVertMenu: React.FC<MoreVertMenuProps> = ({ status, id }) => {
-  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const dispatch = useDispatch();
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 
-  const openMenu = (event: React.MouseEvent<HTMLButtonElement>): void => setAnchorEl(event.currentTarget);
-  const closeMenu = (): void => setAnchorEl(null);
+  const { deleteNote, isConfirmOpen, closeConfirm, handleConfirm } = useDeleteNote();
 
-  const trashEnabled = useSelector((state: RootState) => state.settings.trashEnabled);
-  const actions = getAvailableActions(status, id, dispatch, trashEnabled);
+  const openMenu = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
+  const closeMenu = () => setAnchorEl(null);
+
+  const actions = getAvailableActions(status, id, dispatch, deleteNote);
 
   return (
     <>
       <IconButton onClick={openMenu} sx={{ borderRadius: "50%", ":hover": { backgroundColor: "var(--color-hover)" } }}>
         <MoreVert sx={{ color: "var(--text-primary)" }} />
       </IconButton>
+
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -50,9 +36,31 @@ export const MoreVertMenu: React.FC<MoreVertMenuProps> = ({ status, id }) => {
         }}
       >
         {actions.map((item, index) => (
-          <MoreVertMenuItem key={index} title={item.title} onClick={closeMenu} action={item.action} />
+          <MenuItem
+            key={index}
+            onClick={() => {
+              item.action();
+              closeMenu();
+            }}
+            sx={{
+              padding: "10px 16px",
+              color: "var(--text-primary)",
+              fontSize: "14px",
+              "&:hover": { backgroundColor: "var(--color-hover)" },
+            }}
+          >
+            {t(item.title)}
+          </MenuItem>
         ))}
       </Menu>
+
+      <ConfirmDialog
+        open={isConfirmOpen}
+        onClose={closeConfirm}
+        onConfirm={handleConfirm}
+        title={t("confirm_delete_title")}
+        description={t("confirm_delete_message")}
+      />
     </>
   );
 };
