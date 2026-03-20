@@ -1,4 +1,4 @@
-import { useMemo, ElementType } from "react";
+import { useMemo, ElementType, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Button, Modal, useMediaQuery, useTheme } from "@mui/material";
@@ -9,8 +9,14 @@ import { NoteEditor } from "../components/NoteEditor";
 import { Notes } from "../components/Notes";
 import { SearchInput } from "../shared/ui/SearchInput";
 import { useSearchNotes } from "../shared/hooks/useSearchNotes";
+import { sortNotesArray } from "../shared/utils/sortNotesArray";
+import { SortBy } from "../shared/types/types";
+import { NotesSorter } from "../components/NotesSorter";
 
 export const NotesPage = () => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+
   const { notes } = useSelector((state: RootState) => state.notes);
 
   const activeNotes = useMemo(() => {
@@ -18,8 +24,12 @@ export const NotesPage = () => {
   }, [notes]);
 
   const { query, handleSearchChange, filteredNotes } = useSearchNotes(activeNotes);
-  const { t } = useTranslation();
-  const dispatch = useDispatch();
+
+  const [sortBy, setSortBy] = useState<SortBy>("dateDesc");
+
+  const finalNotes = useMemo(() => {
+    return sortNotesArray(filteredNotes, sortBy);
+  }, [filteredNotes, sortBy]);
 
   const handleCreateNewNote = () => dispatch(openEmptyNoteEditor());
 
@@ -38,9 +48,11 @@ export const NotesPage = () => {
             <SearchInput name="search-note" value={query} onChange={handleSearchChange} placeholder={t("search_placeholder")} />
 
             <MyButton action={handleCreateNewNote} icon={Add} text="Add note" />
+
+            <NotesSorter sortBy={sortBy} changeSortBy={setSortBy} />
           </div>
           <div className="overflow-y-auto">
-            <Notes notes={filteredNotes} />
+            <Notes notes={finalNotes} />
           </div>
         </div>
       </div>

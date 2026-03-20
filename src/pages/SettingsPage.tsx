@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { SelectChangeEvent } from "@mui/material";
 import { setTheme, setLanguage, setMainColor, toggleTrash, setAutoDeletePeriod } from "../store/slices/settingsSlice";
 import { clearTrash } from "../store/slices/notesSlice";
@@ -7,9 +7,11 @@ import { Switch } from "../shared/ui/Switch";
 import { MILLISECONDS_IN_DAY, useSettings } from "../shared/hooks/useSettings";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
 
 export const SettingsPage = () => {
-  const { theme, language, mainColor, trashEnabled, days } = useSettings();
+  const { theme, language, mainColor, trashEnabled, notes, days } = useSettings();
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -35,12 +37,21 @@ export const SettingsPage = () => {
     [dispatch],
   );
 
-  const handleTrashToggle = useCallback(() => {
-    if (trashEnabled) {
-      dispatch(clearTrash());
+  const handleTrashToggle = () => {
+    const hasNotesInTrash = notes.some((note) => note.status === "deleted");
+
+    if (trashEnabled && hasNotesInTrash) {
+      setIsConfirmOpen(true);
+    } else {
+      dispatch(toggleTrash());
     }
+  };
+
+  const handleConfirmDisable = () => {
+    dispatch(clearTrash());
     dispatch(toggleTrash());
-  }, [dispatch, trashEnabled]);
+    setIsConfirmOpen(false);
+  };
 
   const handleAutoDeleteChange = useCallback(
     (event: SelectChangeEvent<string>) => {
@@ -100,6 +111,14 @@ export const SettingsPage = () => {
           ]}
         />
         <Switch text={t("settings_enable_trash")} name="trash" checked={trashEnabled} onChange={handleTrashToggle} />
+
+        <ConfirmDialog
+          open={isConfirmOpen}
+          onClose={() => setIsConfirmOpen(false)}
+          onConfirm={handleConfirmDisable}
+          title={t("confirm_disable_trash_title")}
+          description={t("confirm_disable_trash_message")}
+        />
       </ul>
     </section>
   );
