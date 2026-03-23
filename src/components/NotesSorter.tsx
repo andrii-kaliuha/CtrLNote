@@ -36,12 +36,8 @@ export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }
           borderRadius: "8px",
           cursor: "pointer",
           border: "2px solid transparent",
-          transition: "all 0.2s ease-in-out",
           outline: "none",
-          "&:hover": {
-            backgroundColor: "var(--color-hover)",
-            borderColor: "var(--color-border)",
-          },
+          "&:hover": { borderColor: "var(--color-border)" },
 
           borderColor: open ? "var(--color-primary)" : "transparent",
         }}

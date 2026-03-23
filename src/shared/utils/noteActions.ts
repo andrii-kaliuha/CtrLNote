@@ -1,20 +1,20 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import { openNoteEditor } from "../../store/slices/noteEditorSlice";
 import { archiveNote, unarchiveNote, restoreNote } from "../../store/slices/notesSlice";
-import { Action } from "../types/types";
+import { Action, NoteStatus } from "../types/types";
 
 export const getAvailableActions = (
-  status: string,
+  status: NoteStatus,
   id: string,
   dispatch: Dispatch,
-  onDelete: (id: string, status: string) => void,
+  onDelete: (id: string, status: NoteStatus) => void,
 ): Action[] => {
   switch (status) {
     case "active":
       return [
         { title: "note_action_edit", action: () => dispatch(openNoteEditor(id)) },
-        { title: "note_action_delete", action: () => onDelete(id, status) },
         { title: "note_action_archive", action: () => dispatch(archiveNote(id)) },
+        { title: "note_action_delete", action: () => onDelete(id, status) },
       ];
     case "archived":
       return [

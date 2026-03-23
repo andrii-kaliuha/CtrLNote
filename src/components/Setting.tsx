@@ -31,7 +31,6 @@ export const Setting = ({ title, value, options, function: handleChange }: Setti
 
           "& fieldset": {
             border: "2px solid transparent",
-            transition: "border-color 0.2s",
           },
           "&:hover fieldset": {
             borderColor: "var(--color-border) !important",

@@ -1,14 +1,10 @@
 const getLocaleFromLanguage = (language: string): string => {
-  switch (language.toLowerCase()) {
-    case "ukrainian":
-      return "uk";
-    case "english":
-      return "en";
-    case "polish":
-      return "pl";
-    default:
-      return "en";
-  }
+  const locales: Record<string, string> = {
+    ukrainian: "uk",
+    english: "en",
+    polish: "pl",
+  };
+  return locales[language] || "en";
 };
 
 export const formatDate = (timestamp: number, language: string) => {
@@ -17,7 +13,7 @@ export const formatDate = (timestamp: number, language: string) => {
   const date = new Date(timestamp);
   const now = new Date();
 
-  const isToday = date.getDate() === now.getDate() && date.getMonth() === now.getMonth() && date.getFullYear() === now.getFullYear();
+  const isToday = date.toDateString() === now.toDateString();
 
   if (isToday) {
     return new Intl.DateTimeFormat(locale, {
@@ -34,5 +30,5 @@ export const formatDate = (timestamp: number, language: string) => {
     ...(isSameYear ? {} : { year: "numeric" }),
   }).format(date);
 
-  return formatted.replace(/ р\.?$/, "");
+  return formatted.replace(/\s*[рy]\.?$/i, "").trim();
 };

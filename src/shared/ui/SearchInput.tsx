@@ -26,7 +26,6 @@ export const SearchInput: React.FC<SearchInputProps> = ({ name, value, onChange,
           backgroundColor: "var(--color-surface)",
           color: "var(--text-primary)",
           borderRadius: "8px",
-          transition: "all 0.2s ease-in-out",
 
           "& fieldset": {
             border: "2px solid transparent",

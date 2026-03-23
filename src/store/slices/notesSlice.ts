@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { NotesState } from "../../shared/types/types";
+import type { NoteProps, NotesState, NoteStatus } from "../../shared/types/types";
 import { notesList } from "../../assets/notes";
 
 const initialState: NotesState = { notes: notesList };
@@ -10,50 +10,67 @@ const notesSlice = createSlice({
   name: "notes",
   initialState,
   reducers: {
-    addNote: (state, action: PayloadAction<{ title: string; text: string }>) => {
-      state.notes.push({
-        id: crypto.randomUUID(),
-        title: action.payload.title,
-        text: action.payload.text,
-        createdAt: Date.now(),
-        status: "active",
-      });
+    addNote: {
+      reducer: (state, action: PayloadAction<NoteProps>) => {
+        state.notes.push(action.payload);
+      },
+      prepare: (payload: { title: string; text: string }) => ({
+        payload: {
+          id: crypto.randomUUID(),
+          title: payload.title,
+          text: payload.text,
+          createdAt: Date.now(),
+          status: "active" as NoteStatus,
+        } as NoteProps,
+      }),
     },
+
     editNote: (state, action: PayloadAction<{ id: string; title: string; text: string }>) => {
       const note = findNote(state, action.payload.id);
-      if (note) {
+      if (note && note.status !== "deleted") {
         note.title = action.payload.title;
         note.text = action.payload.text;
       }
     },
+
     archiveNote: (state, action: PayloadAction<string>) => {
       const note = findNote(state, action.payload);
-      if (note) note.status = "archived";
+      if (note && note.status === "active") {
+        note.status = "archived";
+      }
     },
+
     unarchiveNote: (state, action: PayloadAction<string>) => {
       const note = findNote(state, action.payload);
-      if (note?.status === "archived") note.status = "active";
+      if (note && note.status === "archived") {
+        note.status = "active";
+      }
     },
+
     moveToTrash: (state, action: PayloadAction<string>) => {
       const note = findNote(state, action.payload);
-      if (note) {
+      if (note && note.status !== "deleted") {
         note.status = "deleted";
         note.deletedAt = Date.now();
       }
     },
+
     restoreNote: (state, action: PayloadAction<string>) => {
       const note = findNote(state, action.payload);
-      if (note?.status === "deleted") {
+      if (note && note.status === "deleted") {
         note.status = "active";
         delete note.deletedAt;
       }
     },
+
     removeNote: (state, action: PayloadAction<string>) => {
       state.notes = state.notes.filter((note) => note.id !== action.payload);
     },
+
     clearTrash: (state) => {
       state.notes = state.notes.filter((note) => note.status !== "deleted");
     },
+
     restoreAllNotes: (state) => {
       state.notes.forEach((note) => {
         if (note.status === "deleted") {

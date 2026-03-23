@@ -19,7 +19,7 @@ export type NotesSorterProps = { sortBy: SortBy; changeSortBy: (newSortBy: SortB
 
 export type MoreVertMenuItemProps = { title: string; onClick: () => void; action: () => void };
 
-export type MoreVertMenuProps = { status: string; id: string };
+export type MoreVertMenuProps = { status: NoteStatus; id: string };
 
 export type NotesProps = { notes: NoteProps[] };
 
