@@ -10,65 +10,73 @@ export const Switch: React.FC<SwitchProps> = ({ text, name, checked, onChange })
 );
 
 export const MySwitch = styled(MuiSwitch)(({ theme }) => ({
-  width: 50,
-  height: 28,
+  width: 64,
+  height: 32,
   padding: 0,
   display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
 
   "& .MuiSwitch-thumb": {
-    width: 16,
-    height: 16,
-    backgroundColor: "#fff",
+    width: 20,
+    height: 20,
+    backgroundColor: "#BDBDBD", // Додати зміну кольору для вимкненого стану
     boxShadow: "none",
-    transition: theme.transitions.create(["background-color"], {
+    transition: theme.transitions.create(["background-color", "transform"], {
       duration: 200,
     }),
   },
 
   "& .MuiSwitch-switchBase": {
-    padding: 0,
-    margin: 6,
+    padding: 6,
+    margin: 0,
     transitionDuration: "300ms",
 
+    "&:hover": {
+      backgroundColor: "transparent",
+    },
+
+    "& .MuiTouchRipple-root": {
+      display: "none",
+    },
+
     "&.Mui-checked": {
-      transform: "translateX(22px)",
+      transform: "translateX(32px)",
 
-      "& + .MuiSwitch-track": {
-        backgroundColor: "var(--color-primary)",
-
-        opacity: 0.5,
-        border: 0,
+      "&:hover": {
+        backgroundColor: "transparent",
       },
 
       "& .MuiSwitch-thumb": {
         backgroundColor: "var(--color-primary)",
       },
+
+      "& + .MuiSwitch-track": {
+        backgroundColor: "var(--color-surface)",
+        opacity: 1,
+        border: "2px solid transparent",
+      },
+
+      "&:hover + .MuiSwitch-track": {
+        borderColor: "var(--color-primary)",
+      },
     },
 
-    "&.Mui-focusVisible .MuiSwitch-thumb": {
-      color: "#33cf4d",
+    "&:hover + .MuiSwitch-track": {
+      borderColor: "#BDBDBD", // Додати зміну кольору для треку
     },
-    "&.Mui-disabled .MuiSwitch-thumb": {
-      color: theme.palette.mode === "light" ? theme.palette.grey[100] : theme.palette.grey[600],
-    },
-    "&.Mui-disabled + .MuiSwitch-track": {
-      opacity: theme.palette.mode === "light" ? 0.7 : 0.3,
+
+    "&.Mui-focusVisible + .MuiSwitch-track": {
+      borderColor: "var(--color-primary)",
+      borderWidth: "2px",
     },
   },
 
   "& .MuiSwitch-track": {
-    width: 32,
-    height: 10,
-    opacity: "0.6",
-    backgroundColor: "#d0d5dd",
-    transition: theme.transitions.create(["background-color"], {
-      duration: 300,
+    borderRadius: 32 / 2,
+    backgroundColor: "var(--color-surface)",
+    opacity: 1,
+    border: "2px solid transparent",
+    transition: theme.transitions.create(["background-color", "border-color"], {
+      duration: 200,
     }),
-    position: "absolute",
-    left: "50%",
-    top: "50%",
-    transform: "translate(-50%, -50%)",
   },
 }));

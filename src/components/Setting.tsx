@@ -33,14 +33,17 @@ export const Setting = ({ title, value, options, function: handleChange }: Setti
             border: "2px solid transparent",
           },
           "&:hover fieldset": {
-            borderColor: "var(--color-border) !important",
+            borderColor: "#BDBDBD !important",
           },
           "&.Mui-focused fieldset": {
             borderColor: "var(--color-primary) !important",
             borderWidth: "2px",
           },
           "& .MuiSelect-icon": {
-            color: "var(--text-secondary)",
+            color: "#BDBDBD ",
+          },
+          "& .MuiSelect-iconOpen": {
+            color: "var(--color-primary)",
           },
         }}
       >

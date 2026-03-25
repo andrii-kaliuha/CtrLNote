@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import type { SortBy, NotesSorterProps } from "../shared/types/types";
 import { menuItemStyles } from "../shared/style/style";
 
+const sortOptions: SortBy[] = ["titleAsc", "titleDesc", "dateAsc", "dateDesc"];
+
 export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }) => {
   const { t } = useTranslation();
 
@@ -49,7 +51,6 @@ export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        // Позіціонування меню відносно кнопки
         anchorOrigin={{
           vertical: "bottom",
           horizontal: "right",
@@ -58,61 +59,31 @@ export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }
           vertical: "top",
           horizontal: "right",
         }}
-        // Стилізація самого випадаючого списку
         slotProps={{
           paper: {
             sx: {
-              marginTop: "8px",
               backgroundColor: "var(--color-secondary)",
               color: "var(--text-primary)",
+
+              marginTop: "4px",
               borderRadius: "8px",
-              minWidth: "180px",
-              boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.3)",
+              boxShadow: "none",
+              border: "2px solid var(--color-primary)",
+
               "& .MuiList-root": { padding: 0 },
             },
           },
         }}
       >
-        <MenuItem
-          onClick={() => handleSelect("titleAsc")}
-          sx={{
-            ...menuItemStyles,
-            color: sortBy === "titleAsc" ? "var(--color-primary)" : "inherit",
-            fontWeight: sortBy === "titleAsc" ? 600 : 400,
-          }}
-        >
-          {t("titleAsc")}
-        </MenuItem>
-        <MenuItem
-          onClick={() => handleSelect("titleDesc")}
-          sx={{
-            ...menuItemStyles,
-            color: sortBy === "titleDesc" ? "var(--color-primary)" : "inherit",
-            fontWeight: sortBy === "titleDesc" ? 600 : 400,
-          }}
-        >
-          {t("titleDesc")}
-        </MenuItem>
-        <MenuItem
-          onClick={() => handleSelect("dateAsc")}
-          sx={{
-            ...menuItemStyles,
-            color: sortBy === "dateAsc" ? "var(--color-primary)" : "inherit",
-            fontWeight: sortBy === "dateAsc" ? 600 : 400,
-          }}
-        >
-          {t("dateAsc")}
-        </MenuItem>
-        <MenuItem
-          onClick={() => handleSelect("dateDesc")}
-          sx={{
-            ...menuItemStyles,
-            color: sortBy === "dateDesc" ? "var(--color-primary)" : "inherit",
-            fontWeight: sortBy === "dateDesc" ? 600 : 400,
-          }}
-        >
-          {t("dateDesc")}
-        </MenuItem>
+        {sortOptions.map((option) => (
+          <MenuItem
+            key={option}
+            onClick={() => handleSelect(option)}
+            sx={{ ...menuItemStyles, color: sortBy === option ? "var(--color-primary)" : "inherit" }}
+          >
+            {t(option)}
+          </MenuItem>
+        ))}
       </Menu>
     </Box>
   );

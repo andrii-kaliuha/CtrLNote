@@ -42,11 +42,23 @@ export const store = configureStore({
   },
 });
 
+let saveTimeout: ReturnType<typeof setTimeout>;
+
 store.subscribe(() => {
-  const state = store.getState();
-  saveToLocalStorage("settings", state.settings);
-  saveToLocalStorage("notes", state.notes);
-  saveToLocalStorage("search", state.search);
+  if (saveTimeout) clearTimeout(saveTimeout);
+
+  saveTimeout = setTimeout(() => {
+    const state = store.getState();
+
+    try {
+      saveToLocalStorage("settings", state.settings);
+      saveToLocalStorage("notes", state.notes);
+      saveToLocalStorage("search", state.search);
+      console.log("Дані збережено в LocalStorage");
+    } catch (e) {
+      console.error("Помилка автоматичного збереження", e);
+    }
+  }, 1000);
 });
 
 export type RootState = ReturnType<typeof store.getState>;
