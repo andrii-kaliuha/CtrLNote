@@ -27,7 +27,7 @@ export const notesList: NoteProps[] = [
     title: "Нова ідея для бізнесу",
     text: "Мені спала на думку класна ідея для стартапу. Треба почати працювати над нею на наступному тижні.",
     createdAt: 1714953600000,
-    status: "pinned",
+    status: "archived",
   },
   {
     id: "5",
@@ -55,21 +55,21 @@ export const notesList: NoteProps[] = [
     title: "Вибір ноутбука",
     text: "Вибираю новий ноутбук для роботи. Хочу щось з хорошими характеристиками, але в межах бюджету.",
     createdAt: 1715299200000,
-    status: "pinned",
+    status: "archived",
   },
   {
     id: "9",
     title: "План на вихідні",
     text: "На вихідних планую відвідати друзів, а також зайнятися читанням нової книги.",
     createdAt: 1715385600000,
-    status: "pinned",
+    status: "archived",
   },
   {
     id: "10",
     title: "Покупки",
     text: "Сьогодні потрібно купити нові кросівки і пару футболок. Може, ще щось цікаве знайду в магазині.",
     createdAt: 1715472000000,
-    status: "pinned",
+    status: "archived",
   },
   {
     id: "11",
@@ -114,7 +114,7 @@ export const notesList: NoteProps[] = [
     title: "Цитата дня",
     text: "Будь зміною, яку хочеш бачити у світі.",
     createdAt: 1715990400000,
-    status: "pinned",
+    status: "archived",
   },
   {
     id: "17",
