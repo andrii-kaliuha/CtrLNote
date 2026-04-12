@@ -22,7 +22,7 @@ export const ArchivePage = () => {
 
 const Archive = ({ text, notes }: { text: string; notes: NoteProps[] }) => (
   <>
-    <h2 className="pl-3 pb-3 sm:p-3 self-start">{text}</h2>
+    <h2 className="pl-3 pb-3 sm:p-3 text-[var(--color-primary)]">{text}</h2>
     <div className="overflow-y-auto">
       <Notes notes={notes} />
     </div>

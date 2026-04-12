@@ -1,10 +1,10 @@
 import React from "react";
-import { Switch as MuiSwitch, styled } from "@mui/material";
+import { Switch as MuiSwitch, styled, Typography } from "@mui/material";
 import { SwitchProps } from "../types/types";
 
 export const Switch: React.FC<SwitchProps> = ({ text, name, checked, onChange }) => (
   <li className="flex items-center justify-between w-full">
-    <p>{text}</p>
+    <Typography variant="body2">{text}</Typography>
     <MySwitch name={name} checked={checked} onChange={onChange} />
   </li>
 );

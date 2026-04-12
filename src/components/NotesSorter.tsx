@@ -62,7 +62,7 @@ export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }
         slotProps={{
           paper: {
             sx: {
-              backgroundColor: "var(--color-secondary)",
+              backgroundColor: "var(--color-surface)",
               color: "var(--text-primary)",
 
               marginTop: "4px",

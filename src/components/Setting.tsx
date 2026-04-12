@@ -11,11 +11,10 @@ export const Setting = ({ title, value, options, function: handleChange }: Setti
         alignItems: "center",
         justifyContent: "space-between",
         listStyle: "none",
+        paddingY: "2px", // не видаляти, щоб не було обрізання бордеру
       }}
     >
-      <Typography variant="body1" sx={{ color: "var(--text-primary)", fontWeight: 500 }}>
-        {title}
-      </Typography>
+      <Typography variant="body2">{title}</Typography>
 
       <Select
         value={value}
@@ -24,10 +23,22 @@ export const Setting = ({ title, value, options, function: handleChange }: Setti
         size="small"
         sx={{
           minWidth: 120,
+          height: "36px",
+          minHeight: "36px",
+
+          padding: 0,
+
+          "& .MuiSelect-select": {
+            display: "flex",
+            alignItems: "center",
+            paddingY: 0,
+            height: "36px",
+          },
+
           backgroundColor: "var(--color-surface)",
           color: "var(--text-primary)",
           borderRadius: "8px",
-          fontSize: "0.875rem",
+          fontSize: "0.875rem", // ?? 14px змінна
 
           "& fieldset": {
             border: "2px solid transparent",
@@ -37,7 +48,6 @@ export const Setting = ({ title, value, options, function: handleChange }: Setti
           },
           "&.Mui-focused fieldset": {
             borderColor: "var(--color-primary) !important",
-            borderWidth: "2px",
           },
           "& .MuiSelect-icon": {
             color: "#BDBDBD ",
