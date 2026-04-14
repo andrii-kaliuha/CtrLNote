@@ -27,21 +27,18 @@ export const MoreVertMenu = ({ status, id }: MoreVertMenuProps) => {
         sx={{
           borderRadius: "50%",
           transition: "all 0.2s ease",
-          color: "var(--text-primary)", // колір іконки за замовчуванням
+          color: "var(--text-primary)",
 
-          // Стан при наведенні (Hover)
           "&:hover": {
             backgroundColor: "color-mix(in srgb, var(--color-primary), transparent 90%)",
-            color: "var(--color-primary)", // іконка стає кольоровою
+            color: "var(--color-primary)",
           },
 
-          // Стан при натисканні (Active / Click)
           "&:active": {
             backgroundColor: "color-mix(in srgb, var(--color-primary), transparent 80%)",
-            transform: "scale(0.92)", // легкий ефект натискання
+            transform: "scale(0.92)",
           },
 
-          // Якщо меню відкрите, кнопка може залишатися підсвіченою
           ...(Boolean(anchorEl) && {
             backgroundColor: "color-mix(in srgb, var(--color-primary), transparent 85%)",
             color: "var(--color-primary)",
@@ -55,19 +52,20 @@ export const MoreVertMenu = ({ status, id }: MoreVertMenuProps) => {
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={closeMenu}
-        // Додаємо невеликий відступ від кнопки
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         sx={{
           "& .MuiPaper-root": {
-            width: "180px", // трохи вужче зазвичай виглядає краще для контекстного меню
-            backgroundColor: "var(--color-secondary)",
+            width: "180px",
+            backgroundColor: "var(--color-surface)",
             borderRadius: "8px",
-            boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)", // м'яка тінь
-            marginTop: "4px",
-            border: "3px solid color-mix(in srgb, var(--color-primary), transparent 85%)", // тонка рамка
+            // boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
+            // marginTop: "4px",
+            boxShadow: "none",
+            border: "2px solid var(--color-primary) ",
+            // border: "2px solid transparent ",
           },
-          "& .MuiList-root": { padding: "4px 0" }, // невеликі відступи зверху/знизу списку
+          "& .MuiList-root": { padding: 0 },
         }}
       >
         {actions.map((item, index) => (
@@ -81,16 +79,14 @@ export const MoreVertMenu = ({ status, id }: MoreVertMenuProps) => {
               padding: "8px 16px",
               color: "var(--text-primary)",
               fontSize: "14px",
-              minHeight: "36px", // синхронізація висоти з налаштуваннями
-              transition: "all 0.15s ease",
+              minHeight: "36px",
+              // transition: "all 0.15s ease",
 
-              // Напівпрозорий Hover з Primary кольором
               "&:hover": {
                 backgroundColor: "color-mix(in srgb, var(--color-primary), transparent 85%) !important",
                 color: "var(--color-primary)",
               },
 
-              // Акцент на активному стані (якщо потрібно)
               "&:active": {
                 backgroundColor: "color-mix(in srgb, var(--color-primary), transparent 75%) !important",
               },

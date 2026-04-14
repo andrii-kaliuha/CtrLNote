@@ -2,7 +2,7 @@ import { useMemo, ElementType, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Button, Modal, useMediaQuery, useTheme } from "@mui/material";
-import { Add } from "@mui/icons-material";
+import { Add, Note } from "@mui/icons-material";
 import { RootState } from "../store/store";
 import { closeNoteEditor, openEmptyNoteEditor } from "../store/slices/noteEditorSlice";
 import { NoteEditor } from "../components/NoteEditor";
@@ -12,6 +12,7 @@ import { useSearchNotes } from "../shared/hooks/useSearchNotes";
 import { sortNotesArray } from "../shared/utils/sortNotesArray";
 import { SortBy } from "../shared/types/types";
 import { NotesSorter } from "../components/NotesSorter";
+import { EmptyState } from "../shared/ui/EmptyState";
 
 export const NotesPage = () => {
   const { t } = useTranslation();
@@ -51,8 +52,10 @@ export const NotesPage = () => {
 
             <NotesSorter sortBy={sortBy} changeSortBy={setSortBy} />
           </div>
-          <div className="overflow-y-auto">
-            <Notes notes={finalNotes} />
+          <div className="overflow-y-auto h-full">
+            {finalNotes.length > 0 ?
+              <Notes notes={finalNotes} />
+            : <EmptyState icon={Note} title={t("notes_empty_message")} />}
           </div>
         </div>
       </div>

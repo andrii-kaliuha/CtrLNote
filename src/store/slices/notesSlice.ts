@@ -1,8 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { NoteProps, NotesState, NoteStatus } from "../../shared/types/types";
-import { notesList } from "../../assets/notes";
 
-const initialState: NotesState = { notes: notesList };
+const initialState: NotesState = { notes: [] };
 
 const findNote = (state: NotesState, id: string) => state.notes.find((note) => note.id === id);
 

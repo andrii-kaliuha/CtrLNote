@@ -32,7 +32,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({ name, value, onChange,
           },
 
           "&:hover fieldset": {
-            borderColor: "var(--color-border) !important",
+            borderColor: "var(--color-border-hover) !important",
           },
 
           "&.Mui-focused fieldset": {
