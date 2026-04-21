@@ -17,40 +17,16 @@ body {
 }
 
 :root {
-  /* --color-background: #eeeeee; */
   --color-background: #f5f5f5;
-
-  /* --color-background: #fff; */
-  /* --color-surface: #fdfdff; */
   --color-surface: #fff;
 
-  /* --color */
-  /* --color-surface: #eeeeee; */
-  /* --color-secondary: #f0edf5; */
-  /* --color-secondary: #fff; */
-  /* --color-secondary: #f5f5f5; */
-  /* --color-secondary: green; */
-
   --color-primary: var(--color-primary-purple);
-
-  --color-interactive: var(--color-primary);
-
-  --color-accent: #947fd9;
+  --color-interactive: #bdbdbd;
 
   --text-primary: #1e1c22;
   --text-secondary: #5f5b6b;
 
-  --color-outline: #7b5fd6;
-  --color-border: #bdbdbd;
-  /* --color-border-hover: color-mix(in srgb, var(--color-primary) 50%, transparent); */
-  /* --color-border-hover: "#BDBDBD"; */
-  --color-border-hover: #bdbdbd;
-
-  --color-hover: red;
-
-  /* --color-hover: rgba(123, 95, 214, 0.1); */
-  --color-active: rgba(123, 95, 214, 0.2);
-  --color-focus: rgba(123, 95, 214, 0.3);
+  --color-border: #bbbbbb;
 
   --color-primary-green: #49a078;
   --color-primary-purple: #b5a1e2;
@@ -63,21 +39,14 @@ body {
 .dark {
   --color-background: #131214;
   --color-surface: #1e1d20;
-  --color-secondary: #393e41;
 
   --color-primary: var(--color-primary-purple);
-  --color-accent: #a38dde;
+  --color-interactive: #bdbdbd;
 
   --text-primary: #eae6f2;
   --text-secondary: #a29ead;
 
-  --color-outline: #b5a1e2;
-  --color-border: #bdbdbd;
-  --color-border-hover: color-mix(in srgb, var(--color-primary) 50%, transparent);
-
-  --color-hover: rgba(181, 161, 226, 0.1);
-  --color-active: rgba(181, 161, 226, 0.2);
-  --color-focus: rgba(181, 161, 226, 0.3);
+  --color-border: #bbbbbb;
 
   --color-primary-green: #49a078;
   --color-primary-purple: #b5a1e2;

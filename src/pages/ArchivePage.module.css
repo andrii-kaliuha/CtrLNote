@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+}
+
+.header {
+  padding-left: 12px;
+  padding-bottom: 12px;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+@media (min-width: 600px) {
+  .header {
+    padding: 12px;
+  }
+}
+
+.notesWrapper {
+  overflow-y: auto;
+}

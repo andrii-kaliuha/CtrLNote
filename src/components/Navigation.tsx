@@ -1,5 +1,5 @@
 import { Menu } from "@mui/icons-material";
-import { List, ListItemButton, ListItemText, ListItemIcon, BottomNavigation, BottomNavigationAction } from "@mui/material";
+import { List, ListItemButton, ListItemText, ListItemIcon, BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ export const DesktopNavigation = () => {
   const { t } = useTranslation();
 
   return (
-    <nav className="hidden md:block">
+    <Box component="nav" sx={{ display: { xs: "none", md: "block" } }}>
       <List
         sx={{
           width: isSidebarCollapsed ? 64 : 240,
@@ -30,6 +30,14 @@ export const DesktopNavigation = () => {
             height: 48,
             borderTopRightRadius: "8px",
             borderTopLeftRadius: "8px",
+
+            "&:hover, &.Mui-focusVisible": {
+              backgroundColor: "color-mix(in srgb, var(--color-primary), transparent 75%) !important",
+            },
+            "& .MuiTouchRipple-root": {
+              opacity: 0.8,
+              color: "var(--color-primary) !important",
+            },
           }}
         >
           <ListItemIcon sx={{ minWidth: "auto" }}>
@@ -46,8 +54,15 @@ export const DesktopNavigation = () => {
             sx={{
               py: 1.5,
               height: 48,
-              "&:hover": { backgroundColor: "var(--color-hover)" },
               justifyContent: isSidebarCollapsed ? "center" : "flex-start",
+
+              "&:hover, &.Mui-focusVisible": {
+                backgroundColor: "color-mix(in srgb, var(--color-primary), transparent 75%) !important",
+              },
+              "& .MuiTouchRipple-root": {
+                opacity: 0.8,
+                color: "var(--color-primary) !important",
+              },
             }}
           >
             <ListItemIcon sx={{ minWidth: "auto", color: "var(--color-primary)" }}>{icon}</ListItemIcon>
@@ -55,12 +70,12 @@ export const DesktopNavigation = () => {
           </ListItemButton>
         ))}
       </List>
-    </nav>
+    </Box>
   );
 };
 
 export const MobileNavigation = () => (
-  <nav className="md:hidden">
+  <Box component="nav" sx={{ display: { md: "none" } }}>
     <BottomNavigation sx={{ backgroundColor: "var(--color-surface)", borderRadius: "12px" }}>
       {appPages.map(({ title, path, icon }) => (
         <BottomNavigationAction
@@ -78,5 +93,5 @@ export const MobileNavigation = () => (
         />
       ))}
     </BottomNavigation>
-  </nav>
+  </Box>
 );

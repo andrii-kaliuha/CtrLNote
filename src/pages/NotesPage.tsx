@@ -1,7 +1,116 @@
-import { useMemo, ElementType, useState } from "react";
+// import { useMemo, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { useTranslation } from "react-i18next";
+// import { IconButton, Modal, useMediaQuery, useTheme } from "@mui/material";
+// import { Add, Note } from "@mui/icons-material";
+// import { RootState } from "../store/store";
+// import { closeNoteEditor, openEmptyNoteEditor } from "../store/slices/noteEditorSlice";
+// import { NoteEditor } from "../components/NoteEditor";
+// import { Notes } from "../components/Notes";
+// import { SearchInput } from "../shared/ui/SearchInput";
+// import { useSearchNotes } from "../shared/hooks/useSearchNotes";
+// import { sortNotesArray } from "../shared/utils/sortNotesArray";
+// import { SortBy } from "../shared/types/types";
+// import { NotesSorter } from "../components/NotesSorter";
+// import { EmptyState } from "../shared/ui/EmptyState";
+
+// export const NotesPage = () => {
+//   const { t } = useTranslation();
+//   const dispatch = useDispatch();
+
+//   const { notes } = useSelector((state: RootState) => state.notes);
+
+//   const activeNotes = useMemo(() => {
+//     return notes.filter((note) => note.status === "active");
+//   }, [notes]);
+
+//   const { query, handleSearchChange, filteredNotes } = useSearchNotes(activeNotes);
+
+//   const [sortBy, setSortBy] = useState<SortBy>("dateDesc");
+
+//   const finalNotes = useMemo(() => {
+//     return sortNotesArray(filteredNotes, sortBy);
+//   }, [filteredNotes, sortBy]);
+
+//   const handleCreateNewNote = () => dispatch(openEmptyNoteEditor());
+
+//   const { isOpen } = useSelector((state: RootState) => state.noteEditor);
+
+//   const handleClose = () => dispatch(closeNoteEditor());
+
+//   const theme = useTheme();
+//   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+//   return (
+//     <section className="h-full w-full flex gap-3">
+//       <div className="flex min-w-74 flex-1">
+//         <div className="flex flex-col w-full gap-3">
+//           <div className="flex gap-3">
+//             <SearchInput name="search-note" value={query} onChange={handleSearchChange} placeholder={t("search_placeholder")} />
+
+//             <AddButton action={handleCreateNewNote} />
+//             <NotesSorter sortBy={sortBy} changeSortBy={setSortBy} />
+//           </div>
+//           <div className="overflow-y-auto h-full">
+//             {finalNotes.length > 0 ?
+//               <Notes notes={finalNotes} />
+//             : <EmptyState icon={Note} title={t("notes_empty_message")} />}
+//           </div>
+//         </div>
+//       </div>
+
+//       {isOpen &&
+//         (isMobile ?
+//           <Modal open={isOpen} onClose={handleClose} sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
+//             <div style={{ outline: "none", height: "100%", width: "100%" }}>
+//               <NoteEditor />
+//             </div>
+//           </Modal>
+//         : <NoteEditor />)}
+//     </section>
+//   );
+// };
+
+// const AddButton = ({ action }: { action: () => void }) => {
+//   return (
+//     <IconButton
+//       onClick={action}
+//       sx={{
+//         width: 48,
+//         height: 48,
+//         borderRadius: "8px",
+//         backgroundColor: "var(--color-surface)",
+//         color: "var(--color-primary)",
+//         border: "2px solid transparent",
+
+//         "&:hover": {
+//           backgroundColor: "var(--color-surface)",
+//           borderColor: "var(--color-interactive)",
+//         },
+
+//         "&:focus": {
+//           backgroundColor: "var(--color-surface)",
+//           borderColor: "var(--color-interactive)",
+//         },
+
+//         "&:active": {
+//           borderColor: "var(--color-primary)",
+//         },
+
+//         "& .MuiTouchRipple-root": {
+//           display: "none",
+//         },
+//       }}
+//     >
+//       <Add sx={{ fontSize: 24 }} />
+//     </IconButton>
+//   );
+// };
+
+import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import { Button, Modal, useMediaQuery, useTheme } from "@mui/material";
+import { IconButton, Modal, useMediaQuery, useTheme } from "@mui/material";
 import { Add, Note } from "@mui/icons-material";
 import { RootState } from "../store/store";
 import { closeNoteEditor, openEmptyNoteEditor } from "../store/slices/noteEditorSlice";
@@ -13,12 +122,17 @@ import { sortNotesArray } from "../shared/utils/sortNotesArray";
 import { SortBy } from "../shared/types/types";
 import { NotesSorter } from "../components/NotesSorter";
 import { EmptyState } from "../shared/ui/EmptyState";
+import styles from "./NotesPage.module.css";
 
 export const NotesPage = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { notes } = useSelector((state: RootState) => state.notes);
+  const { isOpen } = useSelector((state: RootState) => state.noteEditor);
+  const [sortBy, setSortBy] = useState<SortBy>("dateDesc");
 
   const activeNotes = useMemo(() => {
     return notes.filter((note) => note.status === "active");
@@ -26,44 +140,35 @@ export const NotesPage = () => {
 
   const { query, handleSearchChange, filteredNotes } = useSearchNotes(activeNotes);
 
-  const [sortBy, setSortBy] = useState<SortBy>("dateDesc");
-
   const finalNotes = useMemo(() => {
     return sortNotesArray(filteredNotes, sortBy);
   }, [filteredNotes, sortBy]);
 
   const handleCreateNewNote = () => dispatch(openEmptyNoteEditor());
-
-  const { isOpen } = useSelector((state: RootState) => state.noteEditor);
-
   const handleClose = () => dispatch(closeNoteEditor());
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-
   return (
-    <section className="h-full w-full flex gap-3">
-      <div className="flex min-w-74 flex-1">
-        <div className="flex flex-col w-full gap-3">
-          <div className="flex gap-3">
-            <SearchInput name="search-note" value={query} onChange={handleSearchChange} placeholder={t("search_placeholder")} />
-
-            <MyButton action={handleCreateNewNote} icon={Add} text="Add note" />
-
+    <section className={styles.pageContainer}>
+      <div className={styles.notesSection}>
+        <div className={styles.contentWrapper}>
+          <div className={styles.toolbar}>
+            <SearchInput name="search-note" value={query} onChange={handleSearchChange} placeholder={t("search.placeholder")} />
+            <AddButton action={handleCreateNewNote} />
             <NotesSorter sortBy={sortBy} changeSortBy={setSortBy} />
           </div>
-          <div className="overflow-y-auto h-full">
+
+          <div className={styles.scrollArea}>
             {finalNotes.length > 0 ?
               <Notes notes={finalNotes} />
-            : <EmptyState icon={Note} title={t("notes_empty_message")} />}
+            : <EmptyState icon={Note} title={t("notes.empty_message")} />}
           </div>
         </div>
       </div>
 
       {isOpen &&
         (isMobile ?
-          <Modal open={isOpen} onClose={handleClose} sx={{ display: "flex", justifyContent: "center", alignItems: "center", flexGrow: 1 }}>
-            <div style={{ outline: "none", height: "100%", width: "100%" }}>
+          <Modal open={isOpen} onClose={handleClose} sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <div className={styles.modalContainer}>
               <NoteEditor />
             </div>
           </Modal>
@@ -72,66 +177,32 @@ export const NotesPage = () => {
   );
 };
 
-type NoteIconButtonProps = {
-  action: () => void;
-  icon: ElementType;
-  ariaLabel?: string;
-};
-
-export const NoteIconButton = ({ action, icon: Icon, ariaLabel }: NoteIconButtonProps) => {
+const AddButton = ({ action }: { action: () => void }) => {
   return (
-    <Button
+    <IconButton
       onClick={action}
-      aria-label={ariaLabel}
-      variant="contained"
-      disableElevation
       sx={{
-        minWidth: 48,
         width: 48,
         height: 48,
-        padding: 0,
         borderRadius: "8px",
         backgroundColor: "var(--color-surface)",
-        overflow: "hidden",
-
-        "&:hover": {
-          backgroundColor: "var(--color-hover)",
-        },
-      }}
-    >
-      <Icon sx={{ fontSize: 24, color: "var(--text-primary)" }} />
-    </Button>
-  );
-};
-
-const MyButton = ({ action, icon: Icon }: { action: () => void; icon: ElementType; text: string }) => {
-  return (
-    <Button
-      onClick={action}
-      disableRipple
-      sx={{
-        backgroundColor: "var(--color-surface)",
-        color: "var(--text-primary)",
-        borderRadius: "8px",
-        padding: "6px",
-        minWidth: 48,
-        width: "48px",
-        height: "48px",
-        textTransform: "none",
-        fontWeight: 500,
-
+        color: "var(--color-primary)",
         border: "2px solid transparent",
+        flexShrink: 0,
 
-        "&:hover": {
-          borderColor: "var(--color-border)",
+        "&:hover, &:focus": {
+          backgroundColor: "var(--color-surface)",
+          borderColor: "var(--color-interactive)",
         },
 
-        "&:active": {
-          borderColor: "var(--color-primary)",
+        "&:active": { borderColor: "var(--color-primary)" },
+
+        "& .MuiTouchRipple-root": {
+          display: "none",
         },
       }}
     >
-      <Icon sx={{ fontSize: 24, color: "var(--text-primary)" }} />
-    </Button>
+      <Add sx={{ fontSize: 24 }} />
+    </IconButton>
   );
 };

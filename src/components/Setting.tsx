@@ -22,35 +22,33 @@ export const Setting = ({ title, value, options, function: handleChange }: Setti
         MenuProps={menuProps}
         size="small"
         sx={{
-          minWidth: 120,
+          minWidth: 128,
           height: "36px",
           minHeight: "36px",
-
-          padding: 0,
 
           "& .MuiSelect-select": {
             display: "flex",
             alignItems: "center",
-            paddingY: 0,
+            paddingX: 2,
             height: "36px",
           },
 
           backgroundColor: "var(--color-surface)",
           color: "var(--text-primary)",
           borderRadius: "8px",
-          fontSize: "0.875rem", // ?? 14px змінна
+          fontSize: "14px",
 
           "& fieldset": {
             border: "2px solid transparent",
           },
           "&:hover fieldset": {
-            borderColor: "#BDBDBD !important",
+            borderColor: "var(--color-interactive) !important",
           },
           "&.Mui-focused fieldset": {
             borderColor: "var(--color-primary) !important",
           },
           "& .MuiSelect-icon": {
-            color: "#BDBDBD ",
+            color: "var(--color-interactive) ",
           },
           "& .MuiSelect-iconOpen": {
             color: "var(--color-primary)",

@@ -5,8 +5,8 @@ import { TrashPage } from "../pages/TrashPage";
 import { SettingsPage } from "../pages/SettingsPage";
 
 export const appPages = [
-  { title: "notes", path: "/notes", icon: <StickyNote2 />, element: <NotesPage /> },
-  { title: "archive", path: "/archive", icon: <Archive />, element: <ArchivePage /> },
-  { title: "trash", path: "/trash", icon: <Delete />, element: <TrashPage /> },
-  { title: "settings", path: "/settings", icon: <Settings />, element: <SettingsPage /> },
+  { title: "notes.title", path: "/notes", icon: <StickyNote2 />, element: <NotesPage /> },
+  { title: "archive.title", path: "/archive", icon: <Archive />, element: <ArchivePage /> },
+  { title: "trash.title", path: "/trash", icon: <Delete />, element: <TrashPage /> },
+  { title: "settings.title", path: "/settings", icon: <Settings />, element: <SettingsPage /> },
 ];

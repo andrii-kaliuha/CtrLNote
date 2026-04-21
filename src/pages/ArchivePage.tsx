@@ -5,6 +5,7 @@ import { RootState } from "../store/store";
 import { NoteProps } from "../shared/types/types";
 import { Notes } from "../components/Notes";
 import { EmptyState } from "../shared/ui/EmptyState";
+import styles from "./ArchivePage.module.css";
 
 export const ArchivePage = () => {
   const { notes } = useSelector((state: RootState) => state.notes);
@@ -12,18 +13,18 @@ export const ArchivePage = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col flex-1 h-full w-full">
+    <div className={styles.container}>
       {archivedNotes.length > 0 ?
-        <Archive text={t("archive")} notes={archivedNotes} />
-      : <EmptyState icon={ArchiveIcon} title={t("archive_empty_message")} />}
+        <Archive text={t("archive.title")} notes={archivedNotes} />
+      : <EmptyState icon={ArchiveIcon} title={t("archive.empty_message")} />}
     </div>
   );
 };
 
 const Archive = ({ text, notes }: { text: string; notes: NoteProps[] }) => (
   <>
-    <h2 className="pl-3 pb-3 sm:p-3 text-[var(--color-primary)]">{text}</h2>
-    <div className="overflow-y-auto">
+    <h2 className={styles.header}>{text}</h2>
+    <div className={styles.notesWrapper}>
       <Notes notes={notes} />
     </div>
   </>

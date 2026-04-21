@@ -1,0 +1,54 @@
+.notesGrid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(296px, 1fr));
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.noteCard {
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--color-surface);
+  height: 180px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.title {
+  font-size: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text {
+  font-size: 0.875rem;
+  white-space: pre-wrap;
+  margin: 0;
+
+  overflow: hidden;
+  line-clamp: 4;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.date {
+  font-size: 0.75rem;
+  line-height: 1;
+  color: var(--text-secondary);
+}

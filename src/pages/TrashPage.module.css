@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 12px;
+  height: 100%;
+  width: 100%;
+  min-height: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.title {
+  padding-left: 12px;
+  color: var(--color-primary);
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .title {
+    display: block;
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+}
+
+.scrollArea {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}

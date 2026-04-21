@@ -31,7 +31,7 @@ export const ConfirmDialog = ({ open, onClose, onConfirm, title, description }: 
       </DialogContent>
       <DialogActions sx={{ padding: "16px" }}>
         <Button onClick={onClose} sx={{ color: "var(--text-secondary)", textTransform: "none" }}>
-          {t("cancel")}
+          {t("actions.cancel")}
         </Button>
         <Button
           onClick={() => {
@@ -47,7 +47,7 @@ export const ConfirmDialog = ({ open, onClose, onConfirm, title, description }: 
             "&:hover": { backgroundColor: "var(--color-primary-dark)" },
           }}
         >
-          {t("confirm")}
+          {t("actions.confirm")}
         </Button>
       </DialogActions>
     </Dialog>

@@ -58,12 +58,9 @@ export const MoreVertMenu = ({ status, id }: MoreVertMenuProps) => {
           "& .MuiPaper-root": {
             width: "180px",
             backgroundColor: "var(--color-surface)",
-            borderRadius: "8px",
-            // boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.1)",
-            // marginTop: "4px",
             boxShadow: "none",
+            borderRadius: "8px",
             border: "2px solid var(--color-primary) ",
-            // border: "2px solid transparent ",
           },
           "& .MuiList-root": { padding: 0 },
         }}
@@ -80,7 +77,6 @@ export const MoreVertMenu = ({ status, id }: MoreVertMenuProps) => {
               color: "var(--text-primary)",
               fontSize: "14px",
               minHeight: "36px",
-              // transition: "all 0.15s ease",
 
               "&:hover": {
                 backgroundColor: "color-mix(in srgb, var(--color-primary), transparent 85%) !important",

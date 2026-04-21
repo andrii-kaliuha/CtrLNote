@@ -1,66 +1,86 @@
 {
-  "editNote": "Редагувати нотатку",
-  "cancel": "Скасувати",
-  "save": "Зберегти",
-  "title": "Заголовок",
-  "text": "Текст",
-  "menu": "Меню",
-  "notes": "Нотатки",
-  "pinned": "Закріплені",
-  "archive": "Архів",
-  "search": "Пошук",
-  "trash": "Кошик",
-  "settings": "Налаштування",
-  "titleAsc": "За назвою (А-Я)",
-  "titleDesc": "За назвою (Я-А)",
-  "dateAsc": "За датою (спочатку старі)",
-  "dateDesc": "За датою (спочатку нові)",
-  "archive_empty_message": "Архів ваших нотаток знаходиться тут",
+  "actions": {
+    "confirm": "Підтвердити",
+    "cancel": "Скасувати",
+    "save": "Зберегти",
+    "close": "Закрити"
+  },
 
-  "trash_restore_all": "Відновити все",
-  "trash_delete_all": "Видалити все",
-  "trash_empty_message": "Ваш кошик порожній",
-  "settings_auto_delete": "Автовидалення через",
-  "auto_delete_1": "1 день",
-  "auto_delete_7": "7 днів",
-  "auto_delete_10": "10 днів",
-  "auto_delete_30": "30 днів",
-  "trash_auto_delete_message": "Нотатки буде видалено через {{count}} днів",
+  "archive": {
+    "title": "Архів",
+    "empty_message": "Архів ваших нотаток знаходиться тут"
+  },
 
-  "trash_title": "Кошик",
-  "confirm_restore_all_message": "Відновити всі нотатки?",
-  "confirm_delete_all_message": "Видалити всі нотатки назавжди?",
+  "trash": {
+    "title": "Кошик",
+    "restore": {
+      "title": "Підтвердіть відновлення",
+      "one": "Відновити",
+      "message_one": "Ви впевнені, що хочете відновити цю нотатку?",
+      "all": "Відновити все",
+      "message_all": "Ви впевнені, що хочете відновити всі нотатки?"
+    },
+    "delete": {
+      "title": "Підтвердіть видалення",
+      "one": "Видалити",
+      "message_one": "Нотатку буде видалено назавжди. Продовжити?",
+      "all": "Очистити кошик",
+      "message_all": "Усі нотатки в кошику буде видалено назавжди. Ви впевнені?"
+    },
+    "empty_message": "Ваш кошик порожній",
+    "disabled_message": "Кошик вимкнено",
+    "enable_instruction": "Увімкніть кошик у налаштуваннях, щоб зберігати видалені нотатки",
 
-  "trash_disabled_message": "Кошик вимкнено",
-  "trash_enable_instruction": "Щоб увімкнути кошик, перейдіть до налаштувань",
+    "auto_delete_message_one": "Нотатки буде видалено через {{count}} день",
+    "auto_delete_message_few": "Нотатки буде видалено через {{count}} дні",
+    "auto_delete_message_many": "Нотатки буде видалено через {{count}} днів",
+    "auto_delete_message_other": "Нотатки буде видалено через {{count}} днів"
+  },
 
-  "search_placeholder": "Пошук",
+  "settings": {
+    "title": "Налаштування",
+    "theme": "Тема",
+    "language": "Мова",
+    "main_color": "Основний колір",
+    "auto_delete": "Автовидалення через",
+    "enable_trash": "Увімкнути кошик",
+    "themes": {
+      "light": "Світла",
+      "dark": "Темна"
+    },
+    "colors": {
+      "green": "Зелений",
+      "purple": "Фіолетовий",
+      "blue": "Синій",
+      "red": "Червоний",
+      "yellow": "Жовтий",
+      "orange": "Помаранчевий"
+    },
+    "days_one": "{{count}} день",
+    "days_few": "{{count}} дні",
+    "days_many": "{{count}} днів",
+    "days_other": "{{count}} днів",
+    "confirm_disable": {
+      "title": "Вимкнути кошик?",
+      "message": "Усі нотатки в кошику будуть видалені назавжди. Продовжити?"
+    }
+  },
 
-  "search_no_results": "Нічого не знайдено за запитом \"{{query}}\"",
+  "notes": {
+    "title": "Нотатки",
+    "empty_message": "Тут поки що порожньо. Створіть свою першу нотатку!"
+  },
 
-  "search_instruction": "Почніть вводити текст для пошуку нотаток",
-  "settings_date_format": "Формат дати",
-  "date_format_dd_mm_yyyy": "ДД/ММ/РРРР",
-  "date_format_mm_dd_yyyy": "ММ/ДД/РРРР",
-  "date_format_yyyy_mm_dd": "РРРР-ММ-ДД",
-  "settings_time_format": "Формат часу",
-  "time_format_12_hour": "12 годин",
-  "time_format_24_hour": "24 години",
-  "settings_theme": "Тема інтерфейсу",
-  "theme_light": "Світла",
-  "theme_dark": "Темна",
-  "settings_language": "Мова",
-  "language_english": "Англійська",
-  "language_ukrainian": "Українська",
-  "language_polish": "Польська",
-  "settings_main_color": "Основний колір інтерфейсу",
-  "color_green": "Зелений",
-  "color_purple": "Фіолетовий",
-  "color_blue": "Синій",
-  "color_red": "Червоний",
-  "color_yellow": "Жовтий",
-  "color_orange": "Оранжевий",
-  "settings_enable_trash": "Увімкнути Кошик",
+  "search": {
+    "placeholder": "Пошук нотаток..."
+  },
+
+  "sort": {
+    "titleAsc": "За назвою (А-Я)",
+    "titleDesc": "За назвою (Я-А)",
+    "dateAsc": "За датою (старіші)",
+    "dateDesc": "За датою (новіші)"
+  },
 
   "note_editor_title_label": "Заголовок",
   "note_editor_text_label": "Текст",

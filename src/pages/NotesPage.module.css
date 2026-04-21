@@ -1,0 +1,35 @@
+.pageContainer {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  gap: 12px;
+}
+
+.notesSection {
+  display: flex;
+  min-width: 296px;
+  flex: 1;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 12px;
+}
+
+.toolbar {
+  display: flex;
+  gap: 12px;
+}
+
+.scrollArea {
+  overflow-y: auto;
+  height: 100%;
+}
+
+.modalContainer {
+  outline: none;
+  height: 100%;
+  width: 100%;
+}

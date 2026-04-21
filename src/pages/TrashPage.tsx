@@ -9,6 +9,7 @@ import { EmptyState } from "../shared/ui/EmptyState";
 import { useSettings } from "../shared/hooks/useSettings";
 import { useState } from "react";
 import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
+import styles from "./TrashPage.module.css";
 
 export const TrashPage = () => {
   const { notes, trashEnabled, days } = useSettings();
@@ -17,11 +18,11 @@ export const TrashPage = () => {
   if (trashEnabled === false) return <TrashDisabled />;
 
   return (
-    <>
+    <div className={styles.container}>
       {deletedNotes.length > 0 ?
         <Trash notes={deletedNotes} />
       : <EmptyTrash days={days} />}
-    </>
+    </div>
   );
 };
 
@@ -33,17 +34,17 @@ const Trash = ({ notes }: { notes: NoteProps[] }) => {
   const [isDeleteOpen, setDeleteOpen] = useState(false);
 
   return (
-    <div className="flex flex-col flex-1 gap-3 h-full w-full">
-      <div className="flex justify-between items-center gap-3">
-        <h2 className="hidden sm:block pl-3">{t("trash_title")}</h2>
+    <>
+      <div className={styles.header}>
+        <h2 className={styles.title}>{t("trash.title")}</h2>
 
-        <div className="flex gap-3">
-          <TrashButton action={() => setRestoreOpen(true)} text={t("trash_restore_all")} />
-          <TrashButton action={() => setDeleteOpen(true)} text={t("trash_delete_all")} />
+        <div className={styles.controls}>
+          <TrashButton action={() => setRestoreOpen(true)} text={t("trash.restore.all")} />
+          <TrashButton action={() => setDeleteOpen(true)} text={t("trash.delete.all")} />
         </div>
       </div>
 
-      <div className="overflow-y-auto">
+      <div className={styles.scrollArea}>
         <Notes notes={notes} />
       </div>
 
@@ -51,31 +52,31 @@ const Trash = ({ notes }: { notes: NoteProps[] }) => {
         open={isRestoreOpen}
         onClose={() => setRestoreOpen(false)}
         onConfirm={() => dispatch(restoreAllNotes())}
-        title={t("confirm_restore_title")}
-        description={t("confirm_restore_all_message")}
+        title={t("trash.restore.title")}
+        description={t("trash.restore.message_all")}
       />
 
       <ConfirmDialog
         open={isDeleteOpen}
         onClose={() => setDeleteOpen(false)}
         onConfirm={() => dispatch(clearTrash())}
-        title={t("confirm_delete_title")}
-        description={t("confirm_delete_all_message")}
+        title={t("trash.delete.title")}
+        description={t("trash.delete.message_all")}
       />
-    </div>
+    </>
   );
 };
 
 const EmptyTrash = ({ days }: { days: number }) => {
   const { t } = useTranslation();
 
-  return <EmptyState icon={DeleteIcon} title={t("trash_empty_message")} description={t("trash_auto_delete_message", { count: days })} />;
+  return <EmptyState icon={DeleteIcon} title={t("trash.empty_message")} description={t("trash.auto_delete_message", { count: days })} />;
 };
 
 const TrashDisabled = () => {
   const { t } = useTranslation();
 
-  return <EmptyState icon={DeleteIcon} title={t("trash_disabled_message")} description={t("trash_enable_instruction")} />;
+  return <EmptyState icon={DeleteIcon} title={t("trash.disabled_message")} description={t("trash.enable-instruction")} />;
 };
 
 const TrashButton = ({ action, text }: { action: () => void; text: string }) => {
@@ -88,15 +89,16 @@ const TrashButton = ({ action, text }: { action: () => void; text: string }) => 
         color: "var(--text-primary)",
         borderRadius: "8px",
         height: "32px",
+        px: 2,
         textTransform: "none",
         border: "2px solid transparent",
 
-        "&:hover": {
-          borderColor: "var(--color-border)",
+        "&:hover, &:focus": {
+          backgroundColor: "var(--color-surface)",
+          borderColor: "var(--color-interactive)",
         },
-        "&:active": {
-          borderColor: "var(--color-primary)",
-        },
+
+        "&:active": { borderColor: "var(--color-primary)" },
       }}
     >
       {text}

@@ -34,12 +34,23 @@ export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "var(--color-surface)",
-          color: "var(--text-primary)",
+          color: "var(--color-primary)",
+
           borderRadius: "8px",
           cursor: "pointer",
           border: "2px solid transparent",
           outline: "none",
-          "&:hover": { borderColor: "var(--color-border)" },
+
+          "&:hover, &:focus": {
+            backgroundColor: "var(--color-surface)",
+            borderColor: "var(--color-interactive)",
+          },
+
+          "&:active": { borderColor: "var(--color-primary)" },
+
+          "& .MuiTouchRipple-root": {
+            display: "none",
+          },
 
           borderColor: open ? "var(--color-primary)" : "transparent",
         }}
@@ -51,14 +62,8 @@ export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        transformOrigin={{ vertical: "top", horizontal: "right" }}
         slotProps={{
           paper: {
             sx: {
@@ -81,7 +86,7 @@ export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }
             onClick={() => handleSelect(option)}
             sx={{ ...menuItemStyles, color: sortBy === option ? "var(--color-primary)" : "inherit" }}
           >
-            {t(option)}
+            {t(`sort.${option}`)}
           </MenuItem>
         ))}
       </Menu>
