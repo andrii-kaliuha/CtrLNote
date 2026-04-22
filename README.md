@@ -30,7 +30,7 @@
 
 - **Frontend:** React, TypeScript
 - **State Management:** Redux Toolkit
-- **Styling:** TailwindCSS, Material UI
+- **Styling:** Module CSS, Material UI
 - **Localization:** react-i18next
 - **Build Tooling:** Vite
 

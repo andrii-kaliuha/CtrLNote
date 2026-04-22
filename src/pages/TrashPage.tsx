@@ -70,13 +70,13 @@ const Trash = ({ notes }: { notes: NoteProps[] }) => {
 const EmptyTrash = ({ days }: { days: number }) => {
   const { t } = useTranslation();
 
-  return <EmptyState icon={DeleteIcon} title={t("trash.empty_message")} description={t("trash.auto_delete_message", { count: days })} />;
+  return <EmptyState icon={DeleteIcon} title={t("trash.empty_message")} instruction={t("trash.auto_delete_message", { count: days })} />;
 };
 
 const TrashDisabled = () => {
   const { t } = useTranslation();
 
-  return <EmptyState icon={DeleteIcon} title={t("trash.disabled_message")} description={t("trash.enable-instruction")} />;
+  return <EmptyState icon={DeleteIcon} title={t("trash.disabled_message")} instruction={t("trash.enable_instruction")} />;
 };
 
 const TrashButton = ({ action, text }: { action: () => void; text: string }) => {

@@ -6,6 +6,32 @@
     "close": "Закрити"
   },
 
+  "menu": "Меню",
+
+  "notes": {
+    "title": "Нотатки",
+    "empty_message": "Тут поки що порожньо. Створіть свою першу нотатку!",
+    "search_placeholder": "Пошук нотаток...",
+    "sort": {
+      "titleAsc": "За назвою (А-Я)",
+      "titleDesc": "За назвою (Я-А)",
+      "dateAsc": "За датою (старіші)",
+      "dateDesc": "За датою (новіші)"
+    },
+    "actions": {
+      "edit": "Редагувати",
+      "archive": "Архівувати",
+      "unarchive": "Розархівувати",
+      "delete": "Видалити",
+      "restore": "Відновити",
+      "delete_permanent": "Видалити назавжди"
+    },
+    "editor": {
+      "title_placeholder": "Заголовок",
+      "text_placeholder": "Текст нотатки..."
+    }
+  },
+
   "archive": {
     "title": "Архів",
     "empty_message": "Архів ваших нотаток знаходиться тут"
@@ -13,6 +39,15 @@
 
   "trash": {
     "title": "Кошик",
+    "empty_message": "Ваш кошик порожній",
+    "disabled_message": "Кошик вимкнено",
+    "enable_instruction": "Увімкніть кошик у налаштуваннях",
+
+    "auto_delete_message": "Нотатки буде видалено через {{count}} день",
+    "auto_delete_message_few": "Нотатки буде видалено через {{count}} дні",
+    "auto_delete_message_many": "Нотатки буде видалено через {{count}} днів",
+    "auto_delete_message_other": "Нотатки буде видалено через {{count}} днів",
+
     "restore": {
       "title": "Підтвердіть відновлення",
       "one": "Відновити",
@@ -26,28 +61,23 @@
       "message_one": "Нотатку буде видалено назавжди. Продовжити?",
       "all": "Очистити кошик",
       "message_all": "Усі нотатки в кошику буде видалено назавжди. Ви впевнені?"
-    },
-    "empty_message": "Ваш кошик порожній",
-    "disabled_message": "Кошик вимкнено",
-    "enable_instruction": "Увімкніть кошик у налаштуваннях, щоб зберігати видалені нотатки",
-
-    "auto_delete_message_one": "Нотатки буде видалено через {{count}} день",
-    "auto_delete_message_few": "Нотатки буде видалено через {{count}} дні",
-    "auto_delete_message_many": "Нотатки буде видалено через {{count}} днів",
-    "auto_delete_message_other": "Нотатки буде видалено через {{count}} днів"
+    }
   },
 
   "settings": {
     "title": "Налаштування",
     "theme": "Тема",
-    "language": "Мова",
-    "main_color": "Основний колір",
-    "auto_delete": "Автовидалення через",
-    "enable_trash": "Увімкнути кошик",
     "themes": {
       "light": "Світла",
       "dark": "Темна"
     },
+    "language": "Мова",
+    "languages": {
+      "english": "English",
+      "ukrainian": "Українська",
+      "polish": "Polski"
+    },
+    "main_color": "Основний колір",
     "colors": {
       "green": "Зелений",
       "purple": "Фіолетовий",
@@ -56,43 +86,15 @@
       "yellow": "Жовтий",
       "orange": "Помаранчевий"
     },
-    "days_one": "{{count}} день",
+    "auto_delete": "Автовидалення через",
+    "days": "{{count}} день",
     "days_few": "{{count}} дні",
     "days_many": "{{count}} днів",
     "days_other": "{{count}} днів",
+    "enable_trash": "Увімкнути кошик",
     "confirm_disable": {
       "title": "Вимкнути кошик?",
       "message": "Усі нотатки в кошику будуть видалені назавжди. Продовжити?"
     }
-  },
-
-  "notes": {
-    "title": "Нотатки",
-    "empty_message": "Тут поки що порожньо. Створіть свою першу нотатку!"
-  },
-
-  "search": {
-    "placeholder": "Пошук нотаток..."
-  },
-
-  "sort": {
-    "titleAsc": "За назвою (А-Я)",
-    "titleDesc": "За назвою (Я-А)",
-    "dateAsc": "За датою (старіші)",
-    "dateDesc": "За датою (новіші)"
-  },
-
-  "note_editor_title_label": "Заголовок",
-  "note_editor_text_label": "Текст",
-  "note_editor_cancel": "Скасувати",
-  "note_editor_save": "Зберегти",
-
-  "note_action_edit": "Редагувати",
-  "note_action_pin": "Закріпити",
-  "note_action_delete": "Видалити",
-  "note_action_archive": "Архівувати",
-  "note_action_unpin": "Відкріпити",
-  "note_action_unarchive": "Роз-архівувати",
-  "note_action_restore": "Відновити",
-  "note_action_delete_permanent": "Видалити назавжди"
+  }
 }

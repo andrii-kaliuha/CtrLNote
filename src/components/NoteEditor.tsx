@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store/store";
 import { closeNoteEditor, setTitle, setText, setNoteToEdit } from "../store/slices/noteEditorSlice";
 import { addNote, editNote } from "../store/slices/notesSlice";
-import { Button } from "..//shared/ui/Button";
+import { Button } from "../shared/ui/Button";
 import { useTranslation } from "react-i18next";
 import styles from "./NoteEditor.module.css";
 
@@ -15,7 +15,6 @@ export const NoteEditor = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const { isOpen, noteId, title: editorTitle, text: editorText } = useSelector((state: RootState) => state.noteEditor);
-
   const notes = useSelector((state: RootState) => state.notes.notes);
 
   useEffect(() => {
@@ -28,14 +27,11 @@ export const NoteEditor = () => {
   }, [isOpen, noteId, notes, dispatch]);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => dispatch(setTitle(e.target.value));
-
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => dispatch(setText(e.target.value));
-
   const handleClose = () => dispatch(closeNoteEditor());
 
   const handleSave = () => {
     const originalNote = notes.find((note) => note.id === noteId);
-
     const isStillActive = originalNote && originalNote.status === "active";
 
     if (noteId && isStillActive) {
@@ -53,14 +49,14 @@ export const NoteEditor = () => {
         className={styles.titleInput}
         value={editorTitle}
         onChange={handleTitleChange}
-        placeholder={t("note_editor_title_label")}
+        placeholder={t("notes.editor.title_placeholder")}
       />
 
-      <textarea className={styles.textArea} value={editorText} onChange={handleTextChange} placeholder={t("note_editor_text_label")} />
+      <textarea className={styles.textArea} value={editorText} onChange={handleTextChange} placeholder={t("notes.editor.text_placeholder")} />
 
       <div className={styles.actions}>
-        <Button action={handleClose} text={t("note_editor_cancel")} />
-        <Button action={handleSave} text={t("note_editor_save")} />
+        <Button action={handleClose} text={t("actions.cancel")} />
+        <Button action={handleSave} text={t("actions.save")} />
       </div>
     </Box>
   );

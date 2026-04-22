@@ -1,18 +1,19 @@
 import { ElementType } from "react";
+import styles from "./EmptyState.module.css";
 
 type EmptyStateProps = {
   icon?: ElementType;
   title: string;
-  description?: string;
+  instruction?: string;
 };
 
-export const EmptyState = ({ icon: Icon, title, description }: EmptyStateProps) => {
+export const EmptyState = ({ icon: Icon, title, instruction }: EmptyStateProps) => {
   return (
-    <section className="flex flex-col items-center justify-center gap-3 flex-1 h-full w-full">
-      {Icon && <Icon sx={{ fontSize: 128, color: "var(--text-secondary)" }} />}
+    <section className={styles.container}>
+      {Icon && <Icon sx={{ fontSize: 128, color: "var(--color-interactive)", opacity: 0.5 }} />}
       <div>
-        <p className="text-lg text-center font-medium">{title}</p>
-        {description && <p className="text-sm text-center text-[var(--text-primary)]">{description}</p>}
+        <p className={styles.title}>{title}</p>
+        {instruction && <p className={styles.instruction}>{instruction}</p>}
       </div>
     </section>
   );

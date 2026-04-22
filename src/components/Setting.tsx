@@ -2,7 +2,7 @@ import { MenuItem, Select, Typography, Box } from "@mui/material";
 import type { SettingProps } from "../shared/types/types";
 import { menuItemStyles, menuProps } from "../shared/style/style";
 
-export const Setting = ({ title, value, options, function: handleChange }: SettingProps) => {
+export const Setting = ({ idKey, title, value, options, function: handleChange }: SettingProps) => {
   return (
     <Box
       component="li"
@@ -20,6 +20,7 @@ export const Setting = ({ title, value, options, function: handleChange }: Setti
         value={value}
         onChange={handleChange}
         MenuProps={menuProps}
+        name={idKey}
         size="small"
         sx={{
           minWidth: 128,

@@ -1,72 +1,91 @@
 {
-  "editNote": "Edit Note",
-  "cancel": "Cancel",
-  "save": "Save",
-  "title": "Title",
-  "text": "Text",
+  "actions": {
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close"
+  },
+
   "menu": "Menu",
-  "notes": "Notes",
-  "pinned": "Pinned",
-  "archive": "Archive",
-  "search": "Search",
-  "trash": "Trash",
-  "settings": "Settings",
-  "titleAsc": "By title (A-Z)",
-  "titleDesc": "By title (Z-A)",
-  "dateAsc": "By date (oldest first)",
-  "dateDesc": "By date (newest first)",
-  "archive_empty_message": "Your archived notes are here",
 
-  "trash_restore_all": "Restore_all",
-  "trash_delete_all": "Delete_all",
-  "trash_empty_message": "Your trash is empty",
-  "settings_auto_delete": "Auto-delete after",
-  "auto_delete_1": "1 day",
-  "auto_delete_7": "7 days",
-  "auto_delete_10": "10 days",
-  "auto_delete_30": "30 days",
-  "trash_auto_delete_message": "Notes will be deleted after {{count}} days",
-  "trash_disabled_message": "Trash is disabled",
-  "trash_enable_instruction": "To enable trash, go to settings",
-
-  "search_placeholder": "Search",
-
-  "search_no_results": "No results found for \"{{query}}\"",
-  "search_instruction": "Start typing to search your notes",
-  "settings_date_format": "Date Format",
-  "date_format_dd_mm_yyyy": "DD/MM/YYYY",
-  "date_format_mm_dd_yyyy": "MM/DD/YYYY",
-  "date_format_yyyy_mm_dd": "YYYY-MM-DD",
-  "settings_time_format": "Time Format",
-  "time_format_12_hour": "12 Hour",
-  "time_format_24_hour": "24 Hour",
-  "settings_theme": "Interface Theme",
-  "theme_light": "Light",
-  "theme_dark": "Dark",
-  "settings_language": "Language",
-  "language_english": "English",
-  "language_ukrainian": "Ukrainian",
-  "language_polish": "Polish",
-  "settings_main_color": "Interface Main Color",
-  "color_green": "Green",
-  "color_purple": "Purple",
-  "color_blue": "Blue",
-  "color_red": "Red",
-  "color_yellow": "Yellow",
-  "color_orange": "Orange",
-  "settings_enable_trash": "Enable Trash",
-
-  "note_editor_title_label": "Title",
-  "note_editor_text_label": "Text",
-  "note_editor_cancel": "Cancel",
-  "note_editor_save": "Save",
-
-  "note_action_edit": "Edit",
-  "note_action_pin": "Pin",
-  "note_action_delete": "Delete",
-  "note_action_archive": "Archive",
-  "note_action_unpin": "Unpin",
-  "note_action_unarchive": "Unarchive",
-  "note_action_restore": "Restore",
-  "note_action_delete_permanent": "Delete Permanently"
+  "notes": {
+    "title": "Notes",
+    "empty_message": "It's empty here for now. Create your first note!",
+    "search_placeholder": "Search notes...",
+    "sort": {
+      "titleAsc": "By title (A-Z)",
+      "titleDesc": "By title (Z-A)",
+      "dateAsc": "By date (older)",
+      "dateDesc": "By date (newer)"
+    },
+    "actions": {
+      "edit": "Edit",
+      "archive": "Archive",
+      "unarchive": "Unarchive",
+      "delete": "Delete",
+      "restore": "Restore",
+      "delete_permanent": "Delete permanently"
+    },
+    "editor": {
+      "title_placeholder": "Title",
+      "text_placeholder": "Note text..."
+    }
+  },
+  "archive": {
+    "title": "Archive",
+    "empty_message": "Your archived notes are here"
+  },
+  "trash": {
+    "title": "Trash",
+    "empty_message": "Your trash is empty",
+    "disabled_message": "Trash is disabled",
+    "enable_instruction": "Enable trash in settings",
+    "auto_delete_message": "Notes will be deleted in {{count}} day",
+    "auto_delete_message_other": "Notes will be deleted in {{count}} days",
+    "restore": {
+      "title": "Confirm restoration",
+      "one": "Restore",
+      "message_one": "Are you sure you want to restore this note?",
+      "all": "Restore all",
+      "message_all": "Are you sure you want to restore all notes?"
+    },
+    "delete": {
+      "title": "Confirm deletion",
+      "one": "Delete",
+      "message_one": "The note will be permanently deleted. Continue?",
+      "all": "Empty trash",
+      "message_all": "All notes in the trash will be permanently deleted. Are you sure?"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "themes": {
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "language": "Language",
+    "languages": {
+      "english": "English",
+      "ukrainian": "Ukrainian",
+      "polish": "Polish"
+    },
+    "main_color": "Primary color",
+    "colors": {
+      "green": "Green",
+      "purple": "Purple",
+      "blue": "Blue",
+      "red": "Red",
+      "yellow": "Yellow",
+      "orange": "Orange"
+    },
+    "auto_delete": "Auto-delete after",
+    "days": "{{count}} day",
+    "days_other": "{{count}} days",
+    "enable_trash": "Enable trash",
+    "confirm_disable": {
+      "title": "Disable trash?",
+      "message": "All notes in the trash will be permanently deleted. Continue?"
+    }
+  }
 }

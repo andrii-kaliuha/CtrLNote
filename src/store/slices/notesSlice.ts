@@ -78,10 +78,14 @@ const notesSlice = createSlice({
         }
       });
     },
+
+    setNotes: (state, action: PayloadAction<NoteProps[]>) => {
+      state.notes = action.payload;
+    },
   },
 });
 
-export const { addNote, editNote, archiveNote, unarchiveNote, moveToTrash, restoreNote, removeNote, clearTrash, restoreAllNotes } =
+export const { addNote, editNote, archiveNote, unarchiveNote, moveToTrash, restoreNote, removeNote, clearTrash, restoreAllNotes, setNotes } =
   notesSlice.actions;
 
 export default notesSlice.reducer;

@@ -9,9 +9,9 @@ export const App = () => {
 
   return (
     <HashRouter>
-      <div className="flex flex-col md:flex-row overflow-hidden h-[100dvh] max-w-7xl mx-auto p-3 gap-3">
+      <div className="app-container">
         <DesktopNavigation />
-        <main className="flex-1 min-h-0">
+        <main className="main-content">
           <ErrorNotifier />
           <Routes>
             <Route path="/" element={<Navigate to="/notes" replace />} />

@@ -86,7 +86,7 @@ export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }
             onClick={() => handleSelect(option)}
             sx={{ ...menuItemStyles, color: sortBy === option ? "var(--color-primary)" : "inherit" }}
           >
-            {t(`sort.${option}`)}
+            {t(`notes.sort.${option}`)}
           </MenuItem>
         ))}
       </Menu>

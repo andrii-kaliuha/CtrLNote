@@ -25,7 +25,13 @@ export type NotesProps = { notes: NoteProps[] };
 
 type Option = { value: string; name: string };
 
-export type SettingProps = { title: string; value: string; options: Option[]; function: (event: SelectChangeEvent<string>) => void };
+export type SettingProps = {
+  idKey: string;
+  title: string;
+  value: string;
+  options: Option[];
+  function: (event: SelectChangeEvent<string>) => void;
+};
 
 export type ButtonProps = { action: () => void; text: string };
 
@@ -45,6 +51,6 @@ export type SearchInputProps = {
 
 export type SwitchProps = { text: string; name: string; checked: boolean; onChange: (event: ChangeEvent<HTMLInputElement>) => void };
 
-export type Action = { title: string; action: () => void };
+export type NoteAction = { title: string; action: () => void };
 
 export type MenuItemProps = { value: SortBy; text: string };

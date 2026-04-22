@@ -97,8 +97,8 @@ export const MoreVertMenu = ({ status, id }: MoreVertMenuProps) => {
         open={isConfirmOpen}
         onClose={closeConfirm}
         onConfirm={handleConfirm}
-        title={t("confirm_delete_title")}
-        description={t("confirm_delete_message")}
+        title={t("trash.delete.one")}
+        description={t("trash.delete.message_one")}
       />
     </>
   );

@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import noteEditorReducer from "./slices/noteEditorSlice";
-import notesReducer from "./slices/notesSlice";
+import notesReducer, { setNotes } from "./slices/notesSlice";
 import searchReducer from "./slices/searchSlice";
 import settingsReducer from "./slices/settingsSlice";
 import uiReducer, { setStorageError } from "./slices/uiSlice";
+import { db } from "../db";
 
 const loadFromLocalStorage = (key: string) => {
   try {
@@ -11,16 +12,14 @@ const loadFromLocalStorage = (key: string) => {
     if (serializedState === null) return undefined;
     return JSON.parse(serializedState);
   } catch (e) {
-    localStorage.removeItem(key);
-    console.error(`Критична помилка даних у ${key}. Сховище очищено.`, e);
+    console.error(`Помилка читання ${key}:`, e);
     return undefined;
   }
 };
 
 const hydrateState = (key: string, defaultValue: any) => {
   const saved = loadFromLocalStorage(key);
-  if (saved === undefined) return defaultValue;
-  return { ...defaultValue, ...saved };
+  return saved === undefined ? defaultValue : { ...defaultValue, ...saved };
 };
 
 const preloadedSettings = hydrateState("settings", {
@@ -31,8 +30,7 @@ const preloadedSettings = hydrateState("settings", {
   autoDeletePeriod: 2592000000,
 });
 
-const preloadedNotes = loadFromLocalStorage("notes");
-const preloadedSearch = loadFromLocalStorage("search");
+const preloadedSearch = hydrateState("search", { searchQuery: "" });
 
 export const store = configureStore({
   reducer: {
@@ -44,41 +42,49 @@ export const store = configureStore({
   },
   preloadedState: {
     settings: preloadedSettings,
-    notes: preloadedNotes,
     search: preloadedSearch,
   },
 });
 
+export const initializeApp = async () => {
+  try {
+    const savedNotes = await db.notes.toArray();
+    if (savedNotes.length > 0) {
+      store.dispatch(setNotes(savedNotes));
+      console.log("Нотатки завантажено з IndexedDB");
+    }
+  } catch (error) {
+    console.error("Помилка завантаження нотаток:", error);
+  }
+};
+
+initializeApp();
+
+// --- Синхронізація (Middleware заміна) ---
 let saveTimeout: ReturnType<typeof setTimeout>;
 
 store.subscribe(() => {
   if (saveTimeout) clearTimeout(saveTimeout);
 
-  saveTimeout = setTimeout(() => {
+  saveTimeout = setTimeout(async () => {
     const state = store.getState();
     const currentError = state.ui.storageError;
 
     try {
-      const settings = JSON.stringify(state.settings);
-      const notes = JSON.stringify(state.notes);
-      const search = JSON.stringify(state.search);
+      localStorage.setItem("settings", JSON.stringify(state.settings));
+      localStorage.setItem("search", JSON.stringify(state.search));
 
-      localStorage.setItem("settings", settings);
-      localStorage.setItem("notes", notes);
-      localStorage.setItem("search", search);
+      await db.transaction("rw", db.notes, async () => {
+        await db.notes.clear();
+        await db.notes.bulkAdd(state.notes.notes);
+      });
 
       if (currentError) store.dispatch(setStorageError(null));
-
-      console.log("Дані синхронізовано з LocalStorage");
+      console.log("Дані успішно синхронізовано (LocalStorage + IndexedDB)");
     } catch (e: any) {
-      const isQuotaError = e.name === "QuotaExceededError" || e.name === "NS_ERROR_DOM_QUOTA_REACHED";
-
-      const message =
-        isQuotaError ? "Пам'ять заповнена. Будь ласка, видаліть старі нотатки або очистіть кошик." : "Не вдалося зберегти дані локально.";
-
+      console.error("Помилка синхронізації:", e);
+      const message = "Не вдалося зберегти дані у внутрішню базу.";
       if (currentError !== message) store.dispatch(setStorageError(message));
-
-      console.error("Помилка збереження:", e);
     }
   }, 1000);
 });

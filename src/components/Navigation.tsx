@@ -75,7 +75,7 @@ export const DesktopNavigation = () => {
 };
 
 export const MobileNavigation = () => (
-  <Box component="nav" sx={{ display: { md: "none" } }}>
+  <Box component="nav" sx={{ display: { md: "none", position: "sticky", bottom: 0 } }}>
     <BottomNavigation sx={{ backgroundColor: "var(--color-surface)", borderRadius: "12px" }}>
       {appPages.map(({ title, path, icon }) => (
         <BottomNavigationAction
