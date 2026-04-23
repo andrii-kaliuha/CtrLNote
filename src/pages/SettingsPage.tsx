@@ -1,15 +1,15 @@
 import { useCallback, useState } from "react";
-import { SelectChangeEvent } from "@mui/material";
-import { setTheme, setLanguage, setMainColor, toggleTrash, setAutoDeletePeriod } from "../store/slices/settingsSlice";
-import { clearTrash } from "../store/slices/notesSlice";
-import { Setting } from "../components/Setting";
+import { Box, SelectChangeEvent, Typography } from "@mui/material";
+import { setTheme, setLanguage, setMainColor, toggleTrash, setAutoDeletePeriod } from "../features/Settings/settingsSlice";
+import { clearTrash } from "../widgets/Notes/notesSlice";
+import { Setting } from "../features/Settings/Setting";
 import { Switch } from "../shared/ui/Switch";
 import { MILLISECONDS_IN_DAY, useSettings } from "../shared/hooks/useSettings";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
 import styles from "./SettingsPage.module.css";
-import DataManagement from "../components/DataManagement";
+import { DataManagement } from "../features/ManageData/DataManagement";
 
 const THEME_OPTIONS = ["light", "dark"] as const;
 const LANGUAGE_OPTIONS = ["english", "ukrainian", "polish"] as const;
@@ -114,16 +114,28 @@ export const SettingsPage = () => {
 
         <Switch text={t("settings.enable_trash")} name="trash" checked={trashEnabled} onChange={handleTrashToggle} />
 
-        <ConfirmDialog
-          open={isConfirmOpen}
-          onClose={() => setIsConfirmOpen(false)}
-          onConfirm={handleConfirmDisable}
-          title={t("settings.confirm_disable.title")}
-          description={t("settings.confirm_disable.message")}
-        />
+        <Box
+          component="li"
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            listStyle: "none",
+            paddingY: "2px",
+          }}
+        >
+          <Typography variant="body2">Ваші дані</Typography>
+          <DataManagement />
+        </Box>
       </ul>
 
-      <DataManagement />
+      <ConfirmDialog
+        open={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        onConfirm={handleConfirmDisable}
+        title={t("settings.confirm_disable.title")}
+        description={t("settings.confirm_disable.message")}
+      />
     </section>
   );
 };

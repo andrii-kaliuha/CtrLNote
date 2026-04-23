@@ -1,7 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { SettingsState } from "../../shared/types/types";
 
-const initialState: SettingsState = { theme: "light", language: "english", mainColor: "red", trashEnabled: true, autoDeletePeriod: 2592000000 };
+export const initialState: SettingsState = {
+  theme: "light",
+  language: "english",
+  mainColor: "green",
+  trashEnabled: true,
+  autoDeletePeriod: 2592000000,
+};
 
 export const settingsSlice = createSlice({
   name: "settings",

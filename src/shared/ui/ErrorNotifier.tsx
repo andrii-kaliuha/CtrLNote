@@ -1,7 +1,7 @@
 import { Snackbar, Alert } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { setStorageError } from "../../store/slices/uiSlice";
+import { setStorageError } from "../../app/store/uiSlice";
+import { RootState } from "../../app/store/store";
 
 export const ErrorNotifier = () => {
   const dispatch = useDispatch();

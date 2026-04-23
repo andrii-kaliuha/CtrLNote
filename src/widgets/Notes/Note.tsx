@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import type { NoteProps } from "../shared/types/types";
-import { formatDate } from "../shared/utils/formatDate";
-import { MoreVertMenu } from "./MoreVertMenu";
-import { RootState } from "../store/store";
+import type { NoteProps } from "../../shared/types/types";
+import { MoreVertMenu } from "../../features/MorVertMenu/MoreVertMenu";
+import { formatDate } from "../../shared/utils/formatDate";
+import { RootState } from "../../app/store/store";
 import styles from "./Notes.module.css";
 
 export const Note: React.FC<NoteProps> = ({ id, title, text, createdAt, status }) => {

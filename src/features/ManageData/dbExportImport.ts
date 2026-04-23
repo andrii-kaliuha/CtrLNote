@@ -1,5 +1,5 @@
 import { exportDB, importDB } from "dexie-export-import";
-import { db } from "../../db";
+import { db } from "../../app/db";
 
 export const exportDatabase = async () => {
   try {
@@ -16,24 +16,20 @@ export const exportDatabase = async () => {
     URL.revokeObjectURL(url);
   } catch (error) {
     console.error("Експорт не вдався:", error);
-    alert("Помилка при експорті даних");
+    throw error;
   }
 };
 
 export const importDatabase = async (file: File) => {
   try {
     await importDB(file, {
-      overwriteValues: true, // Дозволяє перезаписувати об'єкти з однаковими ID
+      overwriteValues: true,
       acceptNameDiff: true,
-      progressCallback: () => {
-        return true;
-      },
     } as any);
 
-    // Після імпорту перезавантажити сторінку, щоб Redux підтягнув нові дані з IndexedDB
-    window.location.reload();
+    return true;
   } catch (error) {
     console.error("Імпорт не вдався:", error);
-    alert("Помилка: Файл пошкоджений або має неправильний формат");
+    throw error;
   }
 };

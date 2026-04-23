@@ -3,7 +3,7 @@ import { List, ListItemButton, ListItemText, ListItemIcon, BottomNavigation, Bot
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { appPages } from "../routes/pages";
+import { appPages } from "../../app/routes/pages";
 
 export const DesktopNavigation = () => {
   const [isSidebarCollapsed, setCollapsed] = useState(false);
@@ -75,7 +75,7 @@ export const DesktopNavigation = () => {
 };
 
 export const MobileNavigation = () => (
-  <Box component="nav" sx={{ display: { md: "none", position: "sticky", bottom: 0 } }}>
+  <Box component="nav" sx={{ display: { md: "none" } }}>
     <BottomNavigation sx={{ backgroundColor: "var(--color-surface)", borderRadius: "12px" }}>
       {appPages.map(({ title, path, icon }) => (
         <BottomNavigationAction

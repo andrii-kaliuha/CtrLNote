@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { RootState } from "../../app/store/store";
 import { useTranslation } from "react-i18next";
 import { autoDeleteNotes } from "../utils/autoDeleteNotes";
 

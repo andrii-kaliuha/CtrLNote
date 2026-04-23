@@ -7,11 +7,22 @@
   },
 
   "menu": "Menu",
+  "management": {
+    "export_json": "Export JSON",
+    "import_json": "Import JSON",
+    "no_notes": "You have no notes to export.",
+    "confirm_export_title": "Confirm Export",
+    "confirm_export_message": "Do you want to export your notes ({{count}} pcs) to a JSON file?",
+    "confirm_import_title": "Confirm Import",
+    "confirm_import_message": "Importing notes will replace your current data. Continue?",
+    "import_success": "Data imported successfully!",
+    "import_error": "Error importing file."
+  },
 
   "notes": {
     "title": "Notes",
-    "empty_message": "It's empty here for now. Create your first note!",
-    "search_placeholder": "Search notes...",
+    "empty_message": "It's empty here for now. Create your first note",
+    "search_placeholder": "Search...",
     "sort": {
       "titleAsc": "By title (A-Z)",
       "titleDesc": "By title (Z-A)",

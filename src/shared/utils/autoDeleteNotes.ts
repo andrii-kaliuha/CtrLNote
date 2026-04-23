@@ -1,5 +1,5 @@
 import { AppDispatch } from "../../store/store";
-import { removeNote as removeNotePermanently } from "../../store/slices/notesSlice";
+import { removeNote as removeNotePermanently } from "../../widgets/Notes/notesSlice";
 import { NoteProps } from "../types/types";
 
 export const autoDeleteNotes = (dispatch: AppDispatch, notes: NoteProps[], autoDeletePeriod: number) => {

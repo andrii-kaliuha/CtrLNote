@@ -7,11 +7,20 @@
   },
 
   "menu": "Меню",
+  "management": {
+    "export_json": "Експорт JSON",
+    "import_json": "Імпорт JSON",
+    "no_notes": "У вас немає нотаток для експорту.",
+    "confirm_export_title": "Підтвердження експорту",
+    "confirm_export_message": "Ви хочете експортувати ваші нотатки ({{count}} шт.) у файл JSON?",
+    "import_error": "Помилка при імпорті файлу.",
+    "storage_error": "Не вдалося зберегти дані у внутрішню базу."
+  },
 
   "notes": {
     "title": "Нотатки",
-    "empty_message": "Тут поки що порожньо. Створіть свою першу нотатку!",
-    "search_placeholder": "Пошук нотаток...",
+    "empty_message": "Тут поки що порожньо. Створіть свою першу нотатку",
+    "search_placeholder": "Пошук...",
     "sort": {
       "titleAsc": "За назвою (А-Я)",
       "titleDesc": "За назвою (Я-А)",

@@ -1,6 +1,6 @@
 import { MenuItem, Select, Typography, Box } from "@mui/material";
-import type { SettingProps } from "../shared/types/types";
-import { menuItemStyles, menuProps } from "../shared/style/style";
+import type { SettingProps } from "../../shared/types/types";
+import { menuItemStyles, menuProps } from "../../shared/style/style";
 
 export const Setting = ({ idKey, title, value, options, function: handleChange }: SettingProps) => {
   return (

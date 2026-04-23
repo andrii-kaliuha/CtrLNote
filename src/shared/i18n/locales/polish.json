@@ -7,11 +7,22 @@
   },
 
   "menu": "Menu",
+  "management": {
+    "export_json": "Eksportuj JSON",
+    "import_json": "Importuj JSON",
+    "no_notes": "Nie masz notatek do wyeksportowania.",
+    "confirm_export_title": "Potwierdź eksport",
+    "confirm_export_message": "Czy chcesz wyeksportować swoje notatki ({{count}} szt.) do pliku JSON?",
+    "confirm_import_title": "Potwierdź import",
+    "confirm_import_message": "Importowanie notatek zastąpi Twoje obecne dane. Kontynuować?",
+    "import_success": "Dane zostały pomyślnie zaimportowane!",
+    "import_error": "Błąd podczas importowania pliku."
+  },
 
   "notes": {
     "title": "Notatki",
-    "empty_message": "Tutaj jest jeszcze pusto. Utwórz swoją pierwszą notatkę!",
-    "search_placeholder": "Szukaj notatek...",
+    "empty_message": "Tutaj jest jeszcze pusto. Utwórz swoją pierwszą notatkę",
+    "search_placeholder": "Szukaj...",
     "sort": {
       "titleAsc": "Wg tytułu (A-Z)",
       "titleDesc": "Wg tytułu (Z-A)",

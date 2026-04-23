@@ -2,14 +2,15 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { clearTrash, restoreAllNotes } from "../store/slices/notesSlice";
+import { clearTrash, restoreAllNotes } from "../widgets/Notes/notesSlice";
 import { NoteProps } from "../shared/types/types";
-import { Notes } from "../components/Notes";
+import { Notes } from "../widgets/Notes/Notes";
 import { EmptyState } from "../shared/ui/EmptyState";
 import { useSettings } from "../shared/hooks/useSettings";
 import { useState } from "react";
 import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
 import styles from "./TrashPage.module.css";
+import BlockIcon from "@mui/icons-material/Block";
 
 export const TrashPage = () => {
   const { notes, trashEnabled, days } = useSettings();
@@ -76,7 +77,7 @@ const EmptyTrash = ({ days }: { days: number }) => {
 const TrashDisabled = () => {
   const { t } = useTranslation();
 
-  return <EmptyState icon={DeleteIcon} title={t("trash.disabled_message")} instruction={t("trash.enable_instruction")} />;
+  return <EmptyState icon={BlockIcon} title={t("trash.disabled_message")} instruction={t("trash.enable_instruction")} />;
 };
 
 const TrashButton = ({ action, text }: { action: () => void; text: string }) => {

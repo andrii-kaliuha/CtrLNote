@@ -11,15 +11,15 @@
 }
 
 .title {
-  font-size: 1.125rem; /* text-lg */
+  font-size: 1.125rem;
   text-align: center;
   font-weight: 500;
   color: var(--text-primary);
   margin: 0;
 }
 
-.description {
-  font-size: 0.875rem; /* text-sm */
+.instruction {
+  font-size: 0.875rem;
   text-align: center;
   color: var(--text-secondary);
   margin: 4px 0 0 0;

@@ -2,18 +2,19 @@ import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { IconButton, Modal, useMediaQuery, useTheme } from "@mui/material";
-import { Add, Note } from "@mui/icons-material";
-import { RootState } from "../store/store";
-import { closeNoteEditor, openEmptyNoteEditor } from "../store/slices/noteEditorSlice";
-import { NoteEditor } from "../components/NoteEditor";
-import { Notes } from "../components/Notes";
-import { SearchInput } from "../shared/ui/SearchInput";
+import { RootState } from "../app/store/store";
+import StickyNote2Icon from "@mui/icons-material/StickyNote2";
+import Add from "@mui/icons-material/Add";
+import { closeNoteEditor, openEmptyNoteEditor } from "../features/EditNote/noteEditorSlice";
+import { NoteEditor } from "../features/EditNote/NoteEditor";
+import { SearchInput } from "../features/SearchNotes/SearchInput";
 import { useSearchNotes } from "../shared/hooks/useSearchNotes";
 import { sortNotesArray } from "../shared/utils/sortNotesArray";
-import { SortBy } from "../shared/types/types";
-import { NotesSorter } from "../components/NotesSorter";
+import { NotesSorter } from "../features/SortNotes/NotesSorter";
 import { EmptyState } from "../shared/ui/EmptyState";
 import styles from "./NotesPage.module.css";
+import { SortBy } from "../shared/types/types";
+import { Notes } from "../widgets/Notes/Notes";
 
 export const NotesPage = () => {
   const { t } = useTranslation();
@@ -51,7 +52,7 @@ export const NotesPage = () => {
           <div className={styles.scrollArea}>
             {finalNotes.length > 0 ?
               <Notes notes={finalNotes} />
-            : <EmptyState icon={Note} title={t("notes.empty_message")} />}
+            : <EmptyState icon={StickyNote2Icon} title={t("notes.empty_message")} />}
           </div>
         </div>
       </div>

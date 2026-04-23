@@ -1,8 +1,8 @@
 import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
-import { DesktopNavigation, MobileNavigation } from "./components/Navigation";
-import { useSettings } from "./shared/hooks/useSettings";
+import { DesktopNavigation, MobileNavigation } from "../widgets/Navigation/Navigation";
+import { useSettings } from "../shared/hooks/useSettings";
+import { ErrorNotifier } from "../shared/ui/ErrorNotifier";
 import { appPages } from "./routes/pages";
-import { ErrorNotifier } from "./shared/ui/ErrorNotifier";
 
 export const App = () => {
   useSettings();

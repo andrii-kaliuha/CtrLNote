@@ -2,10 +2,10 @@ import { MoreVert } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { getAvailableActions } from "../shared/utils/noteActions";
-import { useDeleteNote } from "../shared/hooks/useDeleteNote";
-import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
-import { MoreVertMenuProps } from "../shared/types/types";
+import { getAvailableActions } from "../../shared/utils/noteActions";
+import { useDeleteNote } from "../../shared/hooks/useDeleteNote";
+import { ConfirmDialog } from "../../shared/ui/ConfirmDialog";
+import { MoreVertMenuProps } from "../../shared/types/types";
 import { useDispatch } from "react-redux";
 
 export const MoreVertMenu = ({ status, id }: MoreVertMenuProps) => {

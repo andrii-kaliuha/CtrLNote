@@ -1,5 +1,5 @@
-import { NotesProps } from "../shared/types/types";
-import { Note } from "./Note";
+import { NotesProps } from "../../shared/types/types";
+import { Note } from "../Notes/Note";
 import styles from "./Notes.module.css";
 
 export const Notes: React.FC<NotesProps> = ({ notes }) => (
