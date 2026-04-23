@@ -1,4 +1,4 @@
-import { AppDispatch } from "../../store/store";
+import { AppDispatch } from "../../app/store/store";
 import { removeNote as removeNotePermanently } from "../../widgets/Notes/notesSlice";
 import { NoteProps } from "../types/types";
 
