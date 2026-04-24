@@ -3,7 +3,7 @@ import type { SettingsState } from "../../shared/types/types";
 
 export const initialState: SettingsState = {
   theme: "light",
-  language: "english",
+  language: "en",
   mainColor: "green",
   trashEnabled: true,
   autoDeletePeriod: 2592000000,

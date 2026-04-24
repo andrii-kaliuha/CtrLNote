@@ -12,11 +12,16 @@
     "import_json": "Importuj JSON",
     "no_notes": "Nie masz notatek do wyeksportowania.",
     "confirm_export_title": "Potwierdź eksport",
-    "confirm_export_message": "Czy chcesz wyeksportować swoje notatki ({{count}} szt.) do pliku JSON?",
+    "confirm_export_message_one": "Czy chcesz wyeksportować {{count}} notatkę do pliku JSON?",
+    "confirm_export_message_few": "Czy chcesz wyeksportować {{count}} notatki do pliku JSON?",
+    "confirm_export_message_many": "Czy chcesz wyeksportować {{count}} notatek do pliku JSON?",
+    "confirm_export_message_other": "Czy chcesz wyeksportować {{count}} notatek do pliku JSON?",
     "confirm_import_title": "Potwierdź import",
     "confirm_import_message": "Importowanie notatek zastąpi Twoje obecne dane. Kontynuować?",
     "import_success": "Dane zostały pomyślnie zaimportowane!",
-    "import_error": "Błąd podczas importowania pliku."
+    "import_error": "Błąd podczas importowania pliku.",
+    "storage_error": "Failed to save data to the database.",
+    "load_error": "Failed to load notes from the database."
   },
 
   "notes": {
@@ -79,9 +84,9 @@
     },
     "language": "Język",
     "languages": {
-      "english": "Angielski",
-      "ukrainian": "Ukraiński",
-      "polish": "Polski"
+      "en": "Angielski",
+      "uk": "Ukraiński",
+      "pl": "Polski"
     },
     "main_color": "Główny kolor",
     "colors": {

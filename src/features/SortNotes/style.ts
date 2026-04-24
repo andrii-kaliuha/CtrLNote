@@ -42,3 +42,33 @@ export const menuProps = {
     },
   },
 };
+
+export const sortButtonSx = {
+  width: 48,
+  height: 48,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  backgroundColor: "var(--color-surface)",
+  color: "var(--color-primary)",
+  borderRadius: "8px",
+  cursor: "pointer",
+  border: "2px solid transparent",
+  outline: "none",
+  "&:hover, &:focus": {
+    backgroundColor: "var(--color-surface)",
+    borderColor: "var(--color-interactive)",
+  },
+  "&:active": { borderColor: "var(--color-primary)" },
+  "& .MuiTouchRipple-root": { display: "none" },
+};
+
+export const paperSx = {
+  backgroundColor: "var(--color-surface)",
+  color: "var(--text-primary)",
+  marginTop: "4px",
+  borderRadius: "8px",
+  boxShadow: "none",
+  border: "2px solid var(--color-primary)",
+  "& .MuiList-root": { padding: 0 },
+};

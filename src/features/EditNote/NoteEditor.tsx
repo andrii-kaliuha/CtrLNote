@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/store/store";
 import { closeNoteEditor, setTitle, setText, setNoteToEdit } from "./noteEditorSlice";
-import { addNote, editNote } from "../../widgets/Notes/notesSlice";
+import { addNote, editNote } from "../note/notesSlice";
 import { Button } from "../../shared/ui/Button";
 import { useTranslation } from "react-i18next";
 import styles from "./NoteEditor.module.css";

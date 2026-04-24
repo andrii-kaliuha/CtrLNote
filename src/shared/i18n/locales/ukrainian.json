@@ -8,13 +8,18 @@
 
   "menu": "Меню",
   "management": {
+    "title": "Ваші дані",
     "export_json": "Експорт JSON",
     "import_json": "Імпорт JSON",
     "no_notes": "У вас немає нотаток для експорту.",
     "confirm_export_title": "Підтвердження експорту",
-    "confirm_export_message": "Ви хочете експортувати ваші нотатки ({{count}} шт.) у файл JSON?",
+    "confirm_export_message_one": "Ви хочете експортувати {{count}} нотатку у файл JSON?",
+    "confirm_export_message_few": "Ви хочете експортувати {{count}} нотатки у файл JSON?",
+    "confirm_export_message_many": "Ви хочете експортувати {{count}} нотаток у файл JSON?",
+    "confirm_export_message_other": "Ви хочете експортувати {{count}} нотаток у файл JSON?",
     "import_error": "Помилка при імпорті файлу.",
-    "storage_error": "Не вдалося зберегти дані у внутрішню базу."
+    "storage_error": "Не вдалося зберегти дані у внутрішню базу.",
+    "load_error": "Не вдалося завантажити нотатки з бази даних."
   },
 
   "notes": {
@@ -82,9 +87,9 @@
     },
     "language": "Мова",
     "languages": {
-      "english": "English",
-      "ukrainian": "Українська",
-      "polish": "Polski"
+      "en": "English",
+      "uk": "Українська",
+      "pl": "Polski"
     },
     "main_color": "Основний колір",
     "colors": {

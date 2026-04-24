@@ -9,7 +9,7 @@ export const Switch: React.FC<SwitchProps> = ({ text, name, checked, onChange })
   </Box>
 );
 
-export const MySwitch = styled(MuiSwitch)(() => ({
+const MySwitch = styled(MuiSwitch)(() => ({
   width: 64,
   height: 32,
   padding: 0,

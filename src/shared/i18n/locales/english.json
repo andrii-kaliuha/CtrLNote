@@ -12,7 +12,8 @@
     "import_json": "Import JSON",
     "no_notes": "You have no notes to export.",
     "confirm_export_title": "Confirm Export",
-    "confirm_export_message": "Do you want to export your notes ({{count}} pcs) to a JSON file?",
+    "confirm_export_message_one": "Do you want to export {{count}} note to JSON file?",
+    "confirm_export_message_other": "Do you want to export {{count}} notes to JSON file?",
     "confirm_import_title": "Confirm Import",
     "confirm_import_message": "Importing notes will replace your current data. Continue?",
     "import_success": "Data imported successfully!",
@@ -77,9 +78,9 @@
     },
     "language": "Language",
     "languages": {
-      "english": "English",
-      "ukrainian": "Ukrainian",
-      "polish": "Polish"
+      "en": "English",
+      "uk": "Ukrainian",
+      "pl": "Polish"
     },
     "main_color": "Primary color",
     "colors": {

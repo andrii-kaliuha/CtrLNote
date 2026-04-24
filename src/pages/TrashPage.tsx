@@ -2,11 +2,11 @@ import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { clearTrash, restoreAllNotes } from "../widgets/Notes/notesSlice";
+import { clearTrash, restoreAllNotes } from "../features/note/notesSlice";
 import { NoteProps } from "../shared/types/types";
-import { Notes } from "../widgets/Notes/Notes";
+import { NoteList } from "../widgets/noteList/NoteList";
 import { EmptyState } from "../shared/ui/EmptyState";
-import { useSettings } from "../shared/hooks/useSettings";
+import { useSettings } from "../features/settings/useSettings";
 import { useState } from "react";
 import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
 import styles from "./TrashPage.module.css";
@@ -46,7 +46,7 @@ const Trash = ({ notes }: { notes: NoteProps[] }) => {
       </div>
 
       <div className={styles.scrollArea}>
-        <Notes notes={notes} />
+        <NoteList notes={notes} />
       </div>
 
       <ConfirmDialog

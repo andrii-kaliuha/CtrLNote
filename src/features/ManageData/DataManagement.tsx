@@ -55,7 +55,7 @@ export const DataManagement = () => {
   };
 
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
       <Button
         variant="contained"
         sx={{ backgroundColor: "var(--color-primary)", boxShadow: "none", "&:hover, &:focus": { boxShadow: "none" }, borderRadius: "8px" }}

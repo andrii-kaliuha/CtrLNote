@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useSettings } from "./useSettings";
-import { moveToTrash, removeNote as removeNotePermanently } from "../../widgets/Notes/notesSlice";
-import { NoteStatus } from "../types/types";
+import { useSettings } from "../settings/useSettings";
+import { moveToTrash, removeNote as removeNotePermanently } from "./notesSlice";
+import { NoteStatus } from "../../shared/types/types";
 
 export const useDeleteNote = () => {
   const dispatch = useDispatch();

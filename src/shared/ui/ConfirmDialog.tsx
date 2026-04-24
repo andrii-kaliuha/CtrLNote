@@ -16,6 +16,7 @@ export const ConfirmDialog = ({ open, onClose, onConfirm, title, description }: 
     <Dialog
       open={open}
       onClose={onClose}
+      disableRestoreFocus
       sx={{
         "& .MuiPaper-root": {
           backgroundColor: "var(--color-surface)",

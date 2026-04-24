@@ -5,16 +5,16 @@ import { IconButton, Modal, useMediaQuery, useTheme } from "@mui/material";
 import { RootState } from "../app/store/store";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Add from "@mui/icons-material/Add";
-import { closeNoteEditor, openEmptyNoteEditor } from "../features/EditNote/noteEditorSlice";
-import { NoteEditor } from "../features/EditNote/NoteEditor";
-import { SearchInput } from "../features/SearchNotes/SearchInput";
-import { useSearchNotes } from "../shared/hooks/useSearchNotes";
-import { sortNotesArray } from "../shared/utils/sortNotesArray";
-import { NotesSorter } from "../features/SortNotes/NotesSorter";
+import { closeNoteEditor, openEmptyNoteEditor } from "../features/editNote/noteEditorSlice";
+import { NoteEditor } from "../features/editNote/NoteEditor";
+import { SearchInput } from "../features/searchNotes/SearchInput";
+import { useSearchNotes } from "../features/searchNotes/useSearchNotes";
+import { sortNotesArray } from "../features/sortNotes/sortNotesArray";
+import { NotesSorter } from "../features/sortNotes/NotesSorter";
 import { EmptyState } from "../shared/ui/EmptyState";
 import styles from "./NotesPage.module.css";
 import { SortBy } from "../shared/types/types";
-import { Notes } from "../widgets/Notes/Notes";
+import { NoteList } from "../widgets/noteList/NoteList";
 
 export const NotesPage = () => {
   const { t } = useTranslation();
@@ -45,13 +45,15 @@ export const NotesPage = () => {
         <div className={styles.contentWrapper}>
           <div className={styles.toolbar}>
             <SearchInput name="search-note" value={query} onChange={handleSearchChange} placeholder={t("notes.search_placeholder")} />
-            <AddButton action={handleCreateNewNote} />
+            <IconButton onClick={handleCreateNewNote} sx={ButtonSx}>
+              <Add sx={{ fontSize: 24 }} />
+            </IconButton>
             <NotesSorter sortBy={sortBy} changeSortBy={setSortBy} />
           </div>
 
           <div className={styles.scrollArea}>
             {finalNotes.length > 0 ?
-              <Notes notes={finalNotes} />
+              <NoteList notes={finalNotes} />
             : <EmptyState icon={StickyNote2Icon} title={t("notes.empty_message")} />}
           </div>
         </div>
@@ -69,32 +71,23 @@ export const NotesPage = () => {
   );
 };
 
-const AddButton = ({ action }: { action: () => void }) => {
-  return (
-    <IconButton
-      onClick={action}
-      sx={{
-        width: 48,
-        height: 48,
-        borderRadius: "8px",
-        backgroundColor: "var(--color-surface)",
-        color: "var(--color-primary)",
-        border: "2px solid transparent",
-        flexShrink: 0,
+const ButtonSx = {
+  width: 48,
+  height: 48,
+  borderRadius: "8px",
+  backgroundColor: "var(--color-surface)",
+  color: "var(--color-primary)",
+  border: "2px solid transparent",
+  flexShrink: 0,
 
-        "&:hover, &:focus": {
-          backgroundColor: "var(--color-surface)",
-          borderColor: "var(--color-interactive)",
-        },
+  "&:hover, &:focus": {
+    backgroundColor: "var(--color-surface)",
+    borderColor: "var(--color-interactive)",
+  },
 
-        "&:active": { borderColor: "var(--color-primary)" },
+  "&:active": { borderColor: "var(--color-primary)" },
 
-        "& .MuiTouchRipple-root": {
-          display: "none",
-        },
-      }}
-    >
-      <Add sx={{ fontSize: 24 }} />
-    </IconButton>
-  );
+  "& .MuiTouchRipple-root": {
+    display: "none",
+  },
 };

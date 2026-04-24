@@ -79,6 +79,6 @@ npm run build
 
 ## 🧠 Future Improvements
 
-- Import / Export notes
-- IndexedDB persistence
-- Tags & folders
+- **Rich Text:** TipTap editor integration.
+- **Organization:** Nested folders and tags.
+- **Reliability:** Vitest unit testing.

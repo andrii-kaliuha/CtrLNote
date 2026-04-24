@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store/store";
-import { setSearchQuery } from "../../features/SearchNotes/searchSlice";
-import { NoteProps } from "../types/types";
+import { setSearchQuery } from "./searchSlice";
+import { NoteProps } from "../../shared/types/types";
 
 export const useSearchNotes = (notes: NoteProps[]) => {
   const dispatch = useDispatch();

@@ -11,17 +11,17 @@ i18n
   .use(initReactI18next)
   .init({
     resources: {
-      english: {
+      en: {
         translation: translationEn,
       },
-      ukrainian: {
+      uk: {
         translation: translationUa,
       },
-      polish: {
+      pl: {
         translation: translationPl,
       },
     },
-    fallbackLng: "english",
+    fallbackLng: "en",
     interpolation: {
       escapeValue: false,
     },

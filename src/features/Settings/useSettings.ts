@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store/store";
 import { useTranslation } from "react-i18next";
-import { autoDeleteNotes } from "../utils/autoDeleteNotes";
+import { autoDeleteNotes } from "../note/autoDeleteNotes";
 
 export const MILLISECONDS_IN_DAY = 1000 * 60 * 60 * 24;
 

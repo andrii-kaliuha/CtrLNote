@@ -1,6 +1,7 @@
 import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
-import { DesktopNavigation, MobileNavigation } from "../widgets/Navigation/Navigation";
-import { useSettings } from "../shared/hooks/useSettings";
+import { DesktopNavigation } from "../widgets/navigation/DesktopNavigation";
+import { MobileNavigation } from "../widgets/navigation/MobileNavigation";
+import { useSettings } from "../features/settings/useSettings";
 import { ErrorNotifier } from "../shared/ui/ErrorNotifier";
 import { appPages } from "./routes/pages";
 

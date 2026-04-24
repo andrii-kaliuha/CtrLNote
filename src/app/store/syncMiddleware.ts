@@ -1,7 +1,7 @@
 import { Middleware } from "@reduxjs/toolkit";
 import { setStorageError } from "../../app/store/uiSlice";
-import i18n from "../i18n/i18n";
 import { db } from "../../app/db";
+import i18n from "../../shared/i18n/i18n";
 
 let saveTimeout: ReturnType<typeof setTimeout>;
 
@@ -28,7 +28,6 @@ export const syncMiddleware: Middleware = (storeAPI) => (next) => (action: any) 
         storeAPI.dispatch(setStorageError(null));
       }
     } catch (e: any) {
-      console.error("Помилка синхронізації:", e);
       const message = i18n.t("management.storage_error");
 
       if (currentError !== message) {

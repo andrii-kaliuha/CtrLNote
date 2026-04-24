@@ -1,6 +1,6 @@
 import { AppDispatch } from "../../app/store/store";
-import { removeNote as removeNotePermanently } from "../../widgets/Notes/notesSlice";
-import { NoteProps } from "../types/types";
+import { removeNote as removeNotePermanently } from "./notesSlice";
+import { NoteProps } from "../../shared/types/types";
 
 export const autoDeleteNotes = (dispatch: AppDispatch, notes: NoteProps[], autoDeletePeriod: number) => {
   const currentTime = Date.now();

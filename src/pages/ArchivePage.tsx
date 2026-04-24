@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import ArchiveIcon from "@mui/icons-material/Archive";
 import { NoteProps } from "../shared/types/types";
-import { Notes } from "../widgets/Notes/Notes";
+import { NoteList } from "../widgets/noteList/NoteList";
 import { EmptyState } from "../shared/ui/EmptyState";
 import styles from "./ArchivePage.module.css";
 import { RootState } from "../app/store/store";
@@ -25,7 +25,7 @@ const Archive = ({ text, notes }: { text: string; notes: NoteProps[] }) => (
   <>
     <h2 className={styles.header}>{text}</h2>
     <div className={styles.notesWrapper}>
-      <Notes notes={notes} />
+      <NoteList notes={notes} />
     </div>
   </>
 );

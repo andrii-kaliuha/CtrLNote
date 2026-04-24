@@ -1,18 +1,18 @@
 import { useCallback, useState } from "react";
 import { Box, SelectChangeEvent, Typography } from "@mui/material";
-import { setTheme, setLanguage, setMainColor, toggleTrash, setAutoDeletePeriod } from "../features/Settings/settingsSlice";
-import { clearTrash } from "../widgets/Notes/notesSlice";
-import { Setting } from "../features/Settings/Setting";
+import { setTheme, setLanguage, setMainColor, toggleTrash, setAutoDeletePeriod } from "../features/settings/settingsSlice";
+import { clearTrash } from "../features/note/notesSlice";
+import { Setting } from "../features/settings/Setting";
 import { Switch } from "../shared/ui/Switch";
-import { MILLISECONDS_IN_DAY, useSettings } from "../shared/hooks/useSettings";
+import { MILLISECONDS_IN_DAY, useSettings } from "../features/settings/useSettings";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
 import styles from "./SettingsPage.module.css";
-import { DataManagement } from "../features/ManageData/DataManagement";
+import { DataManagement } from "../features/manageData/DataManagement";
 
 const THEME_OPTIONS = ["light", "dark"] as const;
-const LANGUAGE_OPTIONS = ["english", "ukrainian", "polish"] as const;
+const LANGUAGE_OPTIONS = ["en", "uk", "pl"] as const;
 const COLOR_OPTIONS = ["green", "purple", "blue", "red", "yellow", "orange"] as const;
 const AUTO_DELETE_OPTIONS = ["1", "7", "10", "30"] as const;
 
@@ -118,13 +118,15 @@ export const SettingsPage = () => {
           component="li"
           sx={{
             display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            flexDirection: { xs: "column", md: "row" },
+            alignItems: { xs: "center", md: "center" },
+            justifyContent: { xs: "center", md: "space-between" },
+            gap: { xs: 1, md: 0 },
             listStyle: "none",
             paddingY: "2px",
           }}
         >
-          <Typography variant="body2">Ваші дані</Typography>
+          <Typography variant="body2">{t("management.title")}</Typography>
           <DataManagement />
         </Box>
       </ul>
