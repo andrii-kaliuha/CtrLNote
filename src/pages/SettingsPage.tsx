@@ -67,7 +67,7 @@ export const SettingsPage = () => {
 
   return (
     <section className={styles.container}>
-      <ul className={styles.list}>
+      <ul className={styles.list} aria-label={t("settings.title")}>
         <Setting
           idKey="theme"
           title={t("settings.theme")}
@@ -125,8 +125,11 @@ export const SettingsPage = () => {
             listStyle: "none",
             paddingY: "2px",
           }}
+          aria-label={t("management.title")}
         >
-          <Typography variant="body2">{t("management.title")}</Typography>
+          <Typography variant="body2" aria-label={t("management.title")}>
+            {t("management.title")}
+          </Typography>
           <DataManagement />
         </Box>
       </ul>

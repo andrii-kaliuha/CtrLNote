@@ -17,7 +17,7 @@ export const MoreVertMenu = ({ status, id }: MoreVertMenuProps) => {
 
   return (
     <>
-      <IconButton onClick={openMenu} sx={iconButtonSx(Boolean(anchorEl))}>
+      <IconButton onClick={openMenu} sx={iconButtonSx(Boolean(anchorEl))} aria-label={t("notes.actions.menu")}>
         <MoreVert />
       </IconButton>
 
@@ -28,6 +28,7 @@ export const MoreVertMenu = ({ status, id }: MoreVertMenuProps) => {
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         sx={menuSx}
+        aria-label={t("notes.actions.menu")}
       >
         {actions.map((item, index) => (
           <MenuItem

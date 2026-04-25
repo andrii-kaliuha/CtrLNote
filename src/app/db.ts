@@ -8,5 +8,5 @@ interface MyDatabase extends Dexie {
 export const db = new Dexie("CtrLNoteDB") as MyDatabase;
 
 db.version(1).stores({
-  notes: "++id, status, title",
+  notes: "++id, status, title, *tags",
 });

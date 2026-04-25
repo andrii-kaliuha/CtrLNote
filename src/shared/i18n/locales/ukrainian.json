@@ -25,14 +25,18 @@
   "notes": {
     "title": "Нотатки",
     "empty_message": "Тут поки що порожньо. Створіть свою першу нотатку",
+    "untitled": "Без назви",
     "search_placeholder": "Пошук...",
     "sort": {
+      "label": "Сортувати за",
       "titleAsc": "За назвою (А-Я)",
       "titleDesc": "За назвою (Я-А)",
       "dateAsc": "За датою (старіші)",
       "dateDesc": "За датою (новіші)"
     },
     "actions": {
+      "add": "Додайте нотатку",
+      "menu": "Меню нотатки",
       "edit": "Редагувати",
       "archive": "Архівувати",
       "unarchive": "Розархівувати",
@@ -42,7 +46,8 @@
     },
     "editor": {
       "title_placeholder": "Заголовок",
-      "text_placeholder": "Текст нотатки..."
+      "text_placeholder": "Текст нотатки...",
+      "tags_placeholder": "Додайте тег"
     }
   },
 

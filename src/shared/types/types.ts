@@ -1,11 +1,25 @@
 import { SelectChangeEvent } from "@mui/material";
 import { ChangeEvent } from "react";
 
-export type NoteEditorState = { isOpen: boolean; noteId: string | null; title: string; text: string };
+export type NoteEditorState = {
+  isOpen: boolean;
+  noteId: string | null;
+  title: string;
+  text: string;
+  tags: string[];
+};
 
 export type NoteStatus = "active" | "archived" | "deleted";
 
-export type NoteProps = { id: string; title: string; text: string; createdAt: number; status: NoteStatus; deletedAt?: number };
+export type NoteProps = {
+  id: string;
+  title: string;
+  text: string;
+  tags: string[];
+  createdAt: number;
+  status: NoteStatus;
+  deletedAt?: number;
+};
 
 export type NotesState = { notes: NoteProps[] };
 

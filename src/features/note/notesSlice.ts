@@ -13,22 +13,23 @@ const notesSlice = createSlice({
       reducer: (state, action: PayloadAction<NoteProps>) => {
         state.notes.push(action.payload);
       },
-      prepare: (payload: { title: string; text: string }) => ({
+      prepare: (payload: { title: string; text: string; tags: string[] }) => ({
         payload: {
           id: crypto.randomUUID(),
           title: payload.title,
           text: payload.text,
+          tags: payload.tags,
           createdAt: Date.now(),
           status: "active" as NoteStatus,
         } as NoteProps,
       }),
     },
-
-    editNote: (state, action: PayloadAction<{ id: string; title: string; text: string }>) => {
+    editNote: (state, action: PayloadAction<{ id: string; title: string; text: string; tags: string[] }>) => {
       const note = findNote(state, action.payload.id);
       if (note && note.status !== "deleted") {
         note.title = action.payload.title;
         note.text = action.payload.text;
+        note.tags = action.payload.tags;
       }
     },
 

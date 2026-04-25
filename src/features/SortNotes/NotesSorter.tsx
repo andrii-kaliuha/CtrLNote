@@ -21,7 +21,12 @@ export const NotesSorter: React.FC<NotesSorterProps> = ({ sortBy, changeSortBy }
 
   return (
     <Box>
-      <Box component="button" onClick={handleClick} sx={{ ...sortButtonSx, borderColor: open ? "var(--color-primary)" : "transparent" }}>
+      <Box
+        aria-label={t("notes.sort.label")}
+        component="button"
+        onClick={handleClick}
+        sx={{ ...sortButtonSx, borderColor: open ? "var(--color-primary)" : "transparent" }}
+      >
         <Sort sx={{ fontSize: 24 }} />
       </Box>
 

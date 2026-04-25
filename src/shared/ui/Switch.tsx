@@ -3,7 +3,7 @@ import { Box, Switch as MuiSwitch, styled, Typography } from "@mui/material";
 import { SwitchProps } from "../types/types";
 
 export const Switch: React.FC<SwitchProps> = ({ text, name, checked, onChange }) => (
-  <Box component="li" sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+  <Box component="li" sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }} aria-label={text}>
     <Typography variant="body2">{text}</Typography>
     <MySwitch name={name} checked={checked} onChange={onChange} />
   </Box>

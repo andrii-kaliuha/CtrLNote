@@ -2,7 +2,7 @@
   padding: 12px;
   border-radius: 8px;
   background-color: var(--color-surface);
-  height: 180px;
+  min-height: 180px;
   overflow: hidden;
   display: flex;
   flex-direction: column;

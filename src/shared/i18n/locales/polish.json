@@ -26,15 +26,19 @@
 
   "notes": {
     "title": "Notatki",
-    "empty_message": "Tutaj jest jeszcze pusto. Utwórz swoją pierwszą notatkę",
+    "empty_message": "Na razie nic tu nie ma. Utwórz swoją pierwszą notatkę",
+    "untitled": "Bez tytułu",
     "search_placeholder": "Szukaj...",
     "sort": {
-      "titleAsc": "Wg tytułu (A-Z)",
-      "titleDesc": "Wg tytułu (Z-A)",
-      "dateAsc": "Wg daty (starsze)",
-      "dateDesc": "Wg daty (nowsze)"
+      "label": "Sortuj według",
+      "titleAsc": "Po tytule (A-Z)",
+      "titleDesc": "Po tytule (Z-A)",
+      "dateAsc": "Po dacie (najstarsze)",
+      "dateDesc": "Po dacie (najnowsze)"
     },
     "actions": {
+      "add": "Dodaj notatkę",
+      "menu": "Menu notatki",
       "edit": "Edytuj",
       "archive": "Archiwizuj",
       "unarchive": "Cofnij archiwizację",
@@ -44,13 +48,16 @@
     },
     "editor": {
       "title_placeholder": "Tytuł",
-      "text_placeholder": "Treść notatki..."
+      "text_placeholder": "Tekst notatki...",
+      "tags_placeholder": "Dodaj tag"
     }
   },
+
   "archive": {
     "title": "Archiwum",
     "empty_message": "Tutaj znajdują się Twoje zarchiwizowane notatki"
   },
+
   "trash": {
     "title": "Kosz",
     "empty_message": "Twój kosz jest pusty",
@@ -75,6 +82,7 @@
       "message_all": "Wszystkie notatki w koszu zostaną trwale usunięte. Czy na pewno?"
     }
   },
+
   "settings": {
     "title": "Ustawienia",
     "theme": "Motyw",

@@ -23,14 +23,18 @@
   "notes": {
     "title": "Notes",
     "empty_message": "It's empty here for now. Create your first note",
+    "untitled": "Untitled",
     "search_placeholder": "Search...",
     "sort": {
+      "label": "Sort by",
       "titleAsc": "By title (A-Z)",
       "titleDesc": "By title (Z-A)",
-      "dateAsc": "By date (older)",
-      "dateDesc": "By date (newer)"
+      "dateAsc": "By date (oldest)",
+      "dateDesc": "By date (newest)"
     },
     "actions": {
+      "add": "Add a note",
+      "menu": "Note menu",
       "edit": "Edit",
       "archive": "Archive",
       "unarchive": "Unarchive",
@@ -40,13 +44,16 @@
     },
     "editor": {
       "title_placeholder": "Title",
-      "text_placeholder": "Note text..."
+      "text_placeholder": "Note text...",
+      "tags_placeholder": "Add a tag"
     }
   },
+
   "archive": {
     "title": "Archive",
     "empty_message": "Your archived notes are here"
   },
+
   "trash": {
     "title": "Trash",
     "empty_message": "Your trash is empty",
@@ -69,6 +76,7 @@
       "message_all": "All notes in the trash will be permanently deleted. Are you sure?"
     }
   },
+
   "settings": {
     "title": "Settings",
     "theme": "Theme",

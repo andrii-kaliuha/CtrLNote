@@ -23,6 +23,11 @@ export const useSearchNotes = (notes: NoteProps[]) => {
     const lowerQuery = query.trim().toLowerCase();
     if (!lowerQuery) return notes;
 
+    if (lowerQuery.startsWith("#")) {
+      const tagQuery = lowerQuery.slice(1);
+      return notes.filter((note) => note.tags?.some((tag) => tag.toLowerCase().includes(tagQuery)));
+    }
+
     return notes.filter((note) => note.title.toLowerCase().includes(lowerQuery) || note.text.toLowerCase().includes(lowerQuery));
   }, [query, notes]);
 

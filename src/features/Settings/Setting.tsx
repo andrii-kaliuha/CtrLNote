@@ -3,7 +3,7 @@ import type { SettingProps } from "../../shared/types/types";
 import { menuItemStyles, menuProps, selectSx, containerSx } from "./style";
 
 export const Setting = ({ idKey, title, value, options, function: handleChange }: SettingProps) => (
-  <Box component="li" sx={containerSx}>
+  <Box component="li" sx={containerSx} aria-label={title}>
     <Typography variant="body2">{title}</Typography>
     <Select value={value} onChange={handleChange} MenuProps={menuProps} name={idKey} size="small" sx={selectSx}>
       {options.map((item) => (

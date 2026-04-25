@@ -45,7 +45,7 @@ export const NotesPage = () => {
         <div className={styles.contentWrapper}>
           <div className={styles.toolbar}>
             <SearchInput name="search-note" value={query} onChange={handleSearchChange} placeholder={t("notes.search_placeholder")} />
-            <IconButton onClick={handleCreateNewNote} sx={ButtonSx}>
+            <IconButton onClick={handleCreateNewNote} sx={ButtonSx} aria-label={t("notes.actions.add")}>
               <Add sx={{ fontSize: 24 }} />
             </IconButton>
             <NotesSorter sortBy={sortBy} changeSortBy={setSortBy} />
