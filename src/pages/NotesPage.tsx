@@ -12,9 +12,9 @@ import { useSearchNotes } from "../features/searchNotes/useSearchNotes";
 import { sortNotesArray } from "../features/sortNotes/sortNotesArray";
 import { NotesSorter } from "../features/sortNotes/NotesSorter";
 import { EmptyState } from "../shared/ui/EmptyState";
-import styles from "./NotesPage.module.css";
-import { SortBy } from "../shared/types/types";
+import type { SortBy } from "../shared/types/domain";
 import { NoteList } from "../widgets/noteList/NoteList";
+import styles from "./NotesPage.module.css";
 
 export const NotesPage = () => {
   const { t } = useTranslation();

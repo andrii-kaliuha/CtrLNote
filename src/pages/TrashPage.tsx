@@ -1,16 +1,16 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Button } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { clearTrash, restoreAllNotes } from "../features/note/notesSlice";
-import { NoteProps } from "../shared/types/types";
+import type { NoteProps } from "../shared/types/domain";
 import { NoteList } from "../widgets/noteList/NoteList";
 import { EmptyState } from "../shared/ui/EmptyState";
 import { useSettings } from "../features/settings/useSettings";
-import { useState } from "react";
 import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
-import styles from "./TrashPage.module.css";
 import BlockIcon from "@mui/icons-material/Block";
+import styles from "./TrashPage.module.css";
 
 export const TrashPage = () => {
   const { notes, trashEnabled, days } = useSettings();

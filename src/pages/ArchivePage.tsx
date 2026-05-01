@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import ArchiveIcon from "@mui/icons-material/Archive";
-import { NoteProps } from "../shared/types/types";
+import type { NoteProps } from "../shared/types/domain";
 import { NoteList } from "../widgets/noteList/NoteList";
 import { EmptyState } from "../shared/ui/EmptyState";
 import styles from "./ArchivePage.module.css";

@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { Note } from "../../features/note/ui/Note";
-import { NotesProps } from "../../shared/types/types";
+import type { NotesProps } from "../../shared/types/ui";
 import styles from "./NoteList.module.css";
 
 export const NoteList: React.FC<NotesProps> = ({ notes }) => {

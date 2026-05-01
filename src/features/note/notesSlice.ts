@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { NoteProps, NotesState, NoteStatus } from "../../shared/types/types";
+import type { NotesState } from "../../shared/types/state";
+import type { NoteProps, NoteStatus } from "../../shared/types/domain";
 
 const initialState: NotesState = { notes: [] };
 
@@ -13,23 +14,22 @@ const notesSlice = createSlice({
       reducer: (state, action: PayloadAction<NoteProps>) => {
         state.notes.push(action.payload);
       },
-      prepare: (payload: { title: string; text: string; tags: string[] }) => ({
+      prepare: (payload: { title: string; text: string }) => ({
         payload: {
           id: crypto.randomUUID(),
           title: payload.title,
           text: payload.text,
-          tags: payload.tags,
           createdAt: Date.now(),
           status: "active" as NoteStatus,
         } as NoteProps,
       }),
     },
-    editNote: (state, action: PayloadAction<{ id: string; title: string; text: string; tags: string[] }>) => {
+
+    editNote: (state, action: PayloadAction<{ id: string; title: string; text: string }>) => {
       const note = findNote(state, action.payload.id);
       if (note && note.status !== "deleted") {
         note.title = action.payload.title;
         note.text = action.payload.text;
-        note.tags = action.payload.tags;
       }
     },
 

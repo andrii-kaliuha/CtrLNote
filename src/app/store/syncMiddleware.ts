@@ -27,7 +27,7 @@ export const syncMiddleware: Middleware = (storeAPI) => (next) => (action: any) 
       if (currentError) {
         storeAPI.dispatch(setStorageError(null));
       }
-    } catch (e: any) {
+    } catch (e) {
       const message = i18n.t("management.storage_error");
 
       if (currentError !== message) {

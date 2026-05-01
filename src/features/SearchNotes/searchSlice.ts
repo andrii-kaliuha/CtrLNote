@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import type { SearchState } from "../../shared/types/types";
+import type { SearchState } from "../../shared/types/state";
 
 export const initialState: SearchState = { searchQuery: "" };
 

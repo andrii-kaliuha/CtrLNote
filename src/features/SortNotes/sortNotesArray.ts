@@ -1,4 +1,4 @@
-import { NoteProps, SortBy } from "../../shared/types/types";
+import type { NoteProps, SortBy } from "../../shared/types/domain";
 
 export const sortNotesArray = (notes: NoteProps[], sortBy: SortBy): NoteProps[] => {
   const sortedNotes = [...notes];

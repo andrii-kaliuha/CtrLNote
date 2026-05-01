@@ -8,8 +8,8 @@ import { MILLISECONDS_IN_DAY, useSettings } from "../features/settings/useSettin
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
-import styles from "./SettingsPage.module.css";
 import { DataManagement } from "../features/manageData/DataManagement";
+import styles from "./SettingsPage.module.css";
 
 const THEME_OPTIONS = ["light", "dark"] as const;
 const LANGUAGE_OPTIONS = ["en", "uk", "pl"] as const;
@@ -72,7 +72,7 @@ export const SettingsPage = () => {
           idKey="theme"
           title={t("settings.theme")}
           value={theme}
-          function={handleThemeChange}
+          onChange={handleThemeChange}
           options={THEME_OPTIONS.map((theme) => ({
             name: t(`settings.themes.${theme}`),
             value: theme,
@@ -83,7 +83,7 @@ export const SettingsPage = () => {
           idKey="language"
           title={t("settings.language")}
           value={language}
-          function={handleLanguageChange}
+          onChange={handleLanguageChange}
           options={LANGUAGE_OPTIONS.map((language) => ({
             name: t(`settings.languages.${language}`),
             value: language,
@@ -94,7 +94,7 @@ export const SettingsPage = () => {
           idKey="mainColor"
           title={t("settings.main_color")}
           value={mainColor}
-          function={handleMainColorChange}
+          onChange={handleMainColorChange}
           options={COLOR_OPTIONS.map((color) => ({
             name: t(`settings.colors.${color}`),
             value: color,
@@ -105,7 +105,7 @@ export const SettingsPage = () => {
           idKey="autoDelete"
           title={t("settings.auto_delete")}
           value={String(days)}
-          function={handleAutoDeleteChange}
+          onChange={handleAutoDeleteChange}
           options={AUTO_DELETE_OPTIONS.map((day) => ({
             name: t("settings.days", { count: Number(day) }),
             value: day,

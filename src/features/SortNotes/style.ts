@@ -25,24 +25,6 @@ export const menuItemStyles = {
   },
 };
 
-export const menuProps = {
-  PaperProps: {
-    sx: {
-      backgroundColor: "var(--color-surface)",
-      color: "var(--text-primary)",
-
-      marginTop: "4px",
-      borderRadius: "8px",
-      padding: 0,
-
-      boxShadow: "none",
-      border: "2px solid var(--color-primary)",
-
-      "& .MuiList-root": { padding: 0 },
-    },
-  },
-};
-
 export const sortButtonSx = {
   width: 48,
   height: 48,

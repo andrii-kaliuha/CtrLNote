@@ -2,7 +2,8 @@ import { Menu, MenuItem, Box } from "@mui/material";
 import { Sort } from "@mui/icons-material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { NotesSorterProps, SortBy } from "../../shared/types/types";
+import type { SortBy } from "../../shared/types/domain";
+import type { NotesSorterProps } from "../../shared/types/ui";
 import { menuItemStyles, sortButtonSx, paperSx } from "./style";
 
 const sortOptions: SortBy[] = ["titleAsc", "titleDesc", "dateAsc", "dateDesc"];

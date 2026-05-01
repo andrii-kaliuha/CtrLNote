@@ -2,7 +2,7 @@ import { MoreVert } from "@mui/icons-material";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { MoreVertMenuProps } from "../../../shared/types/types";
+import type { MoreVertMenuProps } from "../../../shared/types/ui";
 import { useNoteActions } from "../useNoteActions";
 import { ConfirmDialog } from "../../../shared/ui/ConfirmDialog";
 import { iconButtonSx, menuItemSx, menuSx } from "./style";

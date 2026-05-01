@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Switch as MuiSwitch, styled, Typography } from "@mui/material";
-import { SwitchProps } from "../types/types";
+import type { SwitchProps } from "../types/ui";
 
 export const Switch: React.FC<SwitchProps> = ({ text, name, checked, onChange }) => (
   <Box component="li" sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }} aria-label={text}>

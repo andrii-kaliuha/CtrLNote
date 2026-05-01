@@ -1,6 +1,6 @@
 import { TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { SearchInputProps } from "../../shared/types/types";
+import type { SearchInputProps } from "../../shared/types/ui";
 import { searchInputSx } from "./style";
 
 export const SearchInput: React.FC<SearchInputProps> = ({ name, value, onChange, placeholder }) => {

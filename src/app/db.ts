@@ -1,5 +1,5 @@
 import Dexie, { Table } from "dexie";
-import { NoteProps } from "../shared/types/types";
+import type { NoteProps } from "../shared/types/domain";
 
 interface MyDatabase extends Dexie {
   notes: Table<NoteProps>;
@@ -8,5 +8,5 @@ interface MyDatabase extends Dexie {
 export const db = new Dexie("CtrLNoteDB") as MyDatabase;
 
 db.version(1).stores({
-  notes: "++id, status, title, *tags",
+  notes: "++id, status, title",
 });

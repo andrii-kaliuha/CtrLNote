@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { openNoteEditor } from "../editNote/noteEditorSlice";
 import { archiveNote, unarchiveNote, restoreNote } from "./notesSlice";
 import { useDeleteNote } from "./useDeleteNote";
-import { NoteStatus } from "../../shared/types/types";
+import type { NoteStatus } from "../../shared/types/domain";
 
 export const useNoteActions = (id: string, status: NoteStatus) => {
   const dispatch = useDispatch();

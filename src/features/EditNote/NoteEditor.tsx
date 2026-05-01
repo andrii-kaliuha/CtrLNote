@@ -7,9 +7,7 @@ import { addNote, editNote } from "../note/notesSlice";
 import { Button } from "../../shared/ui/Button";
 import { useTranslation } from "react-i18next";
 import styles from "./NoteEditor.module.css";
-
 import { formatDate } from "../../shared/utils/formatDate";
-import { TagInput } from "./TagInput";
 
 export const NoteEditor = () => {
   const dispatch = useDispatch();
@@ -37,16 +35,14 @@ export const NoteEditor = () => {
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => dispatch(setText(e.target.value));
   const handleClose = () => dispatch(closeNoteEditor());
 
-  const tags = useSelector((state: RootState) => state.noteEditor.tags);
-
   const handleSave = () => {
     const originalNote = notes.find((note) => note.id === noteId);
     const isStillActive = originalNote && originalNote.status === "active";
 
     if (noteId && isStillActive) {
-      dispatch(editNote({ id: noteId, title: editorTitle, text: editorText, tags }));
+      dispatch(editNote({ id: noteId, title: editorTitle, text: editorText }));
     } else {
-      dispatch(addNote({ title: editorTitle, text: editorText, tags }));
+      dispatch(addNote({ title: editorTitle, text: editorText }));
     }
     dispatch(closeNoteEditor());
   };
@@ -56,7 +52,6 @@ export const NoteEditor = () => {
       <time className={styles.time} dateTime={new Date(createdAt).toISOString()}>
         {formatDate(createdAt, language, true)}
       </time>
-      <TagInput />
       <input
         type="text"
         className={styles.titleInput}

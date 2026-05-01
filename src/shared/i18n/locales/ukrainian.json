@@ -6,7 +6,8 @@
     "close": "Закрити"
   },
 
-  "menu": "Меню",
+  "menu": { "title": "Меню", "open": "Відкрити меню", "close": "Згорнути меню" },
+
   "management": {
     "title": "Ваші дані",
     "export_json": "Експорт JSON",
@@ -46,8 +47,7 @@
     },
     "editor": {
       "title_placeholder": "Заголовок",
-      "text_placeholder": "Текст нотатки...",
-      "tags_placeholder": "Додайте тег"
+      "text_placeholder": "Текст нотатки..."
     }
   },
 
