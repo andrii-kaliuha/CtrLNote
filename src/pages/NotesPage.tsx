@@ -2,17 +2,18 @@ import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { IconButton, Modal, useMediaQuery, useTheme } from "@mui/material";
-import { RootState } from "../app/store/store";
-import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import Add from "@mui/icons-material/Add";
+import StickyNote2Icon from "@mui/icons-material/StickyNote2";
+
+import { RootState } from "../app/store/store";
 import { closeNoteEditor, openEmptyNoteEditor } from "../features/editNote/noteEditorSlice";
 import { NoteEditor } from "../features/editNote/NoteEditor";
-import { SearchInput } from "../features/searchNotes/SearchInput";
 import { useSearchNotes } from "../features/searchNotes/useSearchNotes";
+import { SearchInput } from "../features/searchNotes/SearchInput";
 import { sortNotesArray } from "../features/sortNotes/sortNotesArray";
 import { NotesSorter } from "../features/sortNotes/NotesSorter";
-import { EmptyState } from "../shared/ui/EmptyState";
 import type { SortBy } from "../shared/types/domain";
+import { EmptyState } from "../shared/ui/EmptyState";
 import { NoteList } from "../widgets/noteList/NoteList";
 import styles from "./NotesPage.module.css";
 
@@ -45,7 +46,7 @@ export const NotesPage = () => {
         <div className={styles.contentWrapper}>
           <div className={styles.toolbar}>
             <SearchInput name="search-note" value={query} onChange={handleSearchChange} placeholder={t("notes.search_placeholder")} />
-            <IconButton onClick={handleCreateNewNote} sx={ButtonSx} aria-label={t("notes.actions.add")}>
+            <IconButton onClick={handleCreateNewNote} sx={IconButtonSx} aria-label={t("notes.actions.add")}>
               <Add sx={{ fontSize: 24 }} />
             </IconButton>
             <NotesSorter sortBy={sortBy} changeSortBy={setSortBy} />
@@ -71,7 +72,7 @@ export const NotesPage = () => {
   );
 };
 
-const ButtonSx = {
+const IconButtonSx = {
   width: 48,
   height: 48,
   borderRadius: "8px",

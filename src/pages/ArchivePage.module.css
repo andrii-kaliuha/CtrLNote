@@ -8,15 +8,15 @@
 }
 
 .header {
-  padding-left: 12px;
-  padding-bottom: 12px;
+  padding-left: var(--space-md);
+  padding-bottom: var(--space-md);
   color: var(--color-primary);
   margin: 0;
 }
 
 @media (min-width: 600px) {
   .header {
-    padding: 12px;
+    padding: var(--space-md);
   }
 }
 

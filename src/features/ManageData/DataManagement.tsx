@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Button, Stack } from "@mui/material";
 import { FileDownload, FileUpload } from "@mui/icons-material";
-import { exportDatabase, importDatabase } from "./dbExportImport";
-import { ConfirmDialog } from "../../shared/ui/ConfirmDialog";
-import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { setStorageError } from "../../app/store/uiSlice";
+import { useTranslation } from "react-i18next";
+
 import { db } from "../../app/db";
+import { setStorageError } from "../../app/store/uiSlice";
+import { ConfirmDialog } from "../../shared/ui/ConfirmDialog";
+import { exportDatabase, importDatabase } from "./dbExportImport";
 
 const handleKeyDown = (event: React.KeyboardEvent) => {
   if (event.key === " " || event.key === "Enter") {
@@ -58,7 +59,12 @@ export const DataManagement = () => {
     <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
       <Button
         variant="contained"
-        sx={{ backgroundColor: "var(--color-primary)", boxShadow: "none", "&:hover, &:focus": { boxShadow: "none" }, borderRadius: "8px" }}
+        sx={{
+          backgroundColor: "var(--color-primary)",
+          boxShadow: "none",
+          borderRadius: "var(--radius-md)",
+          "&:hover, &:focus": { boxShadow: "none" },
+        }}
         startIcon={<FileDownload />}
         onClick={handleExportClick}
       >
@@ -67,7 +73,11 @@ export const DataManagement = () => {
 
       <Button
         variant="outlined"
-        sx={{ border: "2px solid var(--color-primary)", borderRadius: "8px", color: "var(--color-primary)" }}
+        sx={{
+          border: "var(--border-width) solid var(--color-primary)",
+          borderRadius: "var(--radius-md)",
+          color: "var(--color-primary)",
+        }}
         component="label"
         onKeyDown={handleKeyDown}
         startIcon={<FileUpload />}

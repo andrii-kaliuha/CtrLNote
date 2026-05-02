@@ -37,22 +37,31 @@
 ## 📁 Project Structure
 
 ```text
+
 src/
-├── components/        # UI components (Note, Navigation, Editor, etc.)
-├── pages/             # Application views (Notes, Archive, Trash, Settings)
-├── routes/            # Routing configuration
+├── app/
+│   ├── store/         # Redux Toolkit setup & global slices
+│   ├── routes/        # React Router configuration
+│   ├── App.tsx
+│   └── db.ts          # IndexedDB / Database config
+├── widgets/
+│   ├── navigation/    # Desktop & Mobile nav
+│   └── noteList/      # Notes display logic
+├── pages/             # Application views (Notes, Archive, Trash, Settings.)
+├── features/
+│   ├── editNote/
+│   ├── note/
+│   ├── searchNotes/
+│   ├── sortNotes/
+│   └── manageData/    # Data Export/Import
 ├── shared/
-│   ├── hooks/         # Custom hooks
+│   ├── ui/            # Base UI components (Buttons, Dialogs, Switch etc.)
 │   ├── i18n/          # Localization (UA, EN, PL)
-│   ├── style/         # Global styles/config
-│   ├── types/         # TypeScript types
-│   ├── ui/            # Reusable UI (Button, Switch, Input)
-│   └── utils/         # Helper functions
-├── store/
-│   ├── slices/        # Redux slices
-│   └── store.ts       # Store configuration
-├── App.tsx
-└── main.tsx
+│   ├── types/         # Domain & State TypeScript types
+│   └── utils/         # Helper functions (Formatters, Storage)
+├── main.tsx
+└── index.css
+
 ```
 
 ## ⚙️ Installation & Setup

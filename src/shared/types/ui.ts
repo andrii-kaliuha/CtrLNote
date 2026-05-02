@@ -1,6 +1,6 @@
-import { SelectChangeEvent } from "@mui/material";
-import { ChangeEvent } from "react";
-import { NoteProps, NoteStatus, SortBy } from "./domain";
+import type { SelectChangeEvent } from "@mui/material";
+import type { ChangeEvent } from "react";
+import type { NoteProps, NoteStatus, SortBy } from "./domain";
 
 export type NotesProps = { notes: NoteProps[] };
 

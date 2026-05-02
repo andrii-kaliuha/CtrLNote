@@ -1,10 +1,11 @@
+import { Suspense } from "react";
 import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
-import { DesktopNavigation } from "../widgets/navigation/DesktopNavigation";
-import { MobileNavigation } from "../widgets/navigation/MobileNavigation";
+
 import { useSettings } from "../features/settings/useSettings";
 import { ErrorNotifier } from "../shared/ui/ErrorNotifier";
+import { DesktopNavigation } from "../widgets/navigation/DesktopNavigation";
+import { MobileNavigation } from "../widgets/navigation/MobileNavigation";
 import { appPages } from "./routes/pages";
-import { Suspense } from "react";
 
 export const App = () => {
   useSettings();

@@ -1,13 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
+
 import noteEditorReducer from "../../features/editNote/noteEditorSlice";
 import notesReducer from "../../features/note/notesSlice";
-import searchReducer from "../../features/searchNotes/searchSlice";
-import settingsReducer from "../../features/settings/settingsSlice";
-import uiReducer from "./uiSlice";
+import searchReducer, { initialState as searchInitialState } from "../../features/searchNotes/searchSlice";
+import settingsReducer, { initialState as settingsInitialState } from "../../features/settings/settingsSlice";
 import { hydrateState } from "../../shared/utils/storage";
+import uiReducer from "./uiSlice";
 import { syncMiddleware } from "./syncMiddleware";
-import { initialState as settingsInitialState } from "../../features/settings/settingsSlice";
-import { initialState as searchInitialState } from "../../features/searchNotes/searchSlice";
 
 const preloadedSettings = hydrateState("settings", settingsInitialState);
 const preloadedSearch = hydrateState("search", searchInitialState);

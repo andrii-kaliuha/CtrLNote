@@ -47,7 +47,7 @@ const MySwitch = styled(MuiSwitch)(() => ({
     "&:hover + .MuiSwitch-track": { borderColor: "var(--color-interactive)" },
     "&.Mui-focusVisible + .MuiSwitch-track": {
       borderColor: "var(--color-primary)",
-      borderWidth: "2px",
+      borderWidth: "var(--border-width)",
     },
   },
 

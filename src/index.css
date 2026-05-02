@@ -42,6 +42,28 @@ body {
   --color-primary-red: #d62828;
   --color-primary-yellow: #ffbd00;
   --color-primary-orange: #f75c03;
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  --btn-sm: 28px;
+  --btn-md: 36px;
+  --btn-lg: 44px;
+  --btn-icon: 48px;
+
+  --text-sm: 12px;
+  --text-md: 14px;
+  --text-lg: 16px;
+  --text-xl: 20px;
+
+  --border-width: 2px;
 }
 
 .dark {
@@ -55,13 +77,6 @@ body {
   --text-secondary: #a29ead;
 
   --color-border: #bbbbbb;
-
-  --color-primary-green: #49a078;
-  --color-primary-purple: #b5a1e2;
-  --color-primary-blue: #1976d2;
-  --color-primary-red: #d62828;
-  --color-primary-yellow: #ffbd00;
-  --color-primary-orange: #f75c03;
 }
 
 .app-container {
@@ -71,8 +86,8 @@ body {
   height: 100dvh;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 12px;
-  gap: 12px;
+  padding: var(--space-md);
+  gap: var(--space-md);
 }
 
 @media (min-width: 900px) {

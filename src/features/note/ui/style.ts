@@ -1,5 +1,5 @@
 export const iconButtonSx = (isOpen: boolean) => ({
-  borderRadius: "50%",
+  borderRadius: "var(--radius-full)",
   transition: "all 0.2s ease",
   color: "var(--text-primary)",
   ...(isOpen && {
@@ -21,17 +21,17 @@ export const menuSx = {
     width: "180px",
     backgroundColor: "var(--color-surface)",
     boxShadow: "none",
-    borderRadius: "8px",
-    border: "2px solid var(--color-primary)",
+    borderRadius: "var(--radius-md)",
+    border: "var(--border-width) solid var(--color-primary)",
   },
   "& .MuiList-root": { padding: 0 },
 };
 
 export const menuItemSx = {
-  padding: "8px 16px",
+  padding: "var(--space-sm) var(--space-lg)",
   color: "var(--text-primary)",
-  fontSize: "14px",
-  minHeight: "36px",
+  fontSize: "var(--text-md)",
+  minHeight: "var(--btn-md)",
   "&:hover": {
     backgroundColor: "color-mix(in srgb, var(--color-primary), transparent 85%) !important",
     color: "var(--color-primary)",

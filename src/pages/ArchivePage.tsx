@@ -1,11 +1,12 @@
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import ArchiveIcon from "@mui/icons-material/Archive";
-import type { NoteProps } from "../shared/types/domain";
-import { NoteList } from "../widgets/noteList/NoteList";
-import { EmptyState } from "../shared/ui/EmptyState";
-import styles from "./ArchivePage.module.css";
+
 import { RootState } from "../app/store/store";
+import type { NoteProps } from "../shared/types/domain";
+import { EmptyState } from "../shared/ui/EmptyState";
+import { NoteList } from "../widgets/noteList/NoteList";
+import styles from "./ArchivePage.module.css";
 
 export const ArchivePage = () => {
   const { notes } = useSelector((state: RootState) => state.notes);

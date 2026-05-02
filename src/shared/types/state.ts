@@ -1,4 +1,4 @@
-import { NoteProps } from "./domain";
+import type { NoteProps } from "./domain";
 
 export type NoteEditorState = { isOpen: boolean; noteId: string | null; title: string; text: string };
 

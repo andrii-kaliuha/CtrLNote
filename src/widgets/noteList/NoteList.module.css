@@ -1,6 +1,6 @@
 .noteList {
   display: grid;
-  gap: 12px;
+  gap: var(--space-md);
   grid-template-columns: repeat(auto-fill, minmax(296px, 1fr));
   padding: 0;
   margin: 0;

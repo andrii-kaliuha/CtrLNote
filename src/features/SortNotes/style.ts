@@ -1,10 +1,10 @@
 export const menuItemStyles = {
-  height: "36px",
-  minHeight: "36px",
-  padding: "0 12px",
+  height: "var(--btn-md)",
+  minHeight: "var(--btn-md)",
+  padding: "0 var(--space-md)",
   display: "flex",
   alignItems: "center",
-  fontSize: "14px",
+  fontSize: "var(--text-md)",
   color: "var(--text-primary)",
   cursor: "pointer",
   transition: "background-color 0.2s ease, color 0.2s ease",
@@ -26,16 +26,16 @@ export const menuItemStyles = {
 };
 
 export const sortButtonSx = {
-  width: 48,
-  height: 48,
+  width: "var(--btn-icon)",
+  height: "var(--btn-icon)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
   backgroundColor: "var(--color-surface)",
   color: "var(--color-primary)",
-  borderRadius: "8px",
+  borderRadius: "var(--radius-md)",
   cursor: "pointer",
-  border: "2px solid transparent",
+  border: "var(--border-width) solid transparent",
   outline: "none",
   "&:hover, &:focus": {
     backgroundColor: "var(--color-surface)",
@@ -48,9 +48,9 @@ export const sortButtonSx = {
 export const paperSx = {
   backgroundColor: "var(--color-surface)",
   color: "var(--text-primary)",
-  marginTop: "4px",
-  borderRadius: "8px",
+  marginTop: "var(--space-xs)",
+  borderRadius: "var(--radius-md)",
   boxShadow: "none",
-  border: "2px solid var(--color-primary)",
+  border: "var(--border-width) solid var(--color-primary)",
   "& .MuiList-root": { padding: 0 },
 };

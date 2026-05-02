@@ -10,13 +10,13 @@ const listSx = (isSidebarCollapsed: boolean) => ({
   p: 0,
   backgroundColor: "var(--color-surface)",
   height: "100%",
-  borderRadius: "8px",
+  borderRadius: "var(--radius-md)",
   transition: "width 0.3s ease",
 });
 
 const listItemSx = (isSidebarCollapsed: boolean) => ({
   py: 1.5,
-  height: 48,
+  height: "var(--btn-icon)",
   justifyContent: isSidebarCollapsed ? "center" : "flex-start",
   "&:hover, &.Mui-focusVisible": {
     backgroundColor: "color-mix(in srgb, var(--color-primary), transparent 75%) !important",

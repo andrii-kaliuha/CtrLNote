@@ -1,13 +1,14 @@
-import { Box, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../app/store/store";
-import { closeNoteEditor, setTitle, setText, setNoteToEdit } from "./noteEditorSlice";
-import { addNote, editNote } from "../note/notesSlice";
-import { Button } from "../../shared/ui/Button";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
-import styles from "./NoteEditor.module.css";
+import { Box, Button, useMediaQuery, useTheme } from "@mui/material";
+
+import { RootState } from "../../app/store/store";
+import { addNote, editNote } from "../note/notesSlice";
+import { closeNoteEditor, setTitle, setText, setNoteToEdit } from "./noteEditorSlice";
 import { formatDate } from "../../shared/utils/formatDate";
+import { ButtonSx } from "../../shared/style";
+import styles from "./NoteEditor.module.css";
 
 export const NoteEditor = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ export const NoteEditor = () => {
   };
 
   return (
-    <Box className={styles.container} sx={{ borderRadius: isMobile ? 0 : "12px" }}>
+    <Box className={styles.container} sx={{ borderRadius: isMobile ? 0 : "var(--radius-lg)" }}>
       <time className={styles.time} dateTime={new Date(createdAt).toISOString()}>
         {formatDate(createdAt, language, true)}
       </time>
@@ -58,11 +59,22 @@ export const NoteEditor = () => {
         value={editorTitle}
         onChange={handleTitleChange}
         placeholder={t("notes.editor.title_placeholder")}
+        name="title-editor"
       />
-      <textarea className={styles.textArea} value={editorText} onChange={handleTextChange} placeholder={t("notes.editor.text_placeholder")} />
+      <textarea
+        className={styles.textArea}
+        value={editorText}
+        onChange={handleTextChange}
+        placeholder={t("notes.editor.text_placeholder")}
+        name="text-editor"
+      />
       <div className={styles.actions}>
-        <Button action={handleClose} text={t("actions.cancel")} />
-        <Button action={handleSave} text={t("actions.save")} />
+        <Button onClick={handleClose} disableRipple sx={ButtonSx}>
+          {t("actions.cancel")}
+        </Button>
+        <Button onClick={handleSave} disableRipple sx={{ ...ButtonSx, color: "var(--color-primary) !important" }}>
+          {t("actions.save")}
+        </Button>
       </div>
     </Box>
   );

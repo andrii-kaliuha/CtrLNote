@@ -1,10 +1,11 @@
-import { MoreVert } from "@mui/icons-material";
-import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import { MoreVert } from "@mui/icons-material";
+
 import type { MoreVertMenuProps } from "../../../shared/types/ui";
-import { useNoteActions } from "../useNoteActions";
 import { ConfirmDialog } from "../../../shared/ui/ConfirmDialog";
+import { useNoteActions } from "../useNoteActions";
 import { iconButtonSx, menuItemSx, menuSx } from "./style";
 
 export const MoreVertMenu = ({ status, id }: MoreVertMenuProps) => {

@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
-import type { NoteProps } from "../../../shared/types/domain";
-import { MoreVertMenu } from "./MoreVertMenu";
-import { formatDate } from "../../../shared/utils/formatDate";
-import { RootState } from "../../../app/store/store";
-import styles from "./Note.module.css";
 import { useTranslation } from "react-i18next";
+
+import { RootState } from "../../../app/store/store";
+import type { NoteProps } from "../../../shared/types/domain";
+import { formatDate } from "../../../shared/utils/formatDate";
+import { MoreVertMenu } from "./MoreVertMenu";
+import styles from "./Note.module.css";
 
 export const Note: React.FC<NoteProps> = ({ id, title, text, createdAt, status }) => {
   const language = useSelector((state: RootState) => state.settings.language);

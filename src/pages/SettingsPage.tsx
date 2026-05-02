@@ -1,14 +1,15 @@
 import { useCallback, useState } from "react";
-import { Box, SelectChangeEvent, Typography } from "@mui/material";
-import { setTheme, setLanguage, setMainColor, toggleTrash, setAutoDeletePeriod } from "../features/settings/settingsSlice";
-import { clearTrash } from "../features/note/notesSlice";
-import { Setting } from "../features/settings/Setting";
-import { Switch } from "../shared/ui/Switch";
-import { MILLISECONDS_IN_DAY, useSettings } from "../features/settings/useSettings";
-import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
-import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
+import { useTranslation } from "react-i18next";
+import { Box, SelectChangeEvent, Typography } from "@mui/material";
+
+import { clearTrash } from "../features/note/notesSlice";
+import { setTheme, setLanguage, setMainColor, toggleTrash, setAutoDeletePeriod } from "../features/settings/settingsSlice";
+import { MILLISECONDS_IN_DAY, useSettings } from "../features/settings/useSettings";
+import { Setting } from "../features/settings/Setting";
 import { DataManagement } from "../features/manageData/DataManagement";
+import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
+import { Switch } from "../shared/ui/Switch";
 import styles from "./SettingsPage.module.css";
 
 const THEME_OPTIONS = ["light", "dark"] as const;

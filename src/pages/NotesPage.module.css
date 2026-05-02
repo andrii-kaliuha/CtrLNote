@@ -2,7 +2,7 @@
   height: 100%;
   width: 100%;
   display: flex;
-  gap: 12px;
+  gap: var(--space-md);
 }
 
 .notesSection {
@@ -15,12 +15,12 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 12px;
+  gap: var(--space-md);
 }
 
 .toolbar {
   display: flex;
-  gap: 12px;
+  gap: var(--space-md);
 }
 
 .scrollArea {

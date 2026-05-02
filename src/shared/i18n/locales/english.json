@@ -6,35 +6,36 @@
     "close": "Close"
   },
 
-  "menu": "Menu",
+  "menu": { "title": "Menu", "open": "Open menu", "close": "Close menu" },
+
   "management": {
+    "title": "Your data",
     "export_json": "Export JSON",
     "import_json": "Import JSON",
-    "no_notes": "You have no notes to export.",
+    "no_notes": "No notes to export.",
     "confirm_export_title": "Confirm Export",
-    "confirm_export_message_one": "Do you want to export {{count}} note to JSON file?",
-    "confirm_export_message_other": "Do you want to export {{count}} notes to JSON file?",
-    "confirm_import_title": "Confirm Import",
-    "confirm_import_message": "Importing notes will replace your current data. Continue?",
-    "import_success": "Data imported successfully!",
-    "import_error": "Error importing file."
+    "confirm_export_message_one": "Do you want to export {{count}} note to a JSON file?",
+    "confirm_export_message_other": "Do you want to export {{count}} notes to a JSON file?",
+    "import_error": "Failed to import file.",
+    "storage_error": "Failed to save data.",
+    "load_error": "Failed to load notes."
   },
 
   "notes": {
     "title": "Notes",
-    "empty_message": "It's empty here for now. Create your first note",
+    "empty_message": "No notes yet. Create your first one!",
     "untitled": "Untitled",
     "search_placeholder": "Search...",
     "sort": {
       "label": "Sort by",
-      "titleAsc": "By title (A-Z)",
-      "titleDesc": "By title (Z-A)",
-      "dateAsc": "By date (oldest)",
-      "dateDesc": "By date (newest)"
+      "titleAsc": "Title (A-Z)",
+      "titleDesc": "Title (Z-A)",
+      "dateAsc": "Date (oldest)",
+      "dateDesc": "Date (newest)"
     },
     "actions": {
-      "add": "Add a note",
-      "menu": "Note menu",
+      "add": "Add note",
+      "menu": "Note options",
       "edit": "Edit",
       "archive": "Archive",
       "unarchive": "Unarchive",
@@ -44,36 +45,35 @@
     },
     "editor": {
       "title_placeholder": "Title",
-      "text_placeholder": "Note text...",
-      "tags_placeholder": "Add a tag"
+      "text_placeholder": "Start typing..."
     }
   },
 
   "archive": {
     "title": "Archive",
-    "empty_message": "Your archived notes are here"
+    "empty_message": "Your archived notes will appear here"
   },
 
   "trash": {
     "title": "Trash",
-    "empty_message": "Your trash is empty",
+    "empty_message": "Trash is empty",
     "disabled_message": "Trash is disabled",
     "enable_instruction": "Enable trash in settings",
-    "auto_delete_message": "Notes will be deleted in {{count}} day",
-    "auto_delete_message_other": "Notes will be deleted in {{count}} days",
+    "auto_delete_message_one": "Deleted in {{count}} day",
+    "auto_delete_message_other": "Deleted in {{count}} days",
     "restore": {
       "title": "Confirm restoration",
       "one": "Restore",
-      "message_one": "Are you sure you want to restore this note?",
+      "message_one": "Restore this note?",
       "all": "Restore all",
-      "message_all": "Are you sure you want to restore all notes?"
+      "message_all": "Restore all notes from trash?"
     },
     "delete": {
       "title": "Confirm deletion",
       "one": "Delete",
-      "message_one": "The note will be permanently deleted. Continue?",
+      "message_one": "This note will be permanently deleted.",
       "all": "Empty trash",
-      "message_all": "All notes in the trash will be permanently deleted. Are you sure?"
+      "message_all": "All notes in the trash will be permanently deleted. Proceed?"
     }
   },
 
@@ -87,10 +87,10 @@
     "language": "Language",
     "languages": {
       "en": "English",
-      "uk": "Ukrainian",
-      "pl": "Polish"
+      "uk": "Українська",
+      "pl": "Polski"
     },
-    "main_color": "Primary color",
+    "main_color": "Accent color",
     "colors": {
       "green": "Green",
       "purple": "Purple",
@@ -99,8 +99,8 @@
       "yellow": "Yellow",
       "orange": "Orange"
     },
-    "auto_delete": "Auto-delete after",
-    "days": "{{count}} day",
+    "auto_delete": "Auto-delete in",
+    "days_one": "{{count}} day",
     "days_other": "{{count}} days",
     "enable_trash": "Enable trash",
     "confirm_disable": {

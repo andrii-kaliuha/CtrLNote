@@ -2,14 +2,15 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useTranslation } from "react-i18next";
 import { Button } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { clearTrash, restoreAllNotes } from "../features/note/notesSlice";
-import type { NoteProps } from "../shared/types/domain";
-import { NoteList } from "../widgets/noteList/NoteList";
-import { EmptyState } from "../shared/ui/EmptyState";
-import { useSettings } from "../features/settings/useSettings";
-import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
 import BlockIcon from "@mui/icons-material/Block";
+import DeleteIcon from "@mui/icons-material/Delete";
+
+import { clearTrash, restoreAllNotes } from "../features/note/notesSlice";
+import { useSettings } from "../features/settings/useSettings";
+import type { NoteProps } from "../shared/types/domain";
+import { ConfirmDialog } from "../shared/ui/ConfirmDialog";
+import { EmptyState } from "../shared/ui/EmptyState";
+import { NoteList } from "../widgets/noteList/NoteList";
 import styles from "./TrashPage.module.css";
 
 export const TrashPage = () => {
@@ -88,11 +89,11 @@ const TrashButton = ({ action, text }: { action: () => void; text: string }) => 
       sx={{
         backgroundColor: "var(--color-surface)",
         color: "var(--text-primary)",
-        borderRadius: "8px",
-        height: "32px",
+        borderRadius: "var(--radius-md)",
+        height: "var(--btn-sm)",
         px: 2,
         textTransform: "none",
-        border: "2px solid transparent",
+        border: "var(--border-width) solid transparent",
 
         "&:hover, &:focus": {
           backgroundColor: "var(--color-surface)",
