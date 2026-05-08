@@ -7,13 +7,13 @@
 <div align="center">
   <br>
   <h3>Desktop View (1024px)</h3>
-  <img src="src/assets/screenshots/desktop.png" width="100%" alt="Desktop Version">
+  <img src="public/screenshots/desktop.png" width="100%" alt="Desktop Version">
 
   <h3>Tablet View (768px)</h3>
-  <img src="src/assets/screenshots/tablet.png" width="768" alt="Tablet Version">
+  <img src="public/screenshots/tablet.png" width="768" alt="Tablet Version">
 
   <h3>Mobile View (320px)</h3>
-  <img src="src/assets/screenshots/mobile.png" width="320" alt="Mobile Version">
+  <img src="public/screenshots/mobile.png" width="320" alt="Mobile Version">
   <br>
 </div>
 
